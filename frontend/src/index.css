@@ -406,7 +406,7 @@ input:checked+.slider:before {
 
 
 
-div.controls {
+/* div.controls { */
   /* z-index: 1;
   position: absolute;
   left: 50%;
@@ -415,7 +415,7 @@ div.controls {
   margin-top: 28px;
   margin: 0 auto;
   display: block; */
-}
+/* } */
 
 div.controls {
   display: flex;
@@ -501,7 +501,7 @@ div.controls {
   padding-top: 30px;
 }
 
-div.scoreBoard {}
+/* div.scoreBoard {} */
 
 #rightGuesses {
   color: green;
