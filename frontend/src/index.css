@@ -125,6 +125,7 @@ a:focus-visible {
 }
 
 .public__main,
+
 .login {
   flex-grow: 1;
   border-top: 2px solid var(--BORDER-COLOR);
