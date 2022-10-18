@@ -29,7 +29,7 @@ const getAllUserTurns = asyncHandler(async (req, res) => {
 // @access Private
 const createNewTurn = asyncHandler(async (req, res) => {
     const { time, score, missed } = req.body
-     const user = await User.findById(req.params.id).exec()
+    const user = await User.findById(req.params.id).exec()
 
     // Confirm data
     if (!user || !time || !score || !missed ) {

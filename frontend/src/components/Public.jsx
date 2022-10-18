@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import SvgUs from './Us'
+import Toggle from './Toggle'
 import React, { useState, useEffect } from 'react'
 
 const Public = () => {
@@ -50,12 +51,8 @@ const Public = () => {
                 <h1>Welcome to <span className="nowrap">Geo-Quiz!</span></h1>
             </header>
             <main className="public__main">
-                <label className="toggle">
-                    <input type="checkbox" id="checkbox"/>
-                    <span className="slider2"></span>
-                    <span className="labels" data-on="STUDY" data-off="GAME"></span>
-                    
-                </label>
+                
+                <Toggle />
 
                 <div onMouseMove={addMouseover} >
                     <SvgUs />
