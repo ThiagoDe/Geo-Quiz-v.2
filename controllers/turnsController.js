@@ -4,7 +4,7 @@ const asyncHandler = require('express-async-handler')
 
 
 // @access Private
-const getAllUserTurns = asyncHandler(async (req, res) => {
+const getAllTurns = asyncHandler(async (req, res) => {
     // Get all turns from MongoDB
     const turns = await Turn.find().lean()
 
@@ -13,10 +13,11 @@ const getAllUserTurns = asyncHandler(async (req, res) => {
         return res.status(400).json({ message: 'No notes found' })
     }
 
-    // Add username to each note before sending the response 
-    // See Promise.all with map() here: https://youtu.be/4lqJBBEpjRE 
-    // You could also do this with a for...of loop
+//     // Add username to each note before sending the response 
+//     // See Promise.all with map() here: https://youtu.be/4lqJBBEpjRE 
+//     // You could also do this with a for...of loop
     const turnsWithUser = await Promise.all(turns.map(async (turn) => {
+        
         const user = await User.findById(turn.user).lean().exec()
         return { ...turn, username: user.username }
     }))
@@ -24,12 +25,13 @@ const getAllUserTurns = asyncHandler(async (req, res) => {
     res.json(turnsWithUser)
 })
 
+
 // @desc Create new note
 // @route POST /notes
 // @access Private
 const createNewTurn = asyncHandler(async (req, res) => {
-    const { time, score, missed } = req.body
-    const user = await User.findById(req.params.id).exec()
+    const { user,time, score, missed } = req.body
+    // const user = await User.findById(req.params.id).exec()
 
     // Confirm data
     if (!user || !time || !score || !missed ) {
@@ -85,7 +87,7 @@ const updateTurn = asyncHandler(async (req, res) => {
 
 
 module.exports = {
-    getAllUserTurns,
+    getAllTurns,
     createNewTurn,
     updateTurn,
 }
