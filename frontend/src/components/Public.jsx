@@ -3,74 +3,46 @@ import SvgUs from './Us'
 import React, { useState, useEffect } from 'react'
 
 const Public = () => {
-    // const [gameModeBtn, setGameModeBtn] = useState(false)
+    const [gameModeBtn, setGameModeBtn] = useState(false)
     const [usMap, setUsMap] = useState(null)
     const [stateName, setStateName ] = useState('')
     const [stateId, setStateId] = useState('')
-    const [boxInfo, setBoxInfo] = useState('none')
-    const [x, setX] = useState(0)
-    const [y, setY] = useState(0)
-    const [uniqState, setUniqState] = useState(null)
+    const [boxInfo, setBoxInfo] = useState(null)
+    // const [uniqState, setUniqState] = useState(null)
+    const [pos, setPos] = useState({x: 0, y: 0})
 
     const addMouseover = React.useCallback((e) => {
-
-                    if (e.target.tagName === 'path') {
-                        
+                e.persist()
+                setPos( pos => ({...pos, x: e.clientX, y: e.clientY}))
+                const { x, y } = pos
+                if (e.target.tagName === 'path') {
+                    if (e.target.dataset.name !== stateName) 
                         setStateName(e.target.dataset.name)
                         setStateId(e.target.dataset.id)
+                        if (gameModeBtn.checked){
+                            boxInfo.style.display = "block";
+                            boxInfo.innerHTML = stateName + " " + stateId;
+                            boxInfo.style.opacity = "100%";            
+                            boxInfo.style.top = (y + 25) + 'px';
+                            boxInfo.style.left = (x) + 'px';
+                        }
+                } else {
+                    if (gameModeBtn.checked && boxInfo){
+                        boxInfo.style.opacity = "0%"
                     }
-                 
-                })
+                }
+            }, [boxInfo, pos, stateId, stateName, gameModeBtn])
     
-    const addMouseout = React.useCallback(() => {
-        // e.stopPropagation()
-        console.log('mouseout')
-        boxInfo.style.opacity = "0%"
-    })
-
-    const windowMouse = () => {
-        window.onmousemove = function (e) {  
-                setUniqState(e.target)
-                setX(e.clientX)
-                setY(e.clientY)  
-                boxInfo.style.display = "block";
-                boxInfo.innerHTML = stateName + " " + stateId;
-                boxInfo.style.opacity = "100%";            
-                boxInfo.style.top = (y + 25) + 'px';
-                boxInfo.style.left = (x) + 'px';
-            };
-    }
 
     useEffect (() => {
         setUsMap(document.getElementsByTagName('path'))
-        setBoxInfo(document.getElementById('details-box'))
-
-        
-        if (uniqState) {
-            console.log(uniqState, 'test in')
-            uniqState.addEventListener('mouseover', addMouseover)
-            uniqState.addEventListener('mouseout',addMouseout)
-
+        if (gameModeBtn.checked) {
+            setBoxInfo(document.getElementById('details-box'))
         }
-        window.onmousemove = function (e) {  
-                setUniqState(e.target)
-                setX(e.clientX)
-                setY(e.clientY)  
-                boxInfo.style.display = "block";
-                boxInfo.innerHTML = stateName + " " + stateId;
-                boxInfo.style.opacity = "100%";            
-                boxInfo.style.top = (y + 25) + 'px';
-                boxInfo.style.left = (x) + 'px';
-            };
-        
-    }, [x, y, usMap, stateName, stateId, boxInfo, uniqState, addMouseout, addMouseover] );
+        setGameModeBtn(document.getElementById("checkbox"))
     
+    }, [usMap, stateName, stateId, boxInfo, addMouseover, gameModeBtn] );
     
- 
-
-    
-    
-
 
     const content = (
         <section className="public">
@@ -78,15 +50,20 @@ const Public = () => {
                 <h1>Welcome to <span className="nowrap">Geo-Quiz!</span></h1>
             </header>
             <main className="public__main">
+                <label className="toggle">
+                    <input type="checkbox" id="checkbox"/>
+                    <span className="slider2"></span>
+                    <span className="labels" data-on="STUDY" data-off="GAME"></span>
+                    
+                </label>
 
-                <div id="details-box"></div>
-                <div onMouseEnter={addMouseover} onMouseLeave={addMouseout}>
+                <div onMouseMove={addMouseover} >
                     <SvgUs />
                 </div>
-                
+                { gameModeBtn.checked &&<div id="details-box"></div>}
             </main>
             <footer>
-                <Link to="/login">Employee Login</Link>
+                <Link to="/login">Login</Link>
             </footer>
         </section>
 
