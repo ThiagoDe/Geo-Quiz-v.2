@@ -121,6 +121,8 @@ a:focus-visible {
 
 .public {
   padding: 1em;
+  padding-left: 4em;
+  padding-right: 4em;
   flex-grow: 1;
 }
 
