@@ -19,9 +19,9 @@ export const turnsApiSlice = apiSlice.injectEndpoints({
             },
             keepUnusedDataFor: 5,
             transformResponse: responseData => {
-                const loadedTurns = responseData.map(note => {
-                    note.id = note._id
-                    return note
+                const loadedTurns = responseData.map(turn => {
+                    turn.id = turn._id
+                    return turn
                 });
                 return turnsAdapter.setAll(initialState, loadedTurns)
             },
@@ -34,11 +34,48 @@ export const turnsApiSlice = apiSlice.injectEndpoints({
                 } else return [{ type: 'Turn', id: 'LIST' }]
             }
         }),
+        addNewTurn: builder.mutation({
+            query: initialTurn => ({
+                url: '/turns',
+                method: 'POST',
+                body: {
+                    ...initialTurn,
+                }
+            }),
+            invalidatesTags: [
+                { type: 'Turn', id: "LIST" }
+            ]
+        }),
+        updateTurn: builder.mutation({
+            query: initialTurn => ({
+                url: '/turns',
+                method: 'PATCH',
+                body: {
+                    ...initialTurn,
+                }
+            }),
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Turn', id: arg.id }
+            ]
+        }),
+        deleteTurn: builder.mutation({
+            query: ({ id }) => ({
+                url: `/turns`,
+                method: 'DELETE',
+                body: { id }
+            }),
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Turn', id: arg.id }
+            ]
+        }),
     }),
 })
 
 export const {
     useGetTurnsQuery,
+    useAddNewTurnMutation,
+    useUpdateTurnMutation,
+    useDeleteTurnMutation,
 } = turnsApiSlice
 
 // returns the query result object

@@ -8,12 +8,12 @@ const getAllTurns = asyncHandler(async (req, res) => {
     // Get all turns from MongoDB
     const turns = await Turn.find().lean()
 
-    // If no notes 
+    // If no turns 
     if (!turns?.length) {
-        return res.status(400).json({ message: 'No notes found' })
+        return res.status(400).json({ message: 'No turns found' })
     }
 
-//     // Add username to each note before sending the response 
+//     // Add username to each turn before sending the response 
 //     // See Promise.all with map() here: https://youtu.be/4lqJBBEpjRE 
 //     // You could also do this with a for...of loop
     const turnsWithUser = await Promise.all(turns.map(async (turn) => {
@@ -26,8 +26,8 @@ const getAllTurns = asyncHandler(async (req, res) => {
 })
 
 
-// @desc Create new note
-// @route POST /notes
+// @desc Create new turn
+// @route POST /turns
 // @access Private
 const createNewTurn = asyncHandler(async (req, res) => {
     const { user,time, score, missed } = req.body
@@ -42,7 +42,7 @@ const createNewTurn = asyncHandler(async (req, res) => {
     // const duplicate = await Turn.findOne({ title }).lean().exec()
 
     // if (duplicate) {
-    //     return res.status(409).json({ message: 'Duplicate note title' })
+    //     return res.status(409).json({ message: 'Duplicate turn title' })
     // }
 
     // Create and store the new user 
@@ -84,10 +84,36 @@ const updateTurn = asyncHandler(async (req, res) => {
     res.json(`'${updatedTurn.user}' turn updated`)
 })
 
+// / @desc Delete a turn
+// @route DELETE /turns
+// @access Private
+const deleteTurn = asyncHandler(async (req, res) => {
+    const { id } = req.body
+
+    // Confirm data
+    if (!id) {
+        return res.status(400).json({ message: 'Turn ID required' })
+    }
+
+    // Confirm turn exists to delete 
+    const turn = await Turn.findById(id).exec()
+
+    if (!turn) {
+        return res.status(400).json({ message: 'Turn not found' })
+    }
+
+    const result = await turn.deleteOne()
+
+    const reply = `Turn '${result.title}' with ID ${result._id} deleted`
+
+    res.json(reply)
+})
+
 
 
 module.exports = {
     getAllTurns,
     createNewTurn,
     updateTurn,
+    deleteTurn
 }

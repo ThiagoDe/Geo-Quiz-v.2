@@ -7,7 +7,7 @@ router.route('/')
     .get(turnsController.getAllTurns)
     .post(turnsController.createNewTurn)
     .patch(turnsController.updateTurn)
-
+    .delete(turnsController.deleteTurn)
 
 
 module.exports = router 
