@@ -8,7 +8,11 @@ const TurnsList = () => {
         isSuccess,
         isError,
         error
-    } = useGetTurnsQuery()
+    } = useGetTurnsQuery(undefined, {
+        pollingInterval: 1500,
+        refetchOnFocus: true,
+        refetchOnMountOrArgChange: true
+    })
 
     let content
 
