@@ -9,7 +9,11 @@ const UsersList = () => {
         isSuccess,
         isError,
         error
-    } = useGetUsersQuery()
+    } = useGetUsersQuery(undefined, {
+        pollingInterval: 6000,
+        refetchOnFocus: true,
+        refetchOnMountOrArgChange: true
+    })
 
     let content
 
@@ -32,7 +36,7 @@ const UsersList = () => {
                 <thead className="table__thead">
                     <tr>
                         <th scope="col" className="table__th user__username">Username</th>
-                        <th scope="col" className="table__th user__roles">Id</th>
+                        <th scope="col" className="table__th user__roles">Role(s)</th>
                         <th scope="col" className="table__th user__edit">Edit</th>
                     </tr>
                 </thead>
