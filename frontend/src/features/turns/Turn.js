@@ -21,6 +21,8 @@ const Turn = ({ turnId }) => {
         return (
                 <tr className="table__row user">
                     <td className={`table__cell--inactive`}>{turn.username}</td>
+                    <td className={`table__cell--inactive`}>{turn.statesScored}</td>
+                    <td className={`table__cell--inactive`}>{turn.statesMissed}</td>
                     <td className={`table__cell--inactive`}>{turn.score}</td>
                     <td className={`table__cell--inactive`}>{created}</td>
                     <td className={`table__cell--inactive`}>

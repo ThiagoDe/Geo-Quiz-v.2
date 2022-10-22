@@ -9,7 +9,7 @@ const TurnsList = () => {
         isError,
         error
     } = useGetTurnsQuery(undefined, {
-        pollingInterval: 1500,
+        pollingInterval: 30000,
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true
     })
@@ -36,6 +36,8 @@ const TurnsList = () => {
                     <thead className="table__thead">
                         <tr>
                             <th scope="col" className="table__th">Username</th>
+                            <th scope="col" className="table__th">States Scored</th>
+                            <th scope="col" className="table__th">States Missed</th>
                             <th scope="col" className="table__th">Score</th>
                             <th scope="col" className="table__th">Last Game</th>
                             <th scope="col" className="table__th">Edit</th>

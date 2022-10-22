@@ -29,8 +29,8 @@ const ChangingProgressProvider = (props) => {
             setIsRunning(true)
             setRenderTimes(animationOn)
         }
-        console.log(isRunning)
-        console.log(animationOn, 'AnimationOn number')
+        // console.log(isRunning)
+        // console.log(animationOn, 'AnimationOn number')
         if (valuesIndex >= values.length) stopTimer()
     }, [ valuesIndex, animationOn, renderTimes, isRunning,values])
 

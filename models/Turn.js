@@ -14,10 +14,14 @@ const turnSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    missed: {
+    statesScored: [{
+        type: String,
+        
+    }],
+    statesMissed: [{
         type: Number,
-        default: 0
-    },
+        
+    }],
        
 },
     {
