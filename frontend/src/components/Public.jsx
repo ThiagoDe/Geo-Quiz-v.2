@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import SvgUs from './Us'
-import Toggle from './Toggle'
+import Toggle from './utilities/Toggle'
 import React, { useState, useEffect } from 'react'
+import ButtonRound from './utilities/ButtonRound'
 
 const Public = () => {
     const [gameModeBtn, setGameModeBtn] = useState(false)
@@ -9,10 +10,10 @@ const Public = () => {
     const [stateName, setStateName ] = useState('')
     const [stateId, setStateId] = useState('')
     const [boxInfo, setBoxInfo] = useState(null)
-    // const [uniqState, setUniqState] = useState(null)
     const [pos, setPos] = useState({x: 0, y: 0})
 
     const addMouseover = React.useCallback((e) => {
+                // console.log(gameModeBtn.checked)
                 e.persist()
                 setPos( pos => ({...pos, x: e.clientX, y: e.clientY}))
                 const { x, y } = pos
@@ -43,18 +44,28 @@ const Public = () => {
         setGameModeBtn(document.getElementById("checkbox"))
     
     }, [usMap, stateName, stateId, boxInfo, addMouseover, gameModeBtn] );
+
+    const handleChange = () => {
+        setGameModeBtn(!gameModeBtn)
+    }
+
+    // <----- game logic ------>
+
     
 
     const content = (
         <section className="public">
-            <header>
-                <h1>Welcome to <span className="nowrap">Geo-Quiz!</span></h1>
+            <header className="dash-header">
+                <div className="dash-header__container">
+                    <h1>Welcome to <span className="nowrap">Geo-Quiz!</span></h1>
+                </div>
             </header>
-            <main className="public__main">
-                
-                <Toggle />
-
-                <div onMouseMove={addMouseover} >
+            <main className="public__main">  
+                <div className='game_display_container'>
+                    <Toggle handleChange={handleChange}/>
+                    {!gameModeBtn.checked && <ButtonRound />}
+                </div>
+                <div className='map' onMouseMove={addMouseover} >
                     <SvgUs />
                 </div>
                 { gameModeBtn.checked &&<div id="details-box"></div>}
