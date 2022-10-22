@@ -3,6 +3,8 @@ import SvgUs from './Us'
 import Toggle from './utilities/Toggle'
 import React, { useState, useEffect } from 'react'
 import ButtonRound from './utilities/ButtonRound'
+// import CountdownProgressbar from './utilities/CountdownProgressBar'
+import CircularAnimation from './utilities/CircularAnimation'
 
 const Public = () => {
     const [gameModeBtn, setGameModeBtn] = useState(false)
@@ -11,6 +13,7 @@ const Public = () => {
     const [stateId, setStateId] = useState('')
     const [boxInfo, setBoxInfo] = useState(null)
     const [pos, setPos] = useState({x: 0, y: 0})
+    const [animationOn, setAnimationOn] = useState(0)
 
     const addMouseover = React.useCallback((e) => {
                 // console.log(gameModeBtn.checked)
@@ -48,6 +51,9 @@ const Public = () => {
     const handleChange = () => {
         setGameModeBtn(!gameModeBtn)
     }
+    const handleClick = () => {
+        setAnimationOn(prev => prev + 1)
+    }
 
     // <----- game logic ------>
 
@@ -63,7 +69,11 @@ const Public = () => {
             <main className="public__main">  
                 <div className='game_display_container'>
                     <Toggle handleChange={handleChange}/>
-                    {!gameModeBtn.checked && <ButtonRound />}
+                    {!gameModeBtn.checked && <ButtonRound handleClick={handleClick}/> }
+                        <div style={{ width: "100px" }}>
+                            <CircularAnimation time={4} animationOn={animationOn}/>
+                        </div>
+                    
                 </div>
                 <div className='map' onMouseMove={addMouseover} >
                     <SvgUs />

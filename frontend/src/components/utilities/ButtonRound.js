@@ -1,13 +1,13 @@
 import React from "react";
 import './buttons.css'
 
-const ButtonRound = ({handleChange}) => {
+const ButtonRound = ({handleClick}) => {
     
     return (
         <button 
             id='upgrade'
-            class="round" 
-            onclick='upgrade("upgrade")'
+            className="round" 
+            onClick={handleClick}
             >
             START
         </button>
