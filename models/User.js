@@ -13,10 +13,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "User"
     }],
-    // active: {
-    //     type: Boolean,
-    //     default: true
-    // }
+ 
 })
 
 module.exports = mongoose.model('User', userSchema)

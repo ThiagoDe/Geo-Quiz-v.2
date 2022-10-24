@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom'
 import SvgUs from './Us'
 import Toggle from './utilities/Toggle'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import ButtonRound from './utilities/ButtonRound'
-// import CountdownProgressbar from './utilities/CountdownProgressBar'
 import CircularAnimation from './utilities/CircularAnimation'
+import { useAddNewTurnMutation } from '../features/turns/turnsApiSlice'
+
+
 
 const Public = () => {
     const [gameModeBtn, setGameModeBtn] = useState(false)
@@ -16,7 +18,6 @@ const Public = () => {
     const [animationOn, setAnimationOn] = useState(0)
 
     const addMouseover = React.useCallback((e) => {
-                // console.log(gameModeBtn.checked)
                 e.persist()
                 setPos( pos => ({...pos, x: e.clientX, y: e.clientY}))
                 const { x, y } = pos
@@ -56,22 +57,55 @@ const Public = () => {
     }
 
     // <----- game logic ------>
+    const [addNewTurn, {
+        isLoading,
+        isSuccess,
+        isError,
+        error
+    }] = useAddNewTurnMutation()
 
+    const [time, setTime] = useState(15)
+    const [score, setScore] = useState(0)
+    const [missed, setMissed] = useState(0)
+    const [userId, setUserId] = useState(1)
+    const [statesScored, setStatesScored] = useState([])
+    const [statesMissed, setStatesMissed] = useState([])
+    const [timer, setTimer] = useState(false)
+    const testRef = useRef(200)
     
+    // React.useEffect(() => {
+    //     window.addEventListener('change', (e) => {
+    //         console.log(timer)
+    //     })
+    // }, [timer])
+    useEffect(() => {
+        if (!time) {
+            testRef.current = document.getElementsByClassName('CircularProgressbar-text')[0].innerHTML
+        }
+    })
+    
+    useEffect(() => {
+        testRef.current = document.getElementsByClassName('CircularProgressbar-text')[0].innerHTML
+        // setTimer(document.getElementsByClassName('CircularProgressbar-text')[0].innerHTML)
+        // if (testRef.current === '0') console.log('00000')
+        // console.log(timer)
+        // console.log(testRef.current)
+        // console.log(testRef)
+    }, [time])
 
     const content = (
         <section className="public">
             <header className="dash-header">
                 <div className="dash-header__container">
-                    <h1>Welcome to <span className="nowrap">Geo-Quiz!</span></h1>
+                    <h1>Welcome to <span className="nowrap">Geo-Quiz! {testRef.current}</span></h1>
                 </div>
             </header>
             <main className="public__main">  
-                <div className='game_display_container'>
+                <div  className='game_display_container'>
                     <Toggle handleChange={handleChange}/>
                     {!gameModeBtn.checked && <ButtonRound handleClick={handleClick}/> }
-                        <div style={{ width: "100px" }}>
-                            <CircularAnimation time={4} animationOn={animationOn}/>
+                        <div  style={{ width: "100px" }}>
+                            <CircularAnimation time={7} animationOn={animationOn}/>
                         </div>
                     
                 </div>
