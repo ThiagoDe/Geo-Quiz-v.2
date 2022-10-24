@@ -1100,6 +1100,7 @@ table th {
 /* display and controls game */
 
 .game_display_container {
+  min-height: 100px;
   display: flex;
   justify-content: space-between;
 }

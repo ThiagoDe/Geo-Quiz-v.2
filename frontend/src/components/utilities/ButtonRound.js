@@ -1,7 +1,7 @@
 import React from "react";
 import './buttons.css'
 
-const ButtonRound = ({handleClick}) => {
+const ButtonRound = ({handleClick, text}) => {
     
     return (
         <button 
@@ -9,7 +9,7 @@ const ButtonRound = ({handleClick}) => {
             className="round" 
             onClick={handleClick}
             >
-            START
+            {text}
         </button>
     )
 }

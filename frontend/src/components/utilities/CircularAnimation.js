@@ -9,6 +9,9 @@ import {
 import "react-circular-progressbar/dist/styles.css";
 import {useEffect, useState, useRef, forwardRef, useImperativeHandle } from 'react'
 
+import { useDispatch } from 'react-redux'
+import { gameFinish, resetGame } from "../../features/turnGame/gameSlice";
+
 const ChangingProgressProvider = forwardRef((props, _ref) => {
     const {values, animationOn} = props
     
@@ -19,18 +22,15 @@ const ChangingProgressProvider = forwardRef((props, _ref) => {
     const [renderTimes, setRenderTimes] = useState(0)
     const [endGame, setEndGame] = useState(false)
 
-    const [stoper, setStoper] = useState('')
+    // const roundComplete = useSelector((state) => state.roundComplete.roundComplete)
+    const dispatch = useDispatch()
 
     useImperativeHandle(_ref, () => ({
         isEndGame: () => {
             return endGame
         }
     }))
-    useEffect(() => {
-        setStoper(document.getElementsByClassName('nowrap')[0].innerHTML)
-        console.log(stoper)
-    }, [stoper])
-
+    
     const startTimer = () => {
         timerId.current = setInterval(() => {
                 setValuesIndex(prev => prev + 1)
@@ -40,9 +40,10 @@ const ChangingProgressProvider = forwardRef((props, _ref) => {
     useEffect(() => {
         if (isRunning){
             setEndGame(false)
+            dispatch(resetGame())
             startTimer()
         } 
-    }, [isRunning])
+    }, [isRunning, dispatch])
 
     useEffect(() => {
         
@@ -54,13 +55,13 @@ const ChangingProgressProvider = forwardRef((props, _ref) => {
       
         if (valuesIndex >= values.length) {
             document.getElementsByClassName('nowrap')[0].innerHTML = 'stop'
+            dispatch(gameFinish())
+            
             stopTimer()
         }
-    }, [ valuesIndex, animationOn, renderTimes, isRunning,values, endGame])
+    }, [ valuesIndex, animationOn, renderTimes, isRunning,values, endGame, dispatch])
 
        
-
-
     const stopTimer = () => {
         setEndGame(true)
         
@@ -70,33 +71,12 @@ const ChangingProgressProvider = forwardRef((props, _ref) => {
         setIsRunning(false)
     }
 
-
     return ( props.children(Math.round(values[valuesIndex])) )
 })
 
 
 const CircularAnimation = ({time, animationOn}) => {
-    const testRef = useRef()
-    // const [end, setEnd] = useState()
-
-    // useEffect(() => {
-    //     if (!testRef.current.isEndGame()){
-    //         return
-    //     } else {
-    //         return 
-    //     }
-    // }, [])
-   
-    // useEffect(() => {
-    //     console.log(testRef.current.isEndGame())
-    //     if (!testRef.current.isEndGame()){
-    //         console.log(testRef.current.isEndGame())
-    //     } else {
-    //         console.log(testRef.current.isEndGame())
-
-    //     }
-
-    // }, []
+    
     
     const secondsToPercentages = _.range(time, -1, -1).map(
     seconds => (seconds / time) * 100
@@ -110,7 +90,7 @@ const CircularAnimation = ({time, animationOn}) => {
     return (
         <div>
             
-            <ChangingProgressProvider ref={testRef} values={secondsToPercentages} animationOn={animationOn}>
+            <ChangingProgressProvider values={secondsToPercentages} animationOn={animationOn}>
                 {percentage => (
                     <div id='timer__round'>
                         <CircularProgressbar 

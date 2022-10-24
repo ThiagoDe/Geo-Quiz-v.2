@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import ButtonRound from './utilities/ButtonRound'
 import CircularAnimation from './utilities/CircularAnimation'
 import { useAddNewTurnMutation } from '../features/turns/turnsApiSlice'
-
+import { useSelector, useDispatch } from 'react-redux'
 
 
 const Public = () => {
@@ -16,6 +16,8 @@ const Public = () => {
     const [boxInfo, setBoxInfo] = useState(null)
     const [pos, setPos] = useState({x: 0, y: 0})
     const [animationOn, setAnimationOn] = useState(0)
+
+    const roundComplete = useSelector((state) => state.roundComplete.roundComplete) 
 
     const addMouseover = React.useCallback((e) => {
                 e.persist()
@@ -52,8 +54,11 @@ const Public = () => {
     const handleChange = () => {
         setGameModeBtn(!gameModeBtn)
     }
+    const [firstRound, setFirstRound] = useState(true)
+
     const handleClick = () => {
         setAnimationOn(prev => prev + 1)
+        setFirstRound(false)
     }
 
     // <----- game logic ------>
@@ -71,43 +76,33 @@ const Public = () => {
     const [statesScored, setStatesScored] = useState([])
     const [statesMissed, setStatesMissed] = useState([])
     const [timer, setTimer] = useState(false)
-    const testRef = useRef(200)
-    
-    // React.useEffect(() => {
-    //     window.addEventListener('change', (e) => {
-    //         console.log(timer)
-    //     })
-    // }, [timer])
-    useEffect(() => {
-        if (!time) {
-            testRef.current = document.getElementsByClassName('CircularProgressbar-text')[0].innerHTML
-        }
-    })
+
     
     useEffect(() => {
-        testRef.current = document.getElementsByClassName('CircularProgressbar-text')[0].innerHTML
-        // setTimer(document.getElementsByClassName('CircularProgressbar-text')[0].innerHTML)
-        // if (testRef.current === '0') console.log('00000')
-        // console.log(timer)
-        // console.log(testRef.current)
-        // console.log(testRef)
-    }, [time])
+        console.log(roundComplete, 'from public')
+    }, [])
 
     const content = (
         <section className="public">
             <header className="dash-header">
                 <div className="dash-header__container">
-                    <h1>Welcome to <span className="nowrap">Geo-Quiz! {testRef.current}</span></h1>
+                    <h1>Welcome to <span className="nowrap">Geo-Quiz! </span></h1>
                 </div>
             </header>
             <main className="public__main">  
                 <div  className='game_display_container'>
                     <Toggle handleChange={handleChange}/>
-                    {!gameModeBtn.checked && <ButtonRound handleClick={handleClick}/> }
-                        <div  style={{ width: "100px" }}>
-                            <CircularAnimation time={7} animationOn={animationOn}/>
-                        </div>
-                    
+                    {!gameModeBtn.checked && 
+                        <> 
+                            { (roundComplete || firstRound ) ?
+                            <ButtonRound handleClick={handleClick} text='START'/> :
+                               <ButtonRound handleClick={handleClick} text='NEXT'/> } 
+
+                            <div  style={{ width: "100px" }}>
+                                <CircularAnimation time={4} animationOn={animationOn}/>
+                            </div>
+                        </>
+                    }
                 </div>
                 <div className='map' onMouseMove={addMouseover} >
                     <SvgUs />
