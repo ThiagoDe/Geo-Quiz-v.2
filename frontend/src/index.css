@@ -1112,6 +1112,7 @@ table th {
 /* display and controls game */
 
 .game_display_container {
+  padding: 20px;
   min-height: 100px;
   max-height: 100px !important;
   display: flex;

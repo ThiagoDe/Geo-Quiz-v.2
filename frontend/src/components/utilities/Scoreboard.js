@@ -16,7 +16,7 @@ const Scoreboard = ({score, missed}) => {
             </div>
             <div className="row-score">
                 <div className="row-counter">
-                    {<text>{score}</text>}
+                    {<p>{score}</p>}
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@ const Scoreboard = ({score, missed}) => {
             </div>
             <div className="row-score">
                 <div className="row-counter">
-                    {<text>{missed}</text>}
+                    {<p>{missed}</p>}
                 </div>
             </div>
         </div>
