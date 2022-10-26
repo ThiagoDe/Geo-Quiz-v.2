@@ -1,4 +1,7 @@
+.scoreboard_container {
+    visibility: visible;
 
+}
 .scoreboard {
     background: #333;
     width: 250px;

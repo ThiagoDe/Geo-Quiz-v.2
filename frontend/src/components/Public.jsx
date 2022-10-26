@@ -139,9 +139,13 @@ const Public = () => {
                 </div>
 
                 <div className='main_map_score'>
-                    <div>
-                        <Scoreboard score={score} missed={missed}/>
-                    </div>
+                    
+                        <div className='scoreboard_container' style={!gameModeBtn.checked ? 
+                            {visibility: 'visible'} : {visibility: 'hidden'}} >
+                            <Scoreboard score={score} missed={missed}/>
+                        </div>
+                        
+                    
 
                     <div className='map' onMouseMove={addMouseover} >
                         <SvgUs />

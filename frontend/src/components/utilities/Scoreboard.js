@@ -1,11 +1,6 @@
 import React from "react";
 import './scoreboard.css'
 
-const defaultStore = {
-    title: 'Scoreboard', 
-    score: 6,
-    missing: 7 
-}
 
 const Scoreboard = ({score, missed}) => {
 

@@ -1,7 +1,7 @@
 import * as React from "react";
 const SvgUs = (props) => (
   <svg
-    viewBox="0 0 1000 589"
+    viewBox="60 0 1000 589"
     xmlns="http://www.w3.org/2000/svg"
     height={589}
     style={{
