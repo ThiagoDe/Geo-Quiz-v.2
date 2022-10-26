@@ -19,6 +19,9 @@ const Public = () => {
 
     const roundComplete = useSelector((state) => state.roundComplete.roundComplete) 
 
+    const [firstRound, setFirstRound] = useState(true)
+
+
     const addMouseover = React.useCallback((e) => {
                 e.persist()
                 setPos( pos => ({...pos, x: e.clientX, y: e.clientY}))
@@ -52,9 +55,9 @@ const Public = () => {
     }, [usMap, stateName, stateId, boxInfo, addMouseover, gameModeBtn] );
 
     const handleChange = () => {
+        setFirstRound(true)
         setGameModeBtn(!gameModeBtn)
     }
-    const [firstRound, setFirstRound] = useState(true)
 
     const handleClick = () => {
         setAnimationOn(prev => prev + 1)
@@ -85,8 +88,12 @@ const Public = () => {
     const content = (
         <section className="public">
             <header className="dash-header">
+                    <div>  </div>
                 <div className="dash-header__container">
                     <h1>Welcome to <span className="nowrap">Geo-Quiz! </span></h1>
+                </div>
+                <div className='login_container'>
+                    <Link to="/login">Login</Link>
                 </div>
             </header>
             <main className="public__main">  

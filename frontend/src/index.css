@@ -34,6 +34,7 @@
 }
 
 .nowrap {
+
   white-space: nowrap;
   
 }
@@ -76,8 +77,8 @@ header {
   /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: inherit;
+  /* justify-content: center; */
   font-size: calc(10px + 2vmin);
   color: rgb(12, 12, 12);
 }
@@ -141,6 +142,11 @@ a:focus-visible {
   padding: 1em 0;
 }
 
+.login_container {
+  display:flex;
+  justify-self: right;
+}
+
 .public__addr {
   margin-top: 1em;
 }
@@ -150,8 +156,13 @@ a:focus-visible {
 }
 
 /* || DASH HEADER, CONTAINER & FOOTER */
+header {
 
+}
 .dash-header {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
   position: sticky;
   top: 0;
   z-index: 1;
