@@ -6,6 +6,7 @@ import ButtonRound from './utilities/ButtonRound'
 import CircularAnimation from './utilities/CircularAnimation'
 import { useAddNewTurnMutation } from '../features/turns/turnsApiSlice'
 import { useSelector, useDispatch } from 'react-redux'
+import Scoreboard from './utilities/Scoreboard'
 
 
 const Public = () => {
@@ -62,6 +63,7 @@ const Public = () => {
     const handleClick = () => {
         setAnimationOn(prev => prev + 1)
         setFirstRound(false)
+        nextQuestionQueue() 
     }
 
     // <----- game logic ------>
@@ -72,18 +74,33 @@ const Public = () => {
         error
     }] = useAddNewTurnMutation()
 
-    const [time, setTime] = useState(15)
+    const [time, setTime] = useState(5)
     const [score, setScore] = useState(0)
     const [missed, setMissed] = useState(0)
-    const [userId, setUserId] = useState(1)
+    const [userId, setUserId] = useState(0)
     const [statesScored, setStatesScored] = useState([])
     const [statesMissed, setStatesMissed] = useState([])
     const [timer, setTimer] = useState(false)
-
+    const previousQuestions = []
+    const [currentQuestion, setCurrentQuestion] = useState('')
     
+    const nextQuestionQueue = () => {
+        if (usMap) {
+            let i = Math.floor(Math.random() * ((usMap.length - 1) - 2 + 1) + 2)
+            let state = usMap[i].dataset.name
+            if (!previousQuestions.includes(state)){
+                previousQuestions.push(state)
+                setCurrentQuestion(state)
+            } else {
+                nextQuestionQueue()
+            }
+        }
+    }
+
     useEffect(() => {
-        console.log(roundComplete, 'from public')
+        // nextQuestionQueue() 
     }, [])
+
 
     const content = (
         <section className="public">
@@ -92,10 +109,12 @@ const Public = () => {
                 <div className="dash-header__container">
                     <h1>Welcome to <span className="nowrap">Geo-Quiz! </span></h1>
                 </div>
+                {/* {roundComplete && <h2>finshed</h2>} */}
                 <div className='login_container'>
                     <Link to="/login">Login</Link>
                 </div>
             </header>
+
             <main className="public__main">  
                 <div  className='game_display_container'>
                     <Toggle handleChange={handleChange}/>
@@ -103,18 +122,33 @@ const Public = () => {
                         <> 
                             { (roundComplete || firstRound ) ?
                             <ButtonRound handleClick={handleClick} text='START'/> :
-                               <ButtonRound handleClick={handleClick} text='NEXT'/> } 
+                            <div className='round__center'>
+                               <ButtonRound handleClick={handleClick} text='NEXT'/> 
+                               <br/>
+                               <br/>
+                               
+                               <h3>Where is {currentQuestion}?</h3>
+                            </div>
+                               } 
 
                             <div  style={{ width: "100px" }}>
-                                <CircularAnimation time={4} animationOn={animationOn}/>
+                                <CircularAnimation time={time} animationOn={animationOn}/>
                             </div>
                         </>
                     }
                 </div>
-                <div className='map' onMouseMove={addMouseover} >
-                    <SvgUs />
+
+                <div className='main_map_score'>
+                    <div>
+                        <Scoreboard score={score} missed={missed}/>
+                    </div>
+
+                    <div className='map' onMouseMove={addMouseover} >
+                        <SvgUs />
+                    </div>
+                    <p></p>
                 </div>
-                { gameModeBtn.checked &&<div id="details-box"></div>}
+                    { gameModeBtn.checked && <div id="details-box"></div>}
             </main>
             <footer>
                 <Link to="/login">Login</Link>

@@ -54,7 +54,7 @@ const ChangingProgressProvider = forwardRef((props, _ref) => {
         if (endGame) return 
       
         if (valuesIndex >= values.length) {
-            document.getElementsByClassName('nowrap')[0].innerHTML = 'stop'
+            // document.getElementsByClassName('nowrap')[0].innerHTML = 'stop'
             dispatch(gameFinish())
             
             stopTimer()
@@ -98,6 +98,7 @@ const CircularAnimation = ({time, animationOn}) => {
                             value={percentage} 
                             text={percentageToSeconds(percentage)} 
                             styles={buildStyles({
+                                textSize: '50px',
                                 textColor: "#4D5259",
                                 pathColor: "#4D5259",
                                 trailColor: "ightgray"

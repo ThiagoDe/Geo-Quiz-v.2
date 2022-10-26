@@ -14,7 +14,6 @@
     border-radius: 100px;
     outline: 0;
     transition: ease all .1s;
-    /* flex-grow: 1 */
     height: 42px;
 }
 
@@ -25,4 +24,8 @@
 
 .round:hover {
     background: #d3d3d3;
+}
+
+.round__center {
+    text-align: center;
 }
