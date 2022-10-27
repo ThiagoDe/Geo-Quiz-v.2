@@ -4,12 +4,12 @@ import Public from './components/Public'
 import Login from './features/auth/Login';
 import DashLayout from './components/DashLayout'
 import Welcome from './features/auth/Welcome'
-import TurnsList from './features/turns/TurnsList'
+import RoundsList from './features/rounds/roundsList'
 import UsersList from './features/users/UsersList'
 import EditUser from './features/users/EditUser'
 import NewUserForm from './features/users/NewUserForm'
-import EditTurn from './features/turns/EditTurn'
-import NewTurn from './features/turns/NewTurn'
+import EditRound from './features/rounds/EditRound'
+import NewRound from './features/rounds/NewRound'
 import Prefetch from './features/auth/Prefetch'
 
 function App() {
@@ -30,10 +30,10 @@ function App() {
               <Route path="new" element={<NewUserForm/>}/>
             </Route>
 
-            <Route path="turns">
-              <Route index element={<TurnsList />} />
-              <Route path=":id" element={<EditTurn/>}/>
-              <Route path="new" element={<NewTurn/>}/>
+            <Route path="rounds">
+              <Route index element={<RoundsList />} />
+              <Route path=":id" element={<EditRound/>}/>
+              <Route path="new" element={<NewRound/>}/>
             </Route>
 
 

@@ -1,14 +1,14 @@
-import { useGetTurnsQuery } from "./turnsApiSlice"
-import Turn from "./Turn"
+import { useGetRoundsQuery } from "./roundsApiSlice"
+import Round from "./Round"
 
-const TurnsList = () => {
+const RoundsList = () => {
     const {
-        data: turns,
+        data: rounds,
         isLoading,
         isSuccess,
         isError,
         error
-    } = useGetTurnsQuery(undefined, {
+    } = useGetRoundsQuery(undefined, {
         pollingInterval: 30000,
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true
@@ -23,11 +23,11 @@ const TurnsList = () => {
     }
 
     if (isSuccess) {
-        const { ids } = turns
-        console.log(turns, 'turns from TurnsList.js')
+        const { ids } = rounds
+        console.log(rounds, 'rounds from RoundsList.js')
 
         const tableContent = ids?.length
-            ? ids.map(turnId => <Turn key={turnId} turnId={turnId} />)
+            ? ids.map(roundId => <Round key={roundId} roundId={roundId} />)
             : null
 
         content = (
@@ -53,4 +53,4 @@ const TurnsList = () => {
 
     return content
 }
-export default TurnsList
+export default RoundsList

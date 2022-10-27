@@ -4,7 +4,7 @@ import Toggle from './utilities/Toggle'
 import React, { useState, useEffect, useRef } from 'react'
 import ButtonRound from './utilities/ButtonRound'
 import CircularAnimation from './utilities/CircularAnimation'
-import { useAddNewTurnMutation } from '../features/turns/turnsApiSlice'
+import { useAddNewRoundMutation } from '../features/rounds/roundsApiSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import Scoreboard from './utilities/Scoreboard'
 
@@ -71,12 +71,12 @@ const Public = () => {
     }
 
     // <----- game logic ------>
-    const [addNewTurn, {
+    const [addNewRound, {
         isLoading,
         isSuccess,
         isError,
         error
-    }] = useAddNewTurnMutation()
+    }] = useAddNewRoundMutation()
 
     const time = 5
     const [score, setScore] = useState(0)

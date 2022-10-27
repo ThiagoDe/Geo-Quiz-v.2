@@ -1,30 +1,30 @@
 import { useState, useEffect } from "react"
-import { useUpdateTurnMutation, useDeleteTurnMutation } from "./turnsApiSlice"
+import { useUpdateRoundMutation, useDeleteRoundMutation } from "./roundsApiSlice"
 import { useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons"
 
-const EditTurnForm = ({ turn, users }) => {
+const EditRoundForm = ({ round, users }) => {
 
-    const [updateTurn, {
+    const [updateRound, {
         isLoading,
         isSuccess,
         isError,
         error
-    }] = useUpdateTurnMutation()
+    }] = useUpdateRoundMutation()
 
-    const [deleteTurn, {
+    const [deleteRound, {
         isSuccess: isDelSuccess,
         isError: isDelError,
         error: delerror
-    }] = useDeleteTurnMutation()
+    }] = useDeleteRoundMutation()
 
     const navigate = useNavigate()
 
-    const [title, setTitle] = useState(turn.title)
-    const [text, setText] = useState(turn.text)
-    const [completed, setCompleted] = useState(turn.completed)
-    const [userId, setUserId] = useState(turn.user)
+    const [title, setTitle] = useState(round.title)
+    const [text, setText] = useState(round.text)
+    const [completed, setCompleted] = useState(round.completed)
+    const [userId, setUserId] = useState(round.user)
 
     useEffect(() => {
 
@@ -32,7 +32,7 @@ const EditTurnForm = ({ turn, users }) => {
             setTitle('')
             setText('')
             setUserId('')
-            navigate('/dash/turns')
+            navigate('/dash/rounds')
         }
 
     }, [isSuccess, isDelSuccess, navigate])
@@ -44,18 +44,18 @@ const EditTurnForm = ({ turn, users }) => {
 
     const canSave = [title, text, userId].every(Boolean) && !isLoading
 
-    const onSaveTurnClicked = async (e) => {
+    const onSaveRoundClicked = async (e) => {
         if (canSave) {
-            await updateTurn({ id: turn.id, user: userId, title, text, completed })
+            await updateRound({ id: round.id, user: userId, title, text, completed })
         }
     }
 
-    const onDeleteTurnClicked = async () => {
-        await deleteTurn({ id: turn.id })
+    const onDeleteRoundClicked = async () => {
+        await deleteRound({ id: round.id })
     }
 
-    const created = new Date(turn.createdAt).toLocaleString('en-US', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
-    const updated = new Date(turn.updatedAt).toLocaleString('en-US', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
+    const created = new Date(round.createdAt).toLocaleString('en-US', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
+    const updated = new Date(round.updatedAt).toLocaleString('en-US', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
 
     const options = users.map(user => {
         return (
@@ -79,12 +79,12 @@ const EditTurnForm = ({ turn, users }) => {
 
             <form className="form" onSubmit={e => e.preventDefault()}>
                 <div className="form__title-row">
-                    <h2>Edit Turn #{turn.ticket}</h2>
+                    <h2>Edit Round #{round.ticket}</h2>
                     <div className="form__action-buttons">
                         <button
                             className="icon-button"
                             title="Save"
-                            onClick={onSaveTurnClicked}
+                            onClick={onSaveRoundClicked}
                             disabled={!canSave}
                         >
                             <FontAwesomeIcon icon={faSave} />
@@ -92,17 +92,17 @@ const EditTurnForm = ({ turn, users }) => {
                         <button
                             className="icon-button"
                             title="Delete"
-                            onClick={onDeleteTurnClicked}
+                            onClick={onDeleteRoundClicked}
                         >
                             <FontAwesomeIcon icon={faTrashCan} />
                         </button>
                     </div>
                 </div>
-                <label className="form__label" htmlFor="turn-title">
+                <label className="form__label" htmlFor="round-title">
                     Title:</label>
                 <input
                     className={`form__input ${validTitleClass}`}
-                    id="turn-title"
+                    id="round-title"
                     name="title"
                     type="text"
                     autoComplete="off"
@@ -110,22 +110,22 @@ const EditTurnForm = ({ turn, users }) => {
                     onChange={onTitleChanged}
                 />
 
-                <label className="form__label" htmlFor="turn-text">
+                <label className="form__label" htmlFor="round-text">
                     Text:</label>
                 <textarea
                     className={`form__input form__input--text ${validTextClass}`}
-                    id="turn-text"
+                    id="round-text"
                     name="text"
                     value={text}
                     onChange={onTextChanged}
                 />
                 <div className="form__row">
                     <div className="form__divider">
-                        <label className="form__label form__checkbox-container" htmlFor="turn-completed">
+                        <label className="form__label form__checkbox-container" htmlFor="round-completed">
                             WORK COMPLETE:
                             <input
                                 className="form__checkbox"
-                                id="turn-completed"
+                                id="round-completed"
                                 name="completed"
                                 type="checkbox"
                                 checked={completed}
@@ -133,10 +133,10 @@ const EditTurnForm = ({ turn, users }) => {
                             />
                         </label>
 
-                        <label className="form__label form__checkbox-container" htmlFor="turn-username">
+                        <label className="form__label form__checkbox-container" htmlFor="round-username">
                             ASSIGNED TO:</label>
                         <select
-                            id="turn-username"
+                            id="round-username"
                             name="username"
                             className="form__select"
                             value={userId}
@@ -157,4 +157,4 @@ const EditTurnForm = ({ turn, users }) => {
     return content
 }
 
-export default EditTurnForm
+export default EditRoundForm

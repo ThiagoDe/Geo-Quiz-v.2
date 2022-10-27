@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit"
 import { apiSlice } from './api/apiSlice'
 import { setupListeners } from "@reduxjs/toolkit/query"
 
-import roundCompleteReducer from '../features/turnGame/gameSlice'
+import roundCompleteReducer from '../features/roundGame/gameSlice'
 
 export const store = configureStore({
     reducer: {

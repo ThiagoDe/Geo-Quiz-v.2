@@ -10,7 +10,7 @@ import "react-circular-progressbar/dist/styles.css";
 import {useEffect, useState, useRef, forwardRef, useImperativeHandle } from 'react'
 
 import { useDispatch } from 'react-redux'
-import { gameFinish, resetGame } from "../../features/turnGame/gameSlice";
+import { gameFinish, resetGame } from "../../features/roundGame/gameSlice";
 
 const ChangingProgressProvider = forwardRef((props, _ref) => {
     const {values, animationOn} = props
