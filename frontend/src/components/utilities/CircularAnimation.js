@@ -54,9 +54,7 @@ const ChangingProgressProvider = forwardRef((props, _ref) => {
         if (endGame) return 
       
         if (valuesIndex >= values.length) {
-            // document.getElementsByClassName('nowrap')[0].innerHTML = 'stop'
-            dispatch(gameFinish())
-            
+            dispatch(gameFinish()) // Global state end game
             stopTimer()
         }
     }, [ valuesIndex, animationOn, renderTimes, isRunning,values, endGame, dispatch])

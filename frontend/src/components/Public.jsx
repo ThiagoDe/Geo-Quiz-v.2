@@ -45,21 +45,23 @@ const Public = () => {
                 }
             }, [boxInfo, pos, stateId, stateName, gameModeBtn])
     
-
+      
+            
     useEffect (() => {
         setUsMap(document.getElementsByTagName('path'))
         if (gameModeBtn.checked) {
             setBoxInfo(document.getElementById('details-box'))
         }
         setGameModeBtn(document.getElementById("checkbox"))
-    
+        
     }, [usMap, stateName, stateId, boxInfo, addMouseover, gameModeBtn] );
 
+       //Toggle  
     const handleChange = () => {
         setFirstRound(true)
         setGameModeBtn(!gameModeBtn)
     }
-
+        //Start animation
     const handleClick = () => {
         setAnimationOn(prev => prev + 1)
         setFirstRound(false)
@@ -78,28 +80,53 @@ const Public = () => {
     const [score, setScore] = useState(0)
     const [missed, setMissed] = useState(0)
     const [userId, setUserId] = useState(0)
-    const [statesScored, setStatesScored] = useState([])
-    const [statesMissed, setStatesMissed] = useState([])
+    const statesScored = []
+    const statesMissed = []
     const [timer, setTimer] = useState(false)
-    const previousQuestions = []
+    const [previousQuestions, setPreviousQuestions] = useState(['California'])
     const [currentQuestion, setCurrentQuestion] = useState('')
     
     const nextQuestionQueue = () => {
         if (usMap) {
             let i = Math.floor(Math.random() * ((usMap.length - 1) - 2 + 1) + 2)
             let state = usMap[i].dataset.name
+            console.log(previousQuestions)
             if (!previousQuestions.includes(state)){
-                previousQuestions.push(state)
+                setPreviousQuestions(previousQuestions.push(state))
+                console.log(previousQuestions)
                 setCurrentQuestion(state)
             } else {
                 nextQuestionQueue()
             }
         }
     }
+    const onClickMap =  React.useCallback((e) => { 
+        if (usMap){
+            let clickedState = e.target.dataset.name 
+            // let stateI = e.target.dataset.id
+            // console.log(clickedState)
+            // console.log(stateI)
+            // console.log(previousQuestions, 'prev on click')
+            if (clickedState === previousQuestions[previousQuestions.length - 1]){
+                statesScored.push(clickedState)
+                e.target.style.fill = 'rgb(0, 131, 28)'
+                setScore(score + 1)
+                nextQuestionQueue()
+            } else {
+                setMissed(missed + 1)
+                statesMissed.push(clickedState)
+                e.target.style.fill = 'rgb(161, 0, 0)'
+            }
+            
+        }
+
+    }, [usMap, previousQuestions, score, statesScored])
+
+
 
     useEffect(() => {
-        // nextQuestionQueue() 
-    }, [])
+        // if (usMap) console.log(usMap[52]) 
+    }, [usMap])
 
 
     const content = (
@@ -109,7 +136,6 @@ const Public = () => {
                 <div className="dash-header__container">
                     <h1>Welcome to <span className="nowrap">Geo-Quiz! </span></h1>
                 </div>
-                {/* {roundComplete && <h2>finshed</h2>} */}
                 <div className='login_container'>
                     <Link to="/login">Login</Link>
                 </div>
@@ -121,9 +147,9 @@ const Public = () => {
                     {!gameModeBtn.checked && 
                         <> 
                             { (roundComplete || firstRound ) ?
-                            <ButtonRound handleClick={handleClick} text='START'/> :
+                                <ButtonRound handleClick={handleClick} text='START'/> :
                             <div className='round__center'>
-                               <ButtonRound handleClick={handleClick} text='NEXT'/> 
+                               <ButtonRound handleClick={nextQuestionQueue} text='NEXT'/> 
                                <br/>
                                <br/>
                                
@@ -132,7 +158,7 @@ const Public = () => {
                                } 
 
                             <div  style={{ width: "100px" }}>
-                                <CircularAnimation time={time} animationOn={animationOn}/>
+                                <CircularAnimation time={time} animationOn={animationOn} />
                             </div>
                         </>
                     }
@@ -147,7 +173,7 @@ const Public = () => {
                         
                     
 
-                    <div className='map' onMouseMove={addMouseover} >
+                    <div className='map' onMouseMove={addMouseover} onClick={onClickMap}>
                         <SvgUs />
                     </div>
                     <p></p>
