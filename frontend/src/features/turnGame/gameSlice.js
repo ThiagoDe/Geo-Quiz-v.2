@@ -1,13 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-    roundComplete: false
+    roundComplete: false,
+    gameOn: false
 }
 
 const roundCompleteSlice = createSlice({
     name: 'rounder',
     initialState,
     reducers: {
+        startGame: (state) => {
+            state.gameOn = true
+        },
         gameFinish: (state) => {
             state.roundComplete = true 
         },

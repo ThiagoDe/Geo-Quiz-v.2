@@ -20,7 +20,8 @@ const Public = () => {
 
     const roundComplete = useSelector((state) => state.roundComplete.roundComplete) 
 
-    const [firstRound, setFirstRound] = useState(true)
+    // const [firstRound, setFirstRound] = useState(true)
+    const [gameOn, setGameOn] = useState(false)
 
 
     const addMouseover = React.useCallback((e) => {
@@ -58,13 +59,14 @@ const Public = () => {
 
        //Toggle  
     const handleChange = () => {
-        setFirstRound(true)
+        setGameOn(false)
         setGameModeBtn(!gameModeBtn)
     }
         //Start animation
     const handleClick = () => {
-        setAnimationOn(prev => prev + 1)
-        setFirstRound(false)
+        if (!gameOn)setAnimationOn(prev => prev + 1)
+        setGameOn(true)
+        // setFirstRound(false)
         nextQuestionQueue() 
     }
 
@@ -76,17 +78,16 @@ const Public = () => {
         error
     }] = useAddNewTurnMutation()
 
-    const [time, setTime] = useState(5)
+    const time = 5
     const [score, setScore] = useState(0)
     const [missed, setMissed] = useState(0)
     const [userId, setUserId] = useState(0)
-    const statesScored = []
-    const statesMissed = []
-    const [timer, setTimer] = useState(false)
+    const [statesScored, setStatesScored] =  useState([])
+    const [statesMissed, setStatesMissed] =  useState([])
     const [previousQuestions, setPreviousQuestions] = useState(['California'])
     const [currentQuestion, setCurrentQuestion] = useState('')
     
-    const nextQuestionQueue = () => {
+    const nextQuestionQueue = React.useCallback((e) => {
         if (usMap) {
             let i = Math.floor(Math.random() * ((usMap.length - 1) - 2 + 1) + 2)
             let state = usMap[i].dataset.name
@@ -99,11 +100,11 @@ const Public = () => {
                 nextQuestionQueue()
             }
         }
-    }
+    }, [previousQuestions, usMap])
+
     const onClickMap =  React.useCallback((e) => { 
         if (usMap){
             let clickedState = e.target.dataset.name 
-            // let stateI = e.target.dataset.id
             // console.log(clickedState)
             // console.log(stateI)
             // console.log(previousQuestions, 'prev on click')
@@ -120,7 +121,7 @@ const Public = () => {
             
         }
 
-    }, [usMap, previousQuestions, score, statesScored])
+    }, [usMap, previousQuestions, score, statesScored, missed, nextQuestionQueue, statesMissed])
 
 
 
@@ -146,7 +147,7 @@ const Public = () => {
                     <Toggle handleChange={handleChange}/>
                     {!gameModeBtn.checked && 
                         <> 
-                            { (roundComplete || firstRound ) ?
+                            { (!roundComplete ) ?
                                 <ButtonRound handleClick={handleClick} text='START'/> :
                             <div className='round__center'>
                                <ButtonRound handleClick={nextQuestionQueue} text='NEXT'/> 
