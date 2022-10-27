@@ -13,14 +13,18 @@ const roundCompleteSlice = createSlice({
             state.gameOn = true
         },
         gameFinish: (state) => {
+            state.gameOn = false  
+        },
+        roundFinish: (state) => {
             state.roundComplete = true 
         },
         resetGame: (state) => {
             state.roundComplete = false 
+            // state.gameOn = false 
         }
     }
 })
 
-export const { gameFinish, resetGame } = roundCompleteSlice.actions
+export const { gameFinish, resetGame, startGame, roundFinish } = roundCompleteSlice.actions
 
 export default roundCompleteSlice.reducer

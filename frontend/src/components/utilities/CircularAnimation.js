@@ -9,28 +9,23 @@ import {
 import "react-circular-progressbar/dist/styles.css";
 import {useEffect, useState, useRef, forwardRef, useImperativeHandle } from 'react'
 
-import { useDispatch } from 'react-redux'
-import { gameFinish, resetGame } from "../../features/roundGame/gameSlice";
+import { useSelector, useDispatch } from 'react-redux'
+import { gameFinish, resetGame , roundFinish} from "../../features/roundGame/gameSlice";
 
 const ChangingProgressProvider = forwardRef((props, _ref) => {
-    const {values, animationOn} = props
+    const {values} = props
     
     const [valuesIndex, setValuesIndex] = useState(0)
     const [isRunning, setIsRunning] = useState(false)
     const timerId = useRef(0)
 
-    const [renderTimes, setRenderTimes] = useState(0)
-    const [endGame, setEndGame] = useState(false)
+    // const [endGame, setEndGame] = useState(false)
 
     // const roundComplete = useSelector((state) => state.roundComplete.roundComplete)
+    const gameOn = useSelector((state) => state.roundComplete.gameOn) 
+    const roundComplete = useSelector((state) => state.roundComplete.roundComplete) 
     const dispatch = useDispatch()
 
-    useImperativeHandle(_ref, () => ({
-        isEndGame: () => {
-            return endGame
-        }
-    }))
-    
     const startTimer = () => {
         timerId.current = setInterval(() => {
                 setValuesIndex(prev => prev + 1)
@@ -39,35 +34,37 @@ const ChangingProgressProvider = forwardRef((props, _ref) => {
 
     useEffect(() => {
         if (isRunning){
-            setEndGame(false)
-            dispatch(resetGame())
+            // setEndGame(false)
+            // dispatch(resetGame())
             startTimer()
         } 
     }, [isRunning, dispatch])
-
-    useEffect(() => {
-        
-        if (renderTimes < animationOn){
-            setIsRunning(true)
-            setRenderTimes(animationOn)
-        }
-        if (endGame) return 
-      
-        if (valuesIndex >= values.length) {
-            dispatch(gameFinish()) // Global state end game
-            stopTimer()
-        }
-    }, [ valuesIndex, animationOn, renderTimes, isRunning,values, endGame, dispatch])
-
-       
-    const stopTimer = () => {
-        setEndGame(true)
-        
+    
+    const stopTimer = React.useCallback((e)  => {
+        // setEndGame(true) 
         clearInterval(timerId.current)
+        dispatch(gameFinish())    
         timerId.current = 0
         setValuesIndex(0)
         setIsRunning(false)
-    }
+    }, [dispatch])
+
+    useEffect(() => { 
+        if (gameOn) {
+            // console.log(gameOn, 'from circurlar')
+            // console.log(roundComplete, 'round from circurlar')
+            setIsRunning(true)
+        }
+        // if (endGame) return 
+        
+        if (valuesIndex >= values.length) {
+            dispatch(roundFinish()) // Global state end game
+            stopTimer()
+            // dispatch(resetGame()) // reset Global f f
+        }
+    }, [ valuesIndex, values, dispatch, gameOn, roundComplete, stopTimer])
+
+       
 
     return ( props.children(Math.round(values[valuesIndex])) )
 })
@@ -94,7 +91,7 @@ const CircularAnimation = ({time, animationOn}) => {
                         <CircularProgressbar 
                             
                             value={percentage} 
-                            text={percentageToSeconds(percentage)} 
+                            text={percentage ? percentageToSeconds(percentage) : '0'} 
                             styles={buildStyles({
                                 textSize: '50px',
                                 textColor: "#4D5259",

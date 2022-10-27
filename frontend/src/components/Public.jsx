@@ -7,6 +7,7 @@ import CircularAnimation from './utilities/CircularAnimation'
 import { useAddNewRoundMutation } from '../features/rounds/roundsApiSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import Scoreboard from './utilities/Scoreboard'
+import { gameFinish, resetGame, startGame } from "../features/roundGame/gameSlice";
 
 
 const Public = () => {
@@ -16,13 +17,12 @@ const Public = () => {
     const [stateId, setStateId] = useState('')
     const [boxInfo, setBoxInfo] = useState(null)
     const [pos, setPos] = useState({x: 0, y: 0})
-    const [animationOn, setAnimationOn] = useState(0)
+    const dispatch = useDispatch()
 
-    const roundComplete = useSelector((state) => state.roundComplete.roundComplete) 
+    const roundComplete = useSelector((state) => state.roundComplete.roundComplete)
+    const gameOn = useSelector((state) => state.roundComplete.gameOn) 
 
     // const [firstRound, setFirstRound] = useState(true)
-    const [gameOn, setGameOn] = useState(false)
-
 
     const addMouseover = React.useCallback((e) => {
                 e.persist()
@@ -46,7 +46,6 @@ const Public = () => {
                 }
             }, [boxInfo, pos, stateId, stateName, gameModeBtn])
     
-      
             
     useEffect (() => {
         setUsMap(document.getElementsByTagName('path'))
@@ -59,14 +58,25 @@ const Public = () => {
 
        //Toggle  
     const handleChange = () => {
-        setGameOn(false)
         setGameModeBtn(!gameModeBtn)
     }
-        //Start animation
+
+    const resetDefaultGame = () => {
+        setScore(0)
+        setMissed(0)
+        setStatesScored([])
+        setStatesMissed([])
+        setPreviousQuestions([])
+        setCurrentQuestion('')
+    }
+
+    //Start animation
     const handleClick = () => {
-        if (!gameOn)setAnimationOn(prev => prev + 1)
-        setGameOn(true)
-        // setFirstRound(false)
+        // reset 
+        mapDefaultColors()
+        resetDefaultGame()
+        dispatch(resetGame())
+        dispatch(startGame()) // Global state true
         nextQuestionQueue() 
     }
 
@@ -84,50 +94,67 @@ const Public = () => {
     const [userId, setUserId] = useState(0)
     const [statesScored, setStatesScored] =  useState([])
     const [statesMissed, setStatesMissed] =  useState([])
-    const [previousQuestions, setPreviousQuestions] = useState(['California'])
+    const [previousQuestions, setPreviousQuestions] = useState([])
     const [currentQuestion, setCurrentQuestion] = useState('')
+
+
+    const mapWithOnlyGreens = React.useCallback((e) => {
+                for (let i = 0; i < statesMissed.length; i++) {
+                    let stateName = statesMissed[i]
+                    document.querySelector(`[data-name='${stateName}']`).style.fill = "rgb(79, 82, 82)"
+                }
+            }, [statesMissed])
+
+    const mapDefaultColors = React.useCallback((e) =>{
+        if (usMap) {
+            for (let i = 2; i < usMap.length; i++) {
+                document.getElementById(usMap[i].id).style.fill = "rgb(79, 82, 82)"
+            }
+        }
+    }, [usMap] )
     
     const nextQuestionQueue = React.useCallback((e) => {
         if (usMap) {
+            // Clean red map here left only green
+            mapWithOnlyGreens()
             let i = Math.floor(Math.random() * ((usMap.length - 1) - 2 + 1) + 2)
             let state = usMap[i].dataset.name
             console.log(previousQuestions)
             if (!previousQuestions.includes(state)){
-                setPreviousQuestions(previousQuestions.push(state))
+                setPreviousQuestions(previousQuestions => [...previousQuestions,state])
                 console.log(previousQuestions)
                 setCurrentQuestion(state)
             } else {
                 nextQuestionQueue()
             }
         }
-    }, [previousQuestions, usMap])
+    }, [previousQuestions, usMap, mapWithOnlyGreens])
 
     const onClickMap =  React.useCallback((e) => { 
-        if (usMap){
+        if (usMap && gameOn){
             let clickedState = e.target.dataset.name 
-            // console.log(clickedState)
-            // console.log(stateI)
-            // console.log(previousQuestions, 'prev on click')
             if (clickedState === previousQuestions[previousQuestions.length - 1]){
-                statesScored.push(clickedState)
+                setStatesScored(statesScored => [...statesScored,clickedState])
                 e.target.style.fill = 'rgb(0, 131, 28)'
                 setScore(score + 1)
                 nextQuestionQueue()
             } else {
+                setStatesMissed([...statesMissed,clickedState])
                 setMissed(missed + 1)
-                statesMissed.push(clickedState)
                 e.target.style.fill = 'rgb(161, 0, 0)'
             }
             
         }
 
-    }, [usMap, previousQuestions, score, statesScored, missed, nextQuestionQueue, statesMissed])
+    }, [usMap, previousQuestions, score, missed, nextQuestionQueue, gameOn, statesMissed])
 
 
 
-    useEffect(() => {
-        // if (usMap) console.log(usMap[52]) 
-    }, [usMap])
+    // useEffect(() => {
+    //     // if (usMap) console.log(usMap[52]) 
+    //     console.log(gameOn, 'game')
+    //     console.log(roundComplete, 'round')
+    // }, [usMap, gameOn, roundComplete])
 
 
     const content = (
@@ -147,7 +174,7 @@ const Public = () => {
                     <Toggle handleChange={handleChange}/>
                     {!gameModeBtn.checked && 
                         <> 
-                            { (!roundComplete ) ?
+                            { (!gameOn || roundComplete) ?
                                 <ButtonRound handleClick={handleClick} text='START'/> :
                             <div className='round__center'>
                                <ButtonRound handleClick={nextQuestionQueue} text='NEXT'/> 
@@ -159,7 +186,7 @@ const Public = () => {
                                } 
 
                             <div  style={{ width: "100px" }}>
-                                <CircularAnimation time={time} animationOn={animationOn} />
+                                <CircularAnimation time={time} />
                             </div>
                         </>
                     }
