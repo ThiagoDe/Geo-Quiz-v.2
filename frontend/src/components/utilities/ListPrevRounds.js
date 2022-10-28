@@ -1,39 +1,67 @@
 import React from "react";
 import './listPrevRounds.css'
-
+import { useGetRoundsQuery } from "../../features/rounds/roundsApiSlice";
+import { useEffect } from "react";
 
 const ListPrevRounds = ({score, missed}) => {
+    
+    const {
+        data: rounds,
+        isLoading,
+        isSuccess,
+        isError,
+        error
+    } = useGetRoundsQuery(undefined, {
+        pollingInterval: 30000,
+        refetchOnFocus: true,
+        refetchOnMountOrArgChange: true
+    })
 
+    let content
 
-    return (
-      <div className="listPrevRounds">
-        {/* <div className="header">
-            <p>LISTPREVROUNDS</p>
-        </div> */}
-        <div className="score_rows">
-            <div className="row-name" style={{color:'rgb(0, 131, 28)'}}>
-                <p>CORRECT</p>
-            </div>
-            <div className="row-score">
-                <div className="row-counter">
-                    {<p>{score}</p>}
+    if (isLoading) content = <p>Loading...</p>
+
+    if (isError) {
+        content = <p className="errmsg">{error?.data?.message}</p>
+    }
+
+    if (isSuccess) {
+        const { entities } = rounds
+        
+        if (entities){
+            const roundsIn = Object.values(entities)
+            roundsIn.map(e => console.log(e))
+            } 
+        
+        
+        content = (
+            <div className="listPrevRounds">
+            {/* <div className="header">
+                <p>LISTPREVROUNDS</p>
+            </div> */}
+            <div className="list_score_rows">
+                <div className="list_row-name" >
+                    <p>OCT 28</p>
+                </div>
+                <div className="list_row-score">
+                    <div className="list_row-counter" style={{color:'rgb(0, 131, 28)'}}>
+                        {<p>{3}</p>}
+                    </div>
+                </div>
+                <div className="list_row-score">
+                    <div className="list_row-counter" style={{color:'red'}}>
+                        {<p>{2}</p>}
+                    </div>
                 </div>
             </div>
+            
         </div>
-        <div className="score_rows">
-            <div className="row-name" style={{color:'red'}}>
-                <p>MISSED</p>
-            </div>
-            <div className="row-score">
-                <div className="row-counter">
-                    {<p>{missed}</p>}
-                </div>
-            </div>
-        </div>
-        {/* <AddPlayerForm onAdd={this.onPlayerAdd} /> */}
-      </div>
-    );
+        );
 
+        
+    }
+    return content
+    
 }
 
 export default ListPrevRounds

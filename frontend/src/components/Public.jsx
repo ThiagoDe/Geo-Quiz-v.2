@@ -8,7 +8,7 @@ import { useAddNewRoundMutation } from '../features/rounds/roundsApiSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import Scoreboard from './utilities/Scoreboard'
 import { gameFinish, resetGame, startGame } from "../features/roundGame/gameSlice";
-
+import ListPrevRounds from './utilities/ListPrevRounds'
 
 const Public = () => {
 
@@ -211,7 +211,9 @@ const Public = () => {
                     <div className='map' onMouseMove={addMouseover} onClick={onClickMap}>
                         <SvgUs />
                     </div>
-                    <p></p>
+                    <div>
+                        <ListPrevRounds/>
+                    </div>
                 </div>
                     { gameModeBtn.checked && <div id="details-box"></div>}
             </main>

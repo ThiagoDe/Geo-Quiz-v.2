@@ -47,7 +47,7 @@
 
 
 
-.score_rows {
+.list_score_rows {
     height: 40px;
     color: whitesmoke;
     display: flex;
@@ -65,23 +65,24 @@
 
 
 
-.row-name {
+.list_row-name {
     font-size: 18px;
     flex-grow: 1;
-    padding: 10px 10px 10px 10px;
+    /* padding: 10px 10px 10px 10px; */
+    padding-top: 10px;
     align-items: center;
     text-align: center;
     align-content: center;
 }
 
-.row-score {
+.list_row-score {
     padding: 5px;
     color: #FFFFFF;
     width: 50px;
     background: #4D5259;
 }
 
-.row-counter {
+.list_row-counter {
     display: block !important;
     flex-grow: 1;
     display: flex;
@@ -90,7 +91,7 @@
     align-content: center;
 }
 
-.counter-action {
+.list_counter-action {
     border: none;
     font-weight: bold;
     color: #fafafa;
@@ -121,7 +122,7 @@
     cursor: pointer;
 }
 
-.counter-score {
+.list_counter-score {
     flex-grow: 1;
     background: #2b2b2b;
     color: #fafafa;
