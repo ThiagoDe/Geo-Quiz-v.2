@@ -5,7 +5,7 @@ const DashHeader = () => {
     const content = (
         <header className="dash-header">
             <div className="dash-header__container">
-                <Link to="/dash">
+                <Link to="/">
                     <h1 className="dash-header__title">Geo-Quiz</h1>
                 </Link>
                 <nav className="dash-header__nav">

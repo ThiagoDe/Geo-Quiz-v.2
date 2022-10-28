@@ -48,6 +48,7 @@ const NewRoundForm = ({ users }) => {
     const onSaveRoundClicked = async (e) => {
         e.preventDefault()
         // if (canSave) {
+        
         await addNewRound({ user: userId, time, score, missed })
         // }
     }

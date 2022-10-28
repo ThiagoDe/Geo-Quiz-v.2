@@ -11,6 +11,14 @@ import { gameFinish, resetGame, startGame } from "../features/roundGame/gameSlic
 
 
 const Public = () => {
+
+    const [addNewRound, {
+        isLoading,
+        isSuccess,
+        isError,
+        error
+    }] = useAddNewRoundMutation()
+
     const [gameModeBtn, setGameModeBtn] = useState(false)
     const [usMap, setUsMap] = useState(null)
     const [stateName, setStateName ] = useState('')
@@ -59,6 +67,7 @@ const Public = () => {
        //Toggle  
     const handleChange = () => {
         setGameModeBtn(!gameModeBtn)
+        mapDefaultColors()
     }
 
     const resetDefaultGame = () => {
@@ -81,12 +90,6 @@ const Public = () => {
     }
 
     // <----- game logic ------>
-    const [addNewRound, {
-        isLoading,
-        isSuccess,
-        isError,
-        error
-    }] = useAddNewRoundMutation()
 
     const time = 5
     const [score, setScore] = useState(0)
@@ -148,13 +151,17 @@ const Public = () => {
 
     }, [usMap, previousQuestions, score, missed, nextQuestionQueue, gameOn, statesMissed])
 
+    useEffect(() => {
+        if (roundComplete) {
+           const saveOnDb = async() => {
+            await addNewRound({user: "6351a0f72447330ecbcafdd7",time, score, missed, statesScored, statesMissed })
+            }
+            saveOnDb()
+        }
+
+    }, [score, missed, statesScored, statesMissed, roundComplete, addNewRound])
 
 
-    // useEffect(() => {
-    //     // if (usMap) console.log(usMap[52]) 
-    //     console.log(gameOn, 'game')
-    //     console.log(roundComplete, 'round')
-    // }, [usMap, gameOn, roundComplete])
 
 
     const content = (
@@ -164,8 +171,8 @@ const Public = () => {
                 <div className="dash-header__container">
                     <h1>Welcome to <span className="nowrap">Geo-Quiz! </span></h1>
                 </div>
-                <div className='login_container'>
-                    <Link to="/login">Login</Link>
+                <div className='settings'>
+                    <Link to="/login">LOGIN</Link>
                 </div>
             </header>
 
@@ -208,8 +215,11 @@ const Public = () => {
                 </div>
                     { gameModeBtn.checked && <div id="details-box"></div>}
             </main>
+            <div className='under__map'></div>
             <footer>
-                <Link to="/login">Login</Link>
+                <div className='settings'>
+                    <Link to="/dash">Dash</Link>
+                </div>
             </footer>
         </section>
 

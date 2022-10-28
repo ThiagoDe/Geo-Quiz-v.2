@@ -24,7 +24,7 @@ const RoundsList = () => {
 
     if (isSuccess) {
         const { ids } = rounds
-        console.log(rounds, 'rounds from RoundsList.js')
+        // console.log(rounds, 'rounds from RoundsList.js')
 
         const tableContent = ids?.length
             ? ids.map(roundId => <Round key={roundId} roundId={roundId} />)

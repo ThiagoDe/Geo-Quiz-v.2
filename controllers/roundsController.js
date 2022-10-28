@@ -6,6 +6,7 @@ const asyncHandler = require('express-async-handler')
 // @access Private
 const getAllRounds = asyncHandler(async (req, res) => {
     // Get all rounds from MongoDB
+    // console.log('controller')
     const rounds = await Round.find().lean()
 
     // If no rounds 
@@ -32,11 +33,12 @@ const getAllRounds = asyncHandler(async (req, res) => {
 const createNewRound = asyncHandler(async (req, res) => {
     const { user,time, score, missed, statesScored, statesMissed } = req.body
     // const user = await User.findById(req.params.id).exec()
-
+    // console.log(score)
+    // console.log(missed)
     // Confirm data
-    if (!user || !time || !score || !missed || !statesScored || !statesMissed ) {
-        return res.status(400).json({ message: 'All fields are required' })
-    }
+    // if (!time ) {
+    //     return res.status(400).json({ message: 'All fields are required' })
+    // }
 
     // Check for duplicate title
     // const duplicate = await Round.findOne({ title }).lean().exec()
