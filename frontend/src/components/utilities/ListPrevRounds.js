@@ -28,10 +28,10 @@ const ListPrevRounds = ({score, missed}) => {
     if (isSuccess) {
         const { entities } = rounds
         
-        if (entities){
-            const roundsIn = Object.values(entities)
-            roundsIn.map(e => console.log(e))
-            } 
+        // if (entities){
+        //     const roundsIn = Object.values(entities)
+        //     roundsIn.map(e => console.log(e))
+        //     } 
         
         
         content = (

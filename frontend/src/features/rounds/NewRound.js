@@ -4,7 +4,9 @@ import NewRoundForm from './NewRoundForm'
 
 const NewRound = () => {
     const users = useSelector(selectAllUsers)
-    console.log(users)
+
+    if (!users?.length) return <p>Not Currently Available</p>
+    
     const content = users ? <NewRoundForm users={users} /> : <p>Loading...</p>
 
     return content

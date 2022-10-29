@@ -8,7 +8,7 @@ const RoundsList = () => {
         isSuccess,
         isError,
         error
-    } = useGetRoundsQuery(undefined, {
+    } = useGetRoundsQuery('roundsList', {
         pollingInterval: 30000,
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true
