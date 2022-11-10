@@ -1,7 +1,10 @@
 import { useGetRoundsQuery } from "./roundsApiSlice"
 import Round from "./Round"
+import useAuth from "../../hooks/useAuth"
 
 const RoundsList = () => {
+
+    const { username, isManager, isAdmin } = useAuth()
     const {
         data: rounds,
         isLoading,
@@ -23,12 +26,17 @@ const RoundsList = () => {
     }
 
     if (isSuccess) {
-        const { ids } = rounds
+        const { ids, entities } = rounds
         // console.log(rounds, 'rounds from RoundsList.js')
 
-        const tableContent = ids?.length
-            ? ids.map(roundId => <Round key={roundId} roundId={roundId} />)
-            : null
+        let filteredIds
+        if (isManager || isAdmin) {
+            filteredIds = [...ids]
+        } else {
+            filteredIds = ids.filter(roundId => entities[roundId].username === username)
+        }
+
+        const tableContent = ids?.length && filteredIds.map(roundId => <Round key={roundId} roundId={roundId} />)
 
         content = (
             // <div className="dashboard-container">

@@ -2,13 +2,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from 'react-router-dom'
 import { useDeleteRoundMutation } from "./roundsApiSlice"
-import { useSelector } from 'react-redux'
-import { selectRoundById } from './roundsApiSlice'
+import { useGetRoundsQuery } from './roundsApiSlice'
+import { memo } from 'react'
+// import { useSelector } from 'react-redux'
+// import { selectRoundById } from './roundsApiSlice'
 
 const Round = ({ roundId }) => {
 
-    const round = useSelector(state => selectRoundById(state, roundId))
+    // const round = useSelector(state => selectRoundById(state, roundId))
     // console.log(roundId, 'Round.js')
+    const { round } = useGetRoundsQuery("roundsList", {
+        selectFromResult: ({ data }) => ({
+            round: data?.entities[roundId]
+        }),
+    })
+
     const navigate = useNavigate()
 
     const [deleteRound, {
@@ -54,4 +62,5 @@ const Round = ({ roundId }) => {
 
     } else return null
 }
-export default Round
+const memoizedRound = memo(Round)
+export default memoizedRound

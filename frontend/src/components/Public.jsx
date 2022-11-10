@@ -9,15 +9,49 @@ import { useSelector, useDispatch } from 'react-redux'
 import Scoreboard from './utilities/Scoreboard'
 import { gameFinish, resetGame, startGame } from "../features/roundGame/gameSlice";
 import ListPrevRounds from './utilities/ListPrevRounds'
+import useAuth from '../hooks/useAuth'
+import { useParams } from 'react-router-dom'
+import { useGetUsersQuery} from '../features/users/usersApiSlice'
 
 const Public = () => {
+     const { username, isManager, isAdmin } = useAuth()
+     const [currentId, setCurrentId ] = useState(null)
 
-    const [addNewRound, {
-        isLoading,
-        isSuccess,
-        isError,
-        error
-    }] = useAddNewRoundMutation()
+    //  const { id } = useParams()
+    //  console.log(id, 'userparams')
+        // const {
+        //     data: users,
+        //     isLoading,
+        //     isSuccess,
+        //     isError,
+        //     error
+            
+        // } = useGetUsersQuery('usersList', {
+        //     pollingInterval: 6000,
+        //     refetchOnFocus: true,
+        //     refetchOnMountOrArgChange: true
+        // })
+    
+    
+    // useEffect(() => {
+    //     if (isSuccess && username) {
+
+    //         const { ids, entities } = users
+    //         let userId = ids.filter(id => entities[id].username === username)[0]
+            
+    //         setCurrentId(userId) 
+
+    //     }
+    // }, [ username, users, isSuccess])
+    
+
+
+    const [addNewRound, 
+        // isLoading,
+        // isSuccess,
+        // isError,
+        // error
+   ] = useAddNewRoundMutation()
 
     const [gameModeBtn, setGameModeBtn] = useState(false)
     const [usMap, setUsMap] = useState(null)
@@ -151,15 +185,21 @@ const Public = () => {
 
     }, [usMap, previousQuestions, score, missed, nextQuestionQueue, gameOn, statesMissed])
 
+    
     useEffect(() => {
-        if (roundComplete) {
-           const saveOnDb = async() => {
-            await addNewRound({user: "6351a0f72447330ecbcafdd7",time, score, missed, statesScored, statesMissed })
+        console.log(gameOn, 'gameon')
+        if (score > 0 || missed > 0){
+            if (roundComplete) {
+            const saveOnDb = async() => {
+                // user: "6351a0f72447330ecbcafdd7"
+                await addNewRound({user: '6369f070e8ee7f3c5d180ae1' ,time, score, missed, statesScored, statesMissed })
+                }
+                saveOnDb()
+                // dispatch(resetGame())// reset too early?
             }
-            saveOnDb()
         }
 
-    }, [score, missed, statesScored, statesMissed, roundComplete, addNewRound])
+    }, [score, missed, statesScored, statesMissed, roundComplete, addNewRound, currentId, gameOn])
 
 
 
@@ -212,7 +252,7 @@ const Public = () => {
                         <SvgUs />
                     </div>
                     <div>
-                        <ListPrevRounds/>
+                       { username && <ListPrevRounds/>}
                     </div>
                 </div>
                     { gameModeBtn.checked && <div id="details-box"></div>}
@@ -220,7 +260,7 @@ const Public = () => {
             <div className='under__map'></div>
             <footer>
                 <div className='settings'>
-                    <Link to="/dash">Dash</Link>
+                    { username && <Link to="/dash">Dash</Link>}
                 </div>
             </footer>
         </section>

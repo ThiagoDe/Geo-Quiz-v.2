@@ -13,10 +13,12 @@ const initialState = roundsAdapter.getInitialState()
 export const roundsApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getRounds: builder.query({
-            query: () => '/rounds',
+            query: () => ({
+            url : '/rounds',
             validateStatus: (response, result) => {
                 return response.status === 200 && !result.isError
-            },
+                }
+            }),
             // keepUnusedDataFor: 5,
             transformResponse: responseData => {
                 const loadedRounds = responseData.map(round => {

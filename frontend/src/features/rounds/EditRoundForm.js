@@ -3,8 +3,11 @@ import { useUpdateRoundMutation, useDeleteRoundMutation } from "./roundsApiSlice
 import { useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons"
+import useAuth from '../../hooks/useAuth'
 
 const EditRoundForm = ({ round, users }) => {
+
+    const { isAdmin } = useAuth()
 
     const [updateRound, {
         isLoading,

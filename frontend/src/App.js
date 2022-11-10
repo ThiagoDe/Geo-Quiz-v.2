@@ -12,8 +12,14 @@ import EditRound from './features/rounds/EditRound'
 import NewRound from './features/rounds/NewRound'
 import Prefetch from './features/auth/Prefetch'
 import PersistLogin from './features/auth/PersistLogin';
+import RequireAuth from './features/auth/RequireAuth'
+import { ROLES } from './config/roles'
+import useTitle from './hooks/useTitle';
+
 
 function App() {
+  useTitle('GeoQuizz')
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -21,21 +27,25 @@ function App() {
         <Route path="login" element={<Login />} />
 
           <Route element={<PersistLogin />}>
-            <Route element={<Prefetch/>}>
-              <Route path="dash" element={<DashLayout />}>
+            <Route element={<RequireAuth allowedRoles={[...Object.values(ROLES)]} />}>
+              <Route element={<Prefetch/>}>
+                <Route path="dash" element={<DashLayout />}>
 
-                <Route index element={<Welcome />} />
+                  <Route index element={<Welcome />} />
 
-                <Route path="users">
-                  <Route index element={<UsersList />} />
-                  <Route path=":id" element={<EditUser/>}/>
-                  <Route path="new" element={<NewUserForm/>}/>
-                </Route>
+                  <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Admin]} />}>
+                    <Route path="users">
+                      <Route index element={<UsersList />} />
+                      <Route path=":id" element={<EditUser/>}/>
+                      <Route path="new" element={<NewUserForm/>}/>
+                    </Route>
 
-                <Route path="rounds">
-                  <Route index element={<RoundsList />} />
-                  <Route path=":id" element={<EditRound/>}/>
-                  <Route path="new" element={<NewRound/>}/>
+                    <Route path="rounds">
+                      <Route index element={<RoundsList />} />
+                      <Route path=":id" element={<EditRound/>}/>
+                      <Route path="new" element={<NewRound/>}/>
+                    </Route>
+                  </Route>
                 </Route>
 
 
