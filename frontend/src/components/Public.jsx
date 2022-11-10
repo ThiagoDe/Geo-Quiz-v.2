@@ -20,7 +20,19 @@ const Public = () => {
      const { username, isManager, isAdmin } = useAuth()
      const [currentId, setCurrentId ] = useState(null)
 
-    //  const { id } = useParams()
+     const { users } = useGetUsersQuery("usersList", {
+        selectFromResult: ({ data }) => ({
+            users: data?.ids.filter(idx => data?.entities[idx].username === username)
+        }),
+    })
+
+    useEffect(() => {
+
+        if (users){
+            setCurrentId(users[0])
+        }
+    }, [])
+     
     //  console.log(id, 'userparams')
         // const {
         //     data: users,
@@ -147,7 +159,7 @@ const Public = () => {
 
     const mapDefaultColors = React.useCallback((e) =>{
         if (usMap) {
-            for (let i = 2; i < usMap.length; i++) {
+            for (let i = 3; i < usMap.length; i++) {
                 document.getElementById(usMap[i].id).style.fill = "rgb(79, 82, 82)"
             }
         }
@@ -195,7 +207,7 @@ const Public = () => {
             if (roundComplete) {
             const saveOnDb = async() => {
                 // user: "6351a0f72447330ecbcafdd7"
-                await addNewRound({user: '6369f070e8ee7f3c5d180ae1' ,time, score, missed, statesScored, statesMissed })
+                await addNewRound({user: currentId ,time, score, missed, statesScored, statesMissed })
                 }
                 saveOnDb()
                 // dispatch(resetGame())// reset too early?

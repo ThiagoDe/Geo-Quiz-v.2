@@ -2,6 +2,7 @@ import React from "react";
 import './listPrevRounds.css'
 import { useGetRoundsQuery } from "../../features/rounds/roundsApiSlice";
 import { useEffect } from "react";
+import PulseLoader from 'react-spinners/PulseLoader'
 
 const ListPrevRounds = ({score, missed}) => {
     
@@ -19,7 +20,7 @@ const ListPrevRounds = ({score, missed}) => {
 
     let content
 
-    if (isLoading) content = <p>Loading...</p>
+    if (isLoading) content = <PulseLoader color={"#FFF"} />
 
     if (isError) {
         content = <p className="errmsg">{error?.data?.message}</p>

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { selectRoundById } from './roundsApiSlice'
 import { selectAllUsers } from '../users/usersApiSlice'
 import EditRoundForm from './EditRoundForm'
+import PulseLoader from 'react-spinners/PulseLoader'
 
 const EditRound = () => {
     const { id } = useParams()
@@ -10,7 +11,7 @@ const EditRound = () => {
     const round = useSelector(state => selectRoundById(state, id))
     const users = useSelector(selectAllUsers)
 
-    const content = round && users ? <EditRoundForm round={round} users={users} /> : <p>Loading...</p>
+    const content = round && users ? <EditRoundForm round={round} users={users} /> : <PulseLoader color={"#FFF"} />
 
     return content
 }
