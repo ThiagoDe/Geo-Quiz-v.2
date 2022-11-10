@@ -20,7 +20,7 @@ const PersistLogin = () => {
         isLoading,
         isSuccess,
         isError,
-        error
+        // error
     }] = useRefreshMutation()
 
 
