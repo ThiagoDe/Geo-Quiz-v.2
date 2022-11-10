@@ -28,7 +28,7 @@ function App() {
         <Route path="login" element={<Login />} />
 
           <Route element={<PersistLogin />}>
-            <Route element={<RequireAuth allowedRoles={[...Object.values(ROLES)]} />}>
+            {/* <Route element={<RequireAuth allowedRoles={[...Object.values(ROLES)]} />}> */}
               <Route element={<Prefetch/>}>
                 <Route path="user" element={<Home />}/>
                 <Route path="dash" element={<DashLayout />}>
@@ -54,7 +54,7 @@ function App() {
               </Route>{/* End Dash */}
             </Route>
           </Route>
-      </Route>
+      {/* </Route> */}
     </Routes>
   );
 }
