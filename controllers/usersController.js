@@ -1,5 +1,5 @@
 const User = require('../models/User')
-const Turn = require('../models/Turn')
+const Round = require('../models/Round')
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt')
 
@@ -110,9 +110,9 @@ const deleteUser = asyncHandler(async (req, res) => {
     }
 
     // Does the user still have assigned notes?
-    const turn = await Turn.findOne({ user: id }).lean().exec()
-    if (turn) {
-        return res.status(400).json({ message: 'User has assigned turns' })
+    const round = await Round.findOne({ user: id }).lean().exec()
+    if (round) {
+        return res.status(400).json({ message: 'User has assigned rounds' })
     }
 
     // Does the user exist to delete?

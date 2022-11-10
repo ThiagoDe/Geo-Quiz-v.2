@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { useAddNewTurnMutation } from "./turnsApiSlice"
+import { useAddNewRoundMutation } from "./roundsApiSlice"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave } from "@fortawesome/free-solid-svg-icons"
 
-const NewTurnForm = ({ users }) => {
+const NewRoundForm = ({ users }) => {
 
-    const [addNewTurn, {
+    const [addNewRound, {
         isLoading,
         isSuccess,
         isError,
         error
-    }] = useAddNewTurnMutation()
+    }] = useAddNewRoundMutation()
 
     const navigate = useNavigate()
 
@@ -26,7 +26,7 @@ const NewTurnForm = ({ users }) => {
             setScore('')
             setMissed('')
             setUserId('')
-            navigate('/dash/turns')
+            navigate('/dash/rounds')
         }
         
     }, [isSuccess, navigate, users])
@@ -45,10 +45,11 @@ const NewTurnForm = ({ users }) => {
     const onUserIdChanged = e => setUserId(e.target.value)
 
 
-    const onSaveTurnClicked = async (e) => {
+    const onSaveRoundClicked = async (e) => {
         e.preventDefault()
         // if (canSave) {
-        await addNewTurn({ user: userId, time, score, missed })
+        
+        await addNewRound({ user: userId, time, score, missed })
         // }
     }
 
@@ -70,9 +71,9 @@ const NewTurnForm = ({ users }) => {
         <>
             <p className={errClass}>{error?.data?.message}</p>
 
-            <form className="form" onSubmit={onSaveTurnClicked}>
+            <form className="form" onSubmit={onSaveRoundClicked}>
                 <div className="form__time-row">
-                    <h2>New Turn</h2>
+                    <h2>New Round</h2>
                     <div className="form__action-buttons">
                         <button
                             className="icon-button"
@@ -138,4 +139,4 @@ const NewTurnForm = ({ users }) => {
     return content
 }
 
-export default NewTurnForm
+export default NewRoundForm

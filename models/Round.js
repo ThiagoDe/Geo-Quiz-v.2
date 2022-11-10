@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
 
-const turnSchema = new mongoose.Schema({
+const roundSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        required: false,
         ref: 'User'
     },
     time: {
@@ -18,6 +18,8 @@ const turnSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    statesScored: [],
+    statesMissed: [],
        
 },
     {
@@ -25,4 +27,4 @@ const turnSchema = new mongoose.Schema({
     }
 )
 
-module.exports = mongoose.model('Turn', turnSchema)
+module.exports = mongoose.model('Round', roundSchema)
