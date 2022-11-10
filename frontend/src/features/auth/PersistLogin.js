@@ -5,6 +5,7 @@ import usePersist from "../../hooks/usePersist"
 import { useSelector } from 'react-redux'
 import { selectCurrentToken } from "./authSlice"
 import PulseLoader from 'react-spinners/PulseLoader'
+import { useNavigate } from "react-router-dom"
 
 const PersistLogin = () => {
 
@@ -46,7 +47,8 @@ const PersistLogin = () => {
 
         // eslint-disable-next-line
     }, [])
-
+    const navigate = useNavigate()
+    const onError = () => navigate('/')
 
     let content
     if (!persist) { // persist: no
@@ -57,12 +59,13 @@ const PersistLogin = () => {
         content = <PulseLoader color={"#FFF"} />
     } else if (isError) { //persist: yes, token: no
         console.log('error')
-        content = (
-            <p className='errmsg'>
-                {`${error?.data?.message} - `}
-                <Link to="/login">Please login again</Link>.
-            </p>
-        )
+        onError()
+        // content = (
+        //     <p className='errmsg'>
+        //         {`${error?.data?.message} - `}
+        //         {/* <Link to="/login">Please login again</Link>. */}
+        //     </p>
+        // )
     } else if (isSuccess && trueSuccess) { //persist: yes, token: yes
         console.log('success')
         content = <Outlet />

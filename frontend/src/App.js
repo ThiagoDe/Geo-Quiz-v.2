@@ -15,6 +15,7 @@ import PersistLogin from './features/auth/PersistLogin';
 import RequireAuth from './features/auth/RequireAuth'
 import { ROLES } from './config/roles'
 import useTitle from './hooks/useTitle';
+import Home from './components/Home';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth allowedRoles={[...Object.values(ROLES)]} />}>
               <Route element={<Prefetch/>}>
+                <Route path="user" element={<Home />}/>
                 <Route path="dash" element={<DashLayout />}>
 
                   <Route index element={<Welcome />} />

@@ -1,7 +1,6 @@
 const allowedOrigins = [
     'http://localhost:3000',
-    'https://www.geoquiz.com',
-    'https://geoquiz.com'
+    'https://geoquiz-v2.onrender.com',
 ]
 
 module.exports = allowedOrigins
