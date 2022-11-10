@@ -12,6 +12,9 @@ import ListPrevRounds from './utilities/ListPrevRounds'
 import useAuth from '../hooks/useAuth'
 import { useParams } from 'react-router-dom'
 import { useGetUsersQuery} from '../features/users/usersApiSlice'
+import { useSendLogoutMutation } from '../features/auth/authApiSlice'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons"
 
 const Public = () => {
      const { username, isManager, isAdmin } = useAuth()
@@ -187,7 +190,7 @@ const Public = () => {
 
     
     useEffect(() => {
-        console.log(gameOn, 'gameon')
+        // console.log(gameOn, 'gameon')
         if (score > 0 || missed > 0){
             if (roundComplete) {
             const saveOnDb = async() => {
@@ -200,8 +203,23 @@ const Public = () => {
         }
 
     }, [score, missed, statesScored, statesMissed, roundComplete, addNewRound, currentId, gameOn])
+    
+    const [sendLogout, {
+        isLoading,
+        isSuccess,
+        isError,
+        error
+    }] = useSendLogoutMutation()
 
-
+    const logoutButton = (
+        <button
+            className="icon-button"
+            title="Logout"
+            onClick={sendLogout}
+        >
+            <FontAwesomeIcon icon={faRightFromBracket} />
+        </button>
+    )
 
 
     const content = (
@@ -211,9 +229,9 @@ const Public = () => {
                 <div className="dash-header__container">
                     <h1>Welcome to <span className="nowrap">Geo-Quiz! </span></h1>
                 </div>
-                <div className='settings'>
+                    {username ? logoutButton : <div className='settings'>
                     <Link to="/login">LOGIN</Link>
-                </div>
+                </div>}
             </header>
 
             <main className="public__main">  
