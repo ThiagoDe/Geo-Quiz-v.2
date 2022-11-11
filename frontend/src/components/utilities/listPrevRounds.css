@@ -2,17 +2,19 @@
     visibility: visible;
 
 }
+.listPrev_container{
+margin-top: 70px;
+}
 
 .listPrevRounds {
     background: #333;
+    
     width: 200px;
-    margin: 70px auto;
     border-radius: 15px;
     box-shadow: 0 4px 0px #333;
-    padding: 5px;
 }
 
-.header {
+.header_prevRounds {
     color: whitesmoke;
     text-align: center;
     display: flex;
@@ -25,9 +27,9 @@
     height: 50px;
 }
 
-.header p {
+.header_prevRounds p {
     font-size: 18px;
-    margin-left: 27px;
+    margin-left: 15px;
     text-align: center;
     align-items: center;
     align-content: center;
@@ -51,7 +53,7 @@
     height: 40px;
     color: whitesmoke;
     display: flex;
-    font-size: 1.2em;
+    /* font-size: 18px; */
     border-bottom: solid 2px #444;
     letter-spacing: 2px;
 }

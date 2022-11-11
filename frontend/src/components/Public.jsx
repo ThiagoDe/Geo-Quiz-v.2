@@ -201,20 +201,20 @@ const Public = () => {
     }, [usMap, previousQuestions, score, missed, nextQuestionQueue, gameOn, statesMissed])
 
     
-    useEffect(() => {
-        // console.log(gameOn, 'gameon')
-        if (score > 0 || missed > 0){
-            if (roundComplete) {
-            const saveOnDb = async() => {
-                // user: "6351a0f72447330ecbcafdd7"
-                await addNewRound({user: currentId ,time, score, missed, statesScored, statesMissed })
-                }
-                saveOnDb()
-                // dispatch(resetGame())// reset too early?
-            }
-        }
+    // useEffect(() => {
+    //     // console.log(gameOn, 'gameon')
+    //     if (score > 0 || missed > 0){
+    //         if (roundComplete) {
+    //         const saveOnDb = async() => {
+    //             // user: "6351a0f72447330ecbcafdd7"
+    //             await addNewRound({user: currentId ,time, score, missed, statesScored, statesMissed })
+    //             }
+    //             saveOnDb()
+    //             // dispatch(resetGame())// reset too early?
+    //         }
+    //     }
 
-    }, [score, missed, statesScored, statesMissed, roundComplete, addNewRound, currentId, gameOn])
+    // }, [score, missed, statesScored, statesMissed, roundComplete, addNewRound, currentId, gameOn])
     
     const [sendLogout, {
         isLoading,

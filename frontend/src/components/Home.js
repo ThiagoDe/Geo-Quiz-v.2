@@ -246,7 +246,7 @@ const Home = () => {
             <header className="dash-header">
                     <div>  </div>
                 <div className="dash-header__container">
-                    <h1>Welcome to <span className="nowrap">Geo-Quiz! Home </span></h1>
+                    <h1>Welcome to <span className="nowrap">Geo-Quiz! </span></h1>
                 </div>
                     {username ? logoutButton : <div className='settings'>
                     <Link to="/login">LOGIN</Link>
@@ -288,8 +288,8 @@ const Home = () => {
                     <div className='map' onMouseMove={addMouseover} onClick={onClickMap}>
                         <SvgUs />
                     </div>
-                    <div>
-                       { username && <ListPrevRounds/>}
+                    <div className='listPrev_container'>
+                       { username && <ListPrevRounds username={username}/>}
                     </div>
                 </div>
                     { gameModeBtn.checked && <div id="details-box"></div>}

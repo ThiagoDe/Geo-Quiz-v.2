@@ -3,8 +3,9 @@ import './listPrevRounds.css'
 import { useGetRoundsQuery } from "../../features/rounds/roundsApiSlice";
 import { useEffect } from "react";
 import PulseLoader from 'react-spinners/PulseLoader'
+import PrevRound from "./PrevRound";
 
-const ListPrevRounds = ({score, missed}) => {
+const ListPrevRounds = ({username}) => {
     
     const {
         data: rounds,
@@ -26,37 +27,39 @@ const ListPrevRounds = ({score, missed}) => {
         content = <p className="errmsg">{error?.data?.message}</p>
     }
 
-    if (isSuccess) {
-        const { entities } = rounds
+     if (isSuccess) {
+        const { ids, entities } = rounds
         
-        // if (entities){
-        //     const roundsIn = Object.values(entities)
-        //     roundsIn.map(e => console.log(e))
-        //     } 
+        let filteredIds = ids.filter(roundId => entities[roundId].username === username)
         
+        const userRounds = ids?.length && filteredIds.map(roundId => <PrevRound key={roundId} roundId={roundId} />)
+        // console.log(userRounds, 'userrounds')
         
         content = (
             <div className="listPrevRounds">
-            {/* <div className="header">
-                <p>LISTPREVROUNDS</p>
-            </div> */}
-            <div className="list_score_rows">
-                <div className="list_row-name" >
-                    <p>OCT 28</p>
+                <div className="header_prevRounds">
+                    <p>Previous Games</p>
                 </div>
+                {/* <div className="list_score_rows">
+                    <div className="list_row-name" >
+                        <p>Date</p>
+                    </div>
                 <div className="list_row-score">
                     <div className="list_row-counter" style={{color:'rgb(0, 131, 28)'}}>
-                        {<p>{3}</p>}
+                        {<p>Correct</p>}
                     </div>
                 </div>
                 <div className="list_row-score">
                     <div className="list_row-counter" style={{color:'red'}}>
-                        {<p>{2}</p>}
+                        {<p>Missed</p>}
                     </div>
                 </div>
-            </div>
+                </div> */}
+                <div>
+                    {userRounds.slice(-11, -1)}
+                </div>
             
-        </div>
+            </div>
         );
 
         
