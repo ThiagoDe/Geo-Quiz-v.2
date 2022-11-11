@@ -15,6 +15,7 @@ import { useGetUsersQuery} from '../features/users/usersApiSlice'
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons"
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
      const { username, isManager, isAdmin } = useAuth()
@@ -223,11 +224,17 @@ const Home = () => {
         error
     }] = useSendLogoutMutation()
 
+    const navigate = useNavigate()
+    const onLogout = () => {
+        sendLogout()
+        navigate('/')
+    }
+
     const logoutButton = (
         <button
             className="icon-button"
             title="Logout"
-            onClick={sendLogout}
+            onClick={onLogout}
         >
             <FontAwesomeIcon icon={faRightFromBracket} />
         </button>
