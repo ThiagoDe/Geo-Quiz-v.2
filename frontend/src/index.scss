@@ -5,6 +5,9 @@
   padding: 0;
   /* box-sizing: border-box; */
 }
+.map {
+  min-width: 600px;
+}
 
 /* || VARIABLES */
 
@@ -121,6 +124,7 @@ a:focus-visible {
 }
 
 .public {
+  max-width: fit-content;
   padding-bottom: 0px;
   padding: 1em;
   padding-left: 4em;
@@ -138,6 +142,9 @@ a:focus-visible {
 }
 .under__map {
   min-height: calc(20vh - 34px);
+}
+.login_container {
+  justify-self: center;
 }
 .login {
   flex-grow: 1;
@@ -1142,6 +1149,11 @@ table th {
 
 /* display and controls game */
 
+.game_display_container>*:first-child {
+  /* border: #cd201f; */
+  /* justify-self: center; */
+  align-self: center;
+}
 .game_display_container {
   padding: 20px;
   min-height: 100px;

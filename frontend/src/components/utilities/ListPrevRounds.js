@@ -40,21 +40,7 @@ const ListPrevRounds = ({username}) => {
                 <div className="header_prevRounds">
                     <p>Previous Games</p>
                 </div>
-                {/* <div className="list_score_rows">
-                    <div className="list_row-name" >
-                        <p>Date</p>
-                    </div>
-                <div className="list_row-score">
-                    <div className="list_row-counter" style={{color:'rgb(0, 131, 28)'}}>
-                        {<p>Correct</p>}
-                    </div>
-                </div>
-                <div className="list_row-score">
-                    <div className="list_row-counter" style={{color:'red'}}>
-                        {<p>Missed</p>}
-                    </div>
-                </div>
-                </div> */}
+              
                 <div>
                     {userRounds.slice(-11, -1)}
                 </div>

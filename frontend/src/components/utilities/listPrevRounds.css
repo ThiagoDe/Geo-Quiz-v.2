@@ -8,7 +8,7 @@ margin-top: 70px;
 
 .listPrevRounds {
     background: #333;
-    
+    padding-bottom: 5px;
     width: 200px;
     border-radius: 15px;
     box-shadow: 0 4px 0px #333;
@@ -68,7 +68,7 @@ margin-top: 70px;
 
 
 .list_row-name {
-    font-size: 18px;
+    font-size: 15px;
     flex-grow: 1;
     /* padding: 10px 10px 10px 10px; */
     padding-top: 10px;

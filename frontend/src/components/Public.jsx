@@ -15,6 +15,7 @@ import { useGetUsersQuery} from '../features/users/usersApiSlice'
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons"
+import ModalLogin from './utilities/ModalLogin'
 
 const Public = () => {
      const { username, isManager, isAdmin } = useAuth()
@@ -140,7 +141,7 @@ const Public = () => {
 
     // <----- game logic ------>
 
-    const time = 5
+    const time = 25
     const [score, setScore] = useState(0)
     const [missed, setMissed] = useState(0)
     const [userId, setUserId] = useState(0)
@@ -148,6 +149,7 @@ const Public = () => {
     const [statesMissed, setStatesMissed] =  useState([])
     const [previousQuestions, setPreviousQuestions] = useState([])
     const [currentQuestion, setCurrentQuestion] = useState('')
+    const [modalOpen, setModalOpen] = useState(false)
 
 
     const mapWithOnlyGreens = React.useCallback((e) => {
@@ -201,21 +203,6 @@ const Public = () => {
     }, [usMap, previousQuestions, score, missed, nextQuestionQueue, gameOn, statesMissed])
 
     
-    // useEffect(() => {
-    //     // console.log(gameOn, 'gameon')
-    //     if (score > 0 || missed > 0){
-    //         if (roundComplete) {
-    //         const saveOnDb = async() => {
-    //             // user: "6351a0f72447330ecbcafdd7"
-    //             await addNewRound({user: currentId ,time, score, missed, statesScored, statesMissed })
-    //             }
-    //             saveOnDb()
-    //             // dispatch(resetGame())// reset too early?
-    //         }
-    //     }
-
-    // }, [score, missed, statesScored, statesMissed, roundComplete, addNewRound, currentId, gameOn])
-    
     const [sendLogout, {
         isLoading,
         isSuccess,
@@ -237,18 +224,23 @@ const Public = () => {
     const content = (
         <section className="public">
             <header className="dash-header">
-                    <div>  </div>
+                    <div> <Toggle handleChange={handleChange}/> </div>
                 <div className="dash-header__container">
+                    
                     <h1>Welcome to <span className="nowrap">Geo-Quiz! </span></h1>
                 </div>
-                    {username ? logoutButton : <div className='settings'>
-                    <Link to="/login">LOGIN</Link>
-                </div>}
+                    {username ? logoutButton : <div className='settings' onClick={() => {
+                        setModalOpen(true);
+                        }}>
+                        LOGIN
+                        </div>
+                    }
             </header>
 
             <main className="public__main">  
                 <div  className='game_display_container'>
-                    <Toggle handleChange={handleChange}/>
+                    {/* <Toggle handleChange={handleChange}/> */}
+                    <div></div>
                     {!gameModeBtn.checked && 
                         <> 
                             { (!gameOn || roundComplete) ?
@@ -288,6 +280,11 @@ const Public = () => {
                     { gameModeBtn.checked && <div id="details-box"></div>}
             </main>
             <div className='under__map'></div>
+
+            
+
+            {modalOpen && <ModalLogin setOpenModal={setModalOpen}/>}
+            <div id="modal"></div>
             <footer>
                 <div className='settings'>
                     { username && <Link to="/dash">Dash</Link>}

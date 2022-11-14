@@ -13,6 +13,7 @@ const Login = () => {
     const errRef = useRef()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    
     const [errMsg, setErrMsg] = useState('')
     const [persist, setPersist] = usePersist()
 
@@ -52,6 +53,32 @@ const Login = () => {
         }
     }
 
+    const handleDemoSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            const username = 'UserDemo'
+            const password = 'password'
+            // console.log(demoPassword)
+            // console.log(demoUsername)
+            const { accessToken } = await login({ username, password }).unwrap()
+            dispatch(setCredentials({ accessToken }))
+            setUsername('')
+            setPassword('')
+            navigate('/user')
+        } catch (err) {
+            if (!err.status) {
+                setErrMsg('No Server Response');
+            } else if (err.status === 400) {
+                setErrMsg('Missing Username or Password');
+            } else if (err.status === 401) {
+                setErrMsg('Unauthorized');
+            } else {
+                setErrMsg(err.data?.message);
+            }
+            errRef.current.focus();
+        }
+    }
+
     const handleUserInput = (e) => setUsername(e.target.value)
     const handlePwdInput = (e) => setPassword(e.target.value)
     const handleToggle = () => setPersist(prev => !prev)
@@ -62,10 +89,21 @@ const Login = () => {
 
     const content = (
         <section className="public">
+            <div className='login_container'>
+                
             <header>
-                <h1>User Login</h1>
+                <h1>Login</h1>
             </header>
             <main className="login">
+                {/* <br/>
+                <br/>
+                <br/> */}
+                {/* <label htmlFor='userdeno'> Try Demo Version:</label> */}
+                <form className="form" onSubmit={handleDemoSubmit}>
+                    <button className="form__submit-button" style={{background: 'grey' }}  >Guest Sign In </button>
+                </form>
+                <br/>
+               
                 <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
 
                 <form className="form" onSubmit={handleSubmit}>
@@ -91,7 +129,7 @@ const Login = () => {
                         required
                     />
                     <button className="form__submit-button">Sign In</button>
-
+                    
 
                     <label htmlFor="persist" className="form__persist">
                         <input
@@ -104,10 +142,12 @@ const Login = () => {
                         Trust This Device
                     </label>
                 </form>
+                
             </main>
             <footer>
                 <Link to="/">Back to Home</Link>
             </footer>
+            </div>
         </section>
     )
 

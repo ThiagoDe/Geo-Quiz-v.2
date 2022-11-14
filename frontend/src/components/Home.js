@@ -141,7 +141,7 @@ const Home = () => {
 
     // <----- game logic ------>
 
-    const time = 5
+    const time = 25
     const [score, setScore] = useState(0)
     const [missed, setMissed] = useState(0)
     const [userId, setUserId] = useState(0)
@@ -244,7 +244,7 @@ const Home = () => {
     const content = (
         <section className="public">
             <header className="dash-header">
-                    <div>  </div>
+                    <div> <Toggle handleChange={handleChange}/> </div>
                 <div className="dash-header__container">
                     <h1>Welcome to <span className="nowrap">Geo-Quiz! </span></h1>
                 </div>
@@ -255,7 +255,8 @@ const Home = () => {
 
             <main className="public__main">  
                 <div  className='game_display_container'>
-                    <Toggle handleChange={handleChange}/>
+                    {/* <Toggle handleChange={handleChange}/> */}
+                    <div></div>
                     {!gameModeBtn.checked && 
                         <> 
                             { (!gameOn || roundComplete) ?
