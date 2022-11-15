@@ -21,7 +21,7 @@ const ListPrevRounds = ({username}) => {
 
     let content
 
-    if (isLoading) content = <PulseLoader color={"#FFF"} />
+    if (isLoading) content = <PulseLoader color='green' />
 
     if (isError) {
         content = <p className="errmsg">{error?.data?.message}</p>
@@ -42,7 +42,7 @@ const ListPrevRounds = ({username}) => {
                 </div>
               
                 <div>
-                    {userRounds.slice(-11, -1)}
+                    {userRounds.slice(-11, -1).reverse()}
                 </div>
             
             </div>

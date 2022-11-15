@@ -27,6 +27,7 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Public />} />
         <Route path="login" element={<Login />} />
+        <Route path="new" element={<NewUserForm/>}/>
 
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth allowedRoles={[...Object.values(ROLES)]} />}>
@@ -40,7 +41,7 @@ function App() {
                     <Route path="users">
                       <Route index element={<UsersList />} />
                       <Route path=":id" element={<EditUser/>}/>
-                      <Route path="new" element={<NewUserForm/>}/>
+                      {/* <Route path="new" element={<NewUserForm/>}/> */}
                     </Route>
 
                     <Route path="rounds">

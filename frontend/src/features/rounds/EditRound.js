@@ -11,7 +11,7 @@ const EditRound = () => {
     const round = useSelector(state => selectRoundById(state, id))
     const users = useSelector(selectAllUsers)
 
-    const content = round && users ? <EditRoundForm round={round} users={users} /> : <PulseLoader color={"#FFF"} />
+    const content = round && users ? <EditRoundForm round={round} users={users} /> : <PulseLoader color='green' />
 
     return content
 }

@@ -282,8 +282,8 @@ const Public = () => {
             <div className='under__map'></div>
 
             
-
-            {modalOpen && <ModalLogin setOpenModal={setModalOpen}/>}
+                    {/* Modal  */}
+            {modalOpen && <ModalLogin setOpenModal={setModalOpen} />}
             <div id="modal"></div>
             <footer>
                 <div className='settings'>

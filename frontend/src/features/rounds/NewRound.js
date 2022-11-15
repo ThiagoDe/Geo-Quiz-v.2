@@ -13,7 +13,7 @@ const NewRound = () => {
         }),
     })
 
-    if (!users?.length) return <PulseLoader color={"#FFF"} />
+    if (!users?.length) return <PulseLoader color='green' />
 
     const content = <NewRoundForm users={users} />
 

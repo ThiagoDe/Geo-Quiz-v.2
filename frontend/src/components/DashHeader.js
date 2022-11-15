@@ -40,7 +40,7 @@ const DashHeader = () => {
     const onRoundsClicked = () => navigate('/dash/rounds')
     const onUsersClicked = () => navigate('/dash/users')
 
-    if (isLoading) return <PulseLoader color={"#FFF"} />
+    if (isLoading) return <PulseLoader color='green' />
 
     if (isError) return <p>Error: {error.data?.message}</p>
 

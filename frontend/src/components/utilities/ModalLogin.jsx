@@ -1,7 +1,7 @@
 import './modalLogin.scss'
 import React from 'react'
 import Login from '../../features/auth/Login';
-
+// import NewUserForm from '../../features/users/NewUserForm';
 
 const ModalLogin = ({setOpenModal}) => {
 
@@ -17,7 +17,7 @@ const ModalLogin = ({setOpenModal}) => {
             X
           </button>
         </div>
-
+          {/* <NewUserForm/> */}
           <Login/>
         </div>
       </div>

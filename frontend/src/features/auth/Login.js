@@ -1,9 +1,12 @@
 import { useRef, useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons"
 
 import { useDispatch } from 'react-redux'
 import { setCredentials } from './authSlice'
 import { useLoginMutation } from './authApiSlice'
+import NewUserForm from '../users/NewUserForm'
 
 import usePersist from '../../hooks/usePersist'
 import PulseLoader from 'react-spinners/PulseLoader'
@@ -21,6 +24,7 @@ const Login = () => {
     const dispatch = useDispatch()
 
     const [login, { isLoading }] = useLoginMutation()
+    const [newUserForm, setNewUserForm] = useState(false)
 
     useEffect(() => {
         userRef.current.focus()
@@ -85,72 +89,85 @@ const Login = () => {
 
     const errClass = errMsg ? "errmsg" : "offscreen"
 
-    if (isLoading) return <PulseLoader color={"#FFF"} />
+    if (isLoading) return <div className="pulse"><PulseLoader color='green' /></div>
 
     const content = (
         <section className="public">
-            <div className='login_container'>
-                
-            <header>
-                <h1>Login</h1>
-            </header>
-            <main className="login">
-                {/* <br/>
-                <br/>
-                <br/> */}
-                {/* <label htmlFor='userdeno'> Try Demo Version:</label> */}
-                <form className="form" onSubmit={handleDemoSubmit}>
-                    <button className="form__submit-button" style={{background: 'grey' }}  >Guest Sign In </button>
-                </form>
-                <br/>
-               
-                <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
-
-                <form className="form" onSubmit={handleSubmit}>
-                    <label htmlFor="username">Username:</label>
-                    <input
-                        className="form__input"
-                        type="text"
-                        id="username"
-                        ref={userRef}
-                        value={username}
-                        onChange={handleUserInput}
-                        autoComplete="off"
-                        required
-                    />
-
-                    <label htmlFor="password">Password:</label>
-                    <input
-                        className="form__input"
-                        type="password"
-                        id="password"
-                        onChange={handlePwdInput}
-                        value={password}
-                        required
-                    />
-                    <button className="form__submit-button">Sign In</button>
-                    
-
-                    <label htmlFor="persist" className="form__persist">
-                        <input
-                            type="checkbox"
-                            className="form__checkbox"
-                            id="persist"
-                            onChange={handleToggle}
-                            checked={persist}
-                        />
-                        Trust This Device
-                    </label>
-                </form>
-                
-            </main>
-            <footer>
-                <Link to="/">Back to Home</Link>
-            </footer>
+            <div style={!newUserForm ? {display: 'none'}: {display: 'block'}}>
+                <NewUserForm/>
             </div>
+            <div className='login_container' style={newUserForm ? {display: 'none'}: {display: 'block'}}>
+                {/* {newUserForm ?  :  */}
+                    <>
+                    <header>
+                        <FontAwesomeIcon icon={faUserCircle} style={{fontSize:"110px"}}/>
+                        {/* {isLoading && <div className="pulse"><PulseLoader color='green' /></div>} */}
+                    </header>
+                    <main className="login">
+                        
+                        {/* <form className="form" onSubmit={handleDemoSubmit}>
+                            <button className="form__submit-button" style={{background: 'grey' }}  >Guest Sign In </button>
+                        </form> */}
+                        {/* <br/>
+                        <br/> */}
+                    
+                        <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
+
+                        <form className="form" onSubmit={handleSubmit}>
+                            {/* <label htmlFor="username">Username:</label> */}
+                            <input
+                                placeholder='Username'
+                                className="form__input"
+                                type="text"
+                                id="username"
+                                ref={userRef}
+                                value={username}
+                                onChange={handleUserInput}
+                                autoComplete="off"
+                                required
+                            />
+
+                            {/* <label htmlFor="password">Password:</label> */}
+                            <input
+                                placeholder="Password"
+                                className="form__input"
+                                type="password"
+                                id="password"
+                                onChange={handlePwdInput}
+                                value={password}
+                                required
+                            />
+                            <label htmlFor="persist" className="form__persist">
+                                <input
+                                    type="checkbox"
+                                    className="form__checkbox"
+                                    id="persist"
+                                    onChange={handleToggle}
+                                    checked={persist}
+                                />
+                                <div className='h8' >Trust this device</div>
+                            </label>
+                            <button className="form__submit-button">Sign In</button>
+
+                            <div className='h9'><span>Or sign in as a guest</span></div>
+                            <div className="form" onClick={handleDemoSubmit}>
+                                <button className="form__submit-button" style={{background: '#2196F3', color:'white' }}  >Guest Sign In </button>
+                            </div>
+
+                        </form>
+                        
+                    </main>
+                        <br/>
+                        <div className='create_account'>
+                            <div className='h7' onClick={() => setNewUserForm(!newUserForm)} style={{cursor: 'pointer'}}>Create Your Account </div>
+                        </div>
+                        </>
+                    </div>
         </section>
     )
 
-    return content
+     
+     return content 
+    
 }
 export default Login

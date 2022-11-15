@@ -56,7 +56,7 @@ const PersistLogin = () => {
         content = <Outlet />
     } else if (isLoading) { //persist: yes, token: no
         console.log('loading')
-        content = <PulseLoader color={"#FFF"} />
+        content = <PulseLoader color='green' />
     } else if (isError) { //persist: yes, token: no
         console.log('error')
         onError()

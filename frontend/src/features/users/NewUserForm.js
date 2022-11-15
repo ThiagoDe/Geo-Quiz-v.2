@@ -1,9 +1,14 @@
-import { useState, useEffect } from "react"
+import { useRef, useState, useEffect } from "react"
 import { useAddNewUserMutation } from "./usersApiSlice"
 import { useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave } from "@fortawesome/free-solid-svg-icons"
 import { ROLES } from "../../config/roles"
+import { useLoginMutation } from "../auth/authApiSlice"
+import { setCredentials } from "../auth/authSlice"
+import { useDispatch } from "react-redux"
+import usePersist from "../../hooks/usePersist"
+import PulseLoader from 'react-spinners/PulseLoader'
 
 const USER_REGEX = /^[A-z0-9!]{3,20}$/
 const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/
@@ -17,7 +22,14 @@ const NewUserForm = () => {
         error
     }] = useAddNewUserMutation()
 
+    const errRef = useRef()
+    const [errMsg, setErrMsg] = useState('')
+    const [persist, setPersist] = usePersist()
+
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    // aliases isLoading as loading
+    const [login, { isLoading: loading }] = useLoginMutation()
 
     const [username, setUsername] = useState('')
     const [validUsername, setValidUsername] = useState(false)
@@ -38,9 +50,31 @@ const NewUserForm = () => {
             setUsername('')
             setPassword('')
             setRoles([])
-            navigate('/dash/users')
+            // navigate('/dash/users')
+            // navigate('/user')
         }
     }, [isSuccess, navigate])
+
+    const handleSubmit = async (e) => {
+        try {
+            const { accessToken } = await login({ username, password }).unwrap()
+            dispatch(setCredentials({ accessToken }))
+            setUsername('')
+            setPassword('')
+            navigate('/user')
+        } catch (err) {
+            if (!err.status) {
+                setErrMsg('No Server Response');
+            } else if (err.status === 400) {
+                setErrMsg('Missing Username or Password');
+            } else if (err.status === 401) {
+                setErrMsg('Unauthorized');
+            } else {
+                setErrMsg(err.data?.message);
+            }
+            errRef.current.focus();
+        }
+    }
 
     const onUsernameChanged = e => setUsername(e.target.value)
     const onPasswordChanged = e => setPassword(e.target.value)
@@ -59,6 +93,8 @@ const NewUserForm = () => {
         e.preventDefault()
         if (canSave) {
             await addNewUser({ username, password, roles})
+            handleSubmit()
+
         }
     }
 
@@ -77,6 +113,7 @@ const NewUserForm = () => {
     const validPwdClass = !validPassword ? 'form__input--incomplete' : ''
     const validRolesClass = !Boolean(roles.length) ? 'form__input--incomplete' : ''
 
+    if (loading) return <PulseLoader color='green' />
 
     const content = (
         <>
@@ -118,7 +155,7 @@ const NewUserForm = () => {
                     onChange={onPasswordChanged}
                 />
 
-                <label className="form__label" htmlFor="roles">
+                {/* <label className="form__label" htmlFor="roles">
                     ASSIGNED ROLES:</label>
                 <select
                     id="roles"
@@ -130,7 +167,7 @@ const NewUserForm = () => {
                     onChange={onRolesChanged}
                 >
                     {options}
-                </select>
+                </select> */}
 
             </form>
         </>
