@@ -24,7 +24,7 @@ const PrevRound = ({roundId}) => {
                     <p>{created}</p>
                 </div>
                 <div className="list_row-score">
-                    <div className="list_row-counter" style={{color:'rgb(0, 131, 28)'}}>
+                    <div className="list_row-counter" style={{color:'rgb(0, 131, 28)', fontWeight: 'bolder'}}>
                         {<p>{score}</p>}
                     </div>
                 </div>

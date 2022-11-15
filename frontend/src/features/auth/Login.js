@@ -131,7 +131,7 @@ const Login = () => {
                                 placeholder='Username'
                                 className="form__input"
                                 type="text"
-                                id="username"
+                                id="username_login"
                                 ref={userRef}
                                 value={username}
                                 onChange={handleUserInput}
@@ -144,7 +144,7 @@ const Login = () => {
                                 placeholder="Password"
                                 className="form__input"
                                 type="password"
-                                id="password"
+                                id="password_login"
                                 onChange={handlePwdInput}
                                 value={password}
                                 required

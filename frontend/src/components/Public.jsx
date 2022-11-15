@@ -232,6 +232,8 @@ const Public = () => {
                     
                     <h1>Welcome to <span className="nowrap">Geo-Quiz! </span></h1>
                 </div>
+                { modalOpen ? <div></div> :
+                    <>
                     {username ? logoutButton : <div className='settings'  onClick={() => {
                             setModalOpen(true)
                             
@@ -239,6 +241,7 @@ const Public = () => {
                             LOGIN 
                         </div>
                     }
+                    </>}
             </header>
 
             <main className="public__main">  
