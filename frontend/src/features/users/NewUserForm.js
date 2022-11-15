@@ -9,6 +9,7 @@ import { setCredentials } from "../auth/authSlice"
 import { useDispatch } from "react-redux"
 import usePersist from "../../hooks/usePersist"
 import PulseLoader from 'react-spinners/PulseLoader'
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons"
 
 const USER_REGEX = /^[A-z0-9!]{3,20}$/
 const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/
@@ -120,21 +121,22 @@ const NewUserForm = () => {
             <p className={errClass}>{error?.data?.message}</p>
 
             <form className="form" onSubmit={onSaveUserClicked}>
-                <div className="form__title-row">
-                    <h2>New User</h2>
+                <div className="login_container">
+                    {/* <h2>New User</h2> */}
+                     <header>
+                        <FontAwesomeIcon icon={faUserCircle} style={{fontSize:"110px"}}/>
+                        {/* {isLoading && <div className="pulse"><PulseLoader color='green' /></div>} */}
+                    </header>
+                    <br/>
+                    <div className='h9'><span>Create your account</span></div>
+                    <br/>
                     <div className="form__action-buttons">
-                        <button
-                            className="icon-button"
-                            title="Save"
-                            disabled={!canSave}
-                        >
-                            <FontAwesomeIcon icon={faSave} />
-                        </button>
                     </div>
                 </div>
                 <label className="form__label" htmlFor="username">
-                    Username: <span className="nowrap">[3-20 letters]</span></label>
+                    <span className="nowrap">[3-20 letters]</span></label>
                 <input
+                    placeholder='Username'
                     className={`form__input ${validUserClass}`}
                     id="username"
                     name="username"
@@ -145,8 +147,9 @@ const NewUserForm = () => {
                 />
 
                 <label className="form__label" htmlFor="password">
-                    Password: <span className="nowrap">[4-12 chars incl. !@#$%]</span></label>
+                     <span className="nowrap">[4-12 chars incl. !@#$%]</span></label>
                 <input
+                    placeholder="Password"
                     className={`form__input ${validPwdClass}`}
                     id="password"
                     name="password"
@@ -154,6 +157,7 @@ const NewUserForm = () => {
                     value={password}
                     onChange={onPasswordChanged}
                 />
+                <button className="form__submit-button" style={{background: '#2196F3', color:'white' }}>Sign Up</button>
 
                 {/* <label className="form__label" htmlFor="roles">
                     ASSIGNED ROLES:</label>
