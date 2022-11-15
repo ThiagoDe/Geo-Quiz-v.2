@@ -220,6 +220,9 @@ const Public = () => {
         </button>
     )
 
+    // useEffect(() => {
+
+    // },[loginModal])
 
     const content = (
         <section className="public">
@@ -229,10 +232,11 @@ const Public = () => {
                     
                     <h1>Welcome to <span className="nowrap">Geo-Quiz! </span></h1>
                 </div>
-                    {username ? logoutButton : <div className='settings' onClick={() => {
-                        setModalOpen(true);
-                        }}>
-                        LOGIN
+                    {username ? logoutButton : <div className='settings'  onClick={() => {
+                            setModalOpen(true)
+                            
+                            }}>
+                            LOGIN 
                         </div>
                     }
             </header>

@@ -12,6 +12,7 @@ import usePersist from '../../hooks/usePersist'
 import PulseLoader from 'react-spinners/PulseLoader'
 
 const Login = () => {
+
     const userRef = useRef()
     const errRef = useRef()
     const [username, setUsername] = useState('')
@@ -25,6 +26,11 @@ const Login = () => {
 
     const [login, { isLoading }] = useLoginMutation()
     const [newUserForm, setNewUserForm] = useState(false)
+
+    // useEffect(() => {
+    //     if (loginModal) setNewUserForm(false)
+    //     // console.log(newUserForm)
+    // }, [loginModal])
 
     useEffect(() => {
         userRef.current.focus()
@@ -95,6 +101,12 @@ const Login = () => {
         <section className="public">
             <div style={!newUserForm ? {display: 'none'}: {display: 'block'}}>
                 <NewUserForm/>
+                <br/>
+                <hr/>
+                <br/>
+                <div className='create_account'>
+                    <div className='h7' onClick={() => setNewUserForm(!newUserForm)} style={{cursor: 'pointer'}}>Already have an Account? </div>
+                </div>
             </div>
             <div className='login_container' style={newUserForm ? {display: 'none'}: {display: 'block'}}>
                 {/* {newUserForm ?  :  */}

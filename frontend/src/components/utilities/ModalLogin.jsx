@@ -18,7 +18,7 @@ const ModalLogin = ({setOpenModal}) => {
           </button>
         </div>
           {/* <NewUserForm/> */}
-          <Login/>
+          <Login />
         </div>
       </div>
     // </div>
