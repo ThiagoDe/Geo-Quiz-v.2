@@ -16,6 +16,7 @@ import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from 'react-router-dom'
+import BarChart from './BarChart'
 
 const Home = () => {
      const { username, isManager, isAdmin } = useAuth()
@@ -106,7 +107,8 @@ const Home = () => {
     
             
     useEffect (() => {
-        setUsMap(document.getElementsByTagName('path'))
+        // console.log(document.getElementById('us_svg__svg').getElementsByTagName('path'), 'SVGUS')
+        setUsMap(document.getElementById('us_svg__svg').getElementsByTagName('path'))
         if (gameModeBtn.checked) {
             setBoxInfo(document.getElementById('details-box'))
         }
@@ -160,8 +162,9 @@ const Home = () => {
 
     const mapDefaultColors = React.useCallback((e) =>{
         if (usMap) {
-            for (let i = 3; i < usMap.length; i++) {
+            for (let i = 0; i < usMap.length; i++) {
                 document.getElementById(usMap[i].id).style.fill = "rgb(79, 82, 82)"
+                // document.getElementById(usMap[i].id).style.fill = "rgb(161, 0, 0)"
             }
         }
     }, [usMap] )
@@ -170,12 +173,12 @@ const Home = () => {
         if (usMap) {
             // Clean red map here left only green
             mapWithOnlyGreens()
-            let i = Math.floor(Math.random() * ((usMap.length - 1) - 2 + 1) + 2)
+            let i = Math.floor(Math.random() * (usMap.length - 1))
             let state = usMap[i].dataset.name
-            console.log(previousQuestions)
+            // console.log(previousQuestions)
             if (!previousQuestions.includes(state)){
                 setPreviousQuestions(previousQuestions => [...previousQuestions,state])
-                console.log(previousQuestions)
+                // console.log(previousQuestions)
                 setCurrentQuestion(state)
             } else {
                 nextQuestionQueue()
@@ -246,7 +249,7 @@ const Home = () => {
             <header className="dash-header">
                     <div> <Toggle handleChange={handleChange}/> </div>
                 <div className="dash-header__container">
-                    <h1>Welcome to <span className="nowrap">Geo-Quiz! </span></h1>
+                    <h1>Welcome to <span className="nowrap">Geo-Quiz!</span></h1>
                 </div>
                     {username ? logoutButton : <div className='settings'>
                     <Link to="/login">LOGIN</Link>
@@ -295,7 +298,9 @@ const Home = () => {
                 </div>
                     { gameModeBtn.checked && <div id="details-box"></div>}
             </main>
-            <div className='under__map'></div>
+            <div className='under__map'>
+            <BarChart username={username}/>
+            </div>
             <footer>
                 <div className='settings'>
                     { username && <Link to="/dash">Dash</Link>}

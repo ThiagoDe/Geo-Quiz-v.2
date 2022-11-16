@@ -106,7 +106,7 @@ const Public = () => {
     
             
     useEffect (() => {
-        setUsMap(document.getElementsByTagName('path'))
+        setUsMap(document.getElementById('us_svg__svg').getElementsByTagName('path'))
         if (gameModeBtn.checked) {
             setBoxInfo(document.getElementById('details-box'))
         }
@@ -161,8 +161,9 @@ const Public = () => {
 
     const mapDefaultColors = React.useCallback((e) =>{
         if (usMap) {
-            for (let i = 3; i < usMap.length; i++) {
+            for (let i = 0; i < usMap.length; i++) {
                 document.getElementById(usMap[i].id).style.fill = "rgb(79, 82, 82)"
+                // document.getElementById(usMap[i].id).style.fill = "rgb(161, 0, 0)"
             }
         }
     }, [usMap] )
@@ -171,7 +172,7 @@ const Public = () => {
         if (usMap) {
             // Clean red map here left only green
             mapWithOnlyGreens()
-            let i = Math.floor(Math.random() * ((usMap.length - 1) - 2 + 1) + 2)
+            let i = Math.floor(Math.random() * (usMap.length - 1))
             let state = usMap[i].dataset.name
             console.log(previousQuestions)
             if (!previousQuestions.includes(state)){
