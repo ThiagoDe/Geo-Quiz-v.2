@@ -103,6 +103,16 @@
   padding: 0 10px;
 }
 
+.dash-nivo {
+  display:flex;
+  justify-content: center;
+  height: 500px;
+  // width: 900px;
+}
+.dash-nivo text {
+  font-size: 20px !important;
+}
+
 body {
   font-family: 'courier', sans-serif;
   min-height: 100vh;
@@ -379,12 +389,7 @@ a:focus-visible {
 }
 
 
-
-
-
-
-
-path {
+#us_svg__svg path {
   stroke: rgb(192, 191, 191);
   fill: rgb(79, 82, 82);
   /* fill:rgb(79, 82, 82) ; */
@@ -394,7 +399,7 @@ path {
 
 }
 
-path:hover {
+#us_svg__svg path:hover {
   fill: rgb(119, 119, 119);
   /* cursor: pointer; */
   /* color: rgb(15, 155, 10) */
