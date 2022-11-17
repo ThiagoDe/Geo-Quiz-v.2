@@ -17,6 +17,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from 'react-router-dom'
 import BarChart from './BarChart'
+import ModalLeft from './utilities/ModalLeft'
 
 const Home = () => {
      const { username, isManager, isAdmin } = useAuth()
@@ -208,7 +209,7 @@ const Home = () => {
     useEffect(() => {
         // console.log(gameOn, 'gameon')
         if (score > 0 || missed > 0){
-            if (roundComplete) {
+            if (roundComplete && username) {
             const saveOnDb = async() => {
                 // user: "6351a0f72447330ecbcafdd7"
                 await addNewRound({user: currentId ,time, score, missed, statesScored, statesMissed })
@@ -218,7 +219,7 @@ const Home = () => {
             }
         }
 
-    }, [score, missed, statesScored, statesMissed, roundComplete, addNewRound, currentId, gameOn])
+    }, [score, missed, statesScored, statesMissed, roundComplete, addNewRound, currentId, gameOn, username])
     
     const [sendLogout, {
         isLoading,
@@ -258,8 +259,10 @@ const Home = () => {
 
             <main className="public__main">  
                 <div  className='game_display_container'>
-                    {/* <Toggle handleChange={handleChange}/> */}
-                    <div></div>
+                    <div className='scoreboard_container' style={!gameModeBtn.checked ? 
+                        {visibility: 'visible'} : {visibility: 'hidden'}} >
+                        <Scoreboard score={score} missed={missed}/>
+                    </div>
                     {!gameModeBtn.checked && 
                         <> 
                             { (!gameOn || roundComplete) ?
@@ -281,11 +284,8 @@ const Home = () => {
                 </div>
 
                 <div className='main_map_score'>
-                    
-                        <div className='scoreboard_container' style={!gameModeBtn.checked ? 
-                            {visibility: 'visible'} : {visibility: 'hidden'}} >
-                            <Scoreboard score={score} missed={missed}/>
-                        </div>
+                    {/* <div></div> */}
+                         <ModalLeft statesScored={statesScored} statesMissed={statesMissed} />
                         
                     
 

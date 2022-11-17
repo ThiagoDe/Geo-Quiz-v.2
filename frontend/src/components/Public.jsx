@@ -14,8 +14,10 @@ import { useParams } from 'react-router-dom'
 import { useGetUsersQuery} from '../features/users/usersApiSlice'
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons"
+import { faRightFromBracket, faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import ModalLogin from './utilities/ModalLogin'
+import ArrowAnimation from './utilities/ArrowAnination'
+import ModalLeft from './utilities/ModalLeft'
 
 const Public = () => {
      const { username, isManager, isAdmin } = useAuth()
@@ -34,40 +36,6 @@ const Public = () => {
         }
     }, [])
      
-    //  console.log(id, 'userparams')
-        // const {
-        //     data: users,
-        //     isLoading,
-        //     isSuccess,
-        //     isError,
-        //     error
-            
-        // } = useGetUsersQuery('usersList', {
-        //     pollingInterval: 6000,
-        //     refetchOnFocus: true,
-        //     refetchOnMountOrArgChange: true
-        // })
-    
-    
-    // useEffect(() => {
-    //     if (isSuccess && username) {
-
-    //         const { ids, entities } = users
-    //         let userId = ids.filter(id => entities[id].username === username)[0]
-            
-    //         setCurrentId(userId) 
-
-    //     }
-    // }, [ username, users, isSuccess])
-    
-
-
-    const [addNewRound, 
-        // isLoading,
-        // isSuccess,
-        // isError,
-        // error
-   ] = useAddNewRoundMutation()
 
     const [gameModeBtn, setGameModeBtn] = useState(false)
     const [usMap, setUsMap] = useState(null)
@@ -174,10 +142,10 @@ const Public = () => {
             mapWithOnlyGreens()
             let i = Math.floor(Math.random() * (usMap.length - 1))
             let state = usMap[i].dataset.name
-            console.log(previousQuestions)
+            // console.log(previousQuestions)
             if (!previousQuestions.includes(state)){
                 setPreviousQuestions(previousQuestions => [...previousQuestions,state])
-                console.log(previousQuestions)
+                // console.log(previousQuestions)
                 setCurrentQuestion(state)
             } else {
                 nextQuestionQueue()
@@ -232,9 +200,10 @@ const Public = () => {
                 <div className="dash-header__container">
                     
                     <h1>Welcome to <span className="nowrap">Geo-Quiz! </span></h1>
-                </div>
+                </div >
                 { modalOpen ? <div></div> :
-                    <>
+                    <div className='login-container'>
+                    <ArrowAnimation/>
                     {username ? logoutButton : <div className='settings'  onClick={() => {
                             setModalOpen(true)
                             
@@ -242,13 +211,15 @@ const Public = () => {
                             LOGIN 
                         </div>
                     }
-                    </>}
+                    </div>}
             </header>
 
             <main className="public__main">  
                 <div  className='game_display_container'>
-                    {/* <Toggle handleChange={handleChange}/> */}
-                    <div></div>
+                    <div className='scoreboard_container' style={!gameModeBtn.checked ? 
+                        {visibility: 'visible'} : {visibility: 'hidden'}} >
+                        <Scoreboard score={score} missed={missed}/>
+                    </div>
                     {!gameModeBtn.checked && 
                         <> 
                             { (!gameOn || roundComplete) ?
@@ -271,13 +242,9 @@ const Public = () => {
 
                 <div className='main_map_score'>
                     
-                        <div className='scoreboard_container' style={!gameModeBtn.checked ? 
-                            {visibility: 'visible'} : {visibility: 'hidden'}} >
-                            <Scoreboard score={score} missed={missed}/>
-                        </div>
+                        <ModalLeft statesScored={statesScored} statesMissed={statesMissed} />
+                
                         
-                    
-
                     <div className='map' onMouseMove={addMouseover} onClick={onClickMap}>
                         <SvgUs />
                     </div>
@@ -297,6 +264,7 @@ const Public = () => {
                 <div className='settings'>
                     { username && <Link to="/dash">Dash</Link>}
                 </div>
+               
             </footer>
         </section>
 
