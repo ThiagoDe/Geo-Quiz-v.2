@@ -113,6 +113,11 @@
   font-size: 20px !important;
 }
 
+.login-container {
+  display: flex;
+  width: 120px
+}
+
 body {
   font-family: 'courier', sans-serif;
   min-height: 100vh;
@@ -1199,7 +1204,7 @@ table th {
   align-self: center;
 }
 .game_display_container {
-  padding: 20px;
+  // padding: 20px;
   min-height: 100px;
   max-height: 100px !important;
   display: flex;

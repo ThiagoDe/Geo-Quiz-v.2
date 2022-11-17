@@ -38,7 +38,7 @@ const ListPrevRounds = ({username}) => {
         content = (
             <div className="listPrevRounds">
                 <div className="header_prevRounds">
-                    <p>Previous Games</p>
+                    <p>PREVIOUS GAMES</p>
                 </div>
               
                 <div>
