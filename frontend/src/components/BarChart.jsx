@@ -29,11 +29,15 @@ const BarChart = ({username}) => {
       maintainAspectRatio: false, 
       plugins: {
         legend: {
-          position: "top"
+          position: "top",
+          labels: {
+            family: "'courier', 'sans-serif'"
+          }
         },
         title: {
           display: true,
-          text: "Previous Games Chart"
+          text: "Previous Games Chart", 
+          
         }
       }
     }
@@ -91,7 +95,7 @@ const BarChart = ({username}) => {
 
         content = (
             <div className='dash-nivo' >
-             <Bar options={options} data={data2} width={1000} height='200px' />
+             <Bar options={options} data={data2} width={1000} height='200px' style={{fontFamily: "courier"}}/>
             </div>
            
     )

@@ -18,6 +18,7 @@ import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from 'react-router-dom'
 import BarChart from './BarChart'
 import ModalLeft from './utilities/ModalLeft'
+import Footer from './utilities/Footer'
 
 const Home = () => {
      const { username, isManager, isAdmin } = useAuth()
@@ -211,7 +212,6 @@ const Home = () => {
         if (score > 0 || missed > 0){
             if (roundComplete && username) {
             const saveOnDb = async() => {
-                // user: "6351a0f72447330ecbcafdd7"
                 await addNewRound({user: currentId ,time, score, missed, statesScored, statesMissed })
                 }
                 saveOnDb()
@@ -276,7 +276,7 @@ const Home = () => {
                             </div>
                                } 
 
-                            <div  style={{ width: "100px" }}>
+                            <div  style={{ width: "120px", marginRight: '30px' }}>
                                 <CircularAnimation time={time} />
                             </div>
                         </>
@@ -301,11 +301,12 @@ const Home = () => {
             <div className='under__map'>
             <BarChart username={username}/>
             </div>
-            <footer>
+            {/* <footer>
                 <div className='settings'>
                     { username && <Link to="/dash">Dash</Link>}
                 </div>
-            </footer>
+            </footer> */}
+            <Footer username={username}/>
         </section>
 
     )

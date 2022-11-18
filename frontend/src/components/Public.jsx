@@ -18,24 +18,28 @@ import { faRightFromBracket, faArrowRight } from "@fortawesome/free-solid-svg-ic
 import ModalLogin from './utilities/ModalLogin'
 import ArrowAnimation from './utilities/ArrowAnination'
 import ModalLeft from './utilities/ModalLeft'
+import Footer from './utilities/Footer'
 
 const Public = () => {
-     const { username, isManager, isAdmin } = useAuth()
-     const [currentId, setCurrentId ] = useState(null)
+    const { username} = useAuth()
+    const [currentId, setCurrentId ] = useState(null)
+    const [showArrow, setShowArrow] = useState(true)
 
-     const { users } = useGetUsersQuery("usersList", {
+    const { users } = useGetUsersQuery("usersList", {
         selectFromResult: ({ data }) => ({
             users: data?.ids.filter(idx => data?.entities[idx].username === username)
         }),
     })
 
     useEffect(() => {
-
         if (users){
             setCurrentId(users[0])
         }
     }, [])
      
+    setTimeout(() => {
+        setShowArrow(false)
+    }, 10000)
 
     const [gameModeBtn, setGameModeBtn] = useState(false)
     const [usMap, setUsMap] = useState(null)
@@ -48,7 +52,6 @@ const Public = () => {
     const roundComplete = useSelector((state) => state.roundComplete.roundComplete)
     const gameOn = useSelector((state) => state.roundComplete.gameOn) 
 
-    // const [firstRound, setFirstRound] = useState(true)
 
     const addMouseover = React.useCallback((e) => {
                 e.persist()
@@ -194,6 +197,7 @@ const Public = () => {
     // },[loginModal])
 
     const content = (
+        <>
         <section className="public">
             <header className="dash-header">
                     <div> <Toggle handleChange={handleChange}/> </div>
@@ -203,7 +207,12 @@ const Public = () => {
                 </div >
                 { modalOpen ? <div></div> :
                     <div className='login-container'>
-                    <ArrowAnimation/>
+                    {/* { showArrow ? <ArrowAnimation/>: <div></div>} */}
+                    <div style={showArrow ? 
+                        {visibility: 'visible'} : {visibility: 'hidden'}}>
+                    <ArrowAnimation  />
+                    </div>
+
                     {username ? logoutButton : <div className='settings'  onClick={() => {
                             setModalOpen(true)
                             
@@ -233,7 +242,7 @@ const Public = () => {
                             </div>
                                } 
 
-                            <div  style={{ width: "100px" }}>
+                            <div className='animation'  style={{ width: "120px", marginRight: '30px' }}>
                                 <CircularAnimation time={time} />
                             </div>
                         </>
@@ -260,14 +269,10 @@ const Public = () => {
                     {/* Modal  */}
             {modalOpen && <ModalLogin setOpenModal={setModalOpen} />}
             <div id="modal"></div>
-            <footer>
-                <div className='settings'>
-                    { username && <Link to="/dash">Dash</Link>}
-                </div>
-               
-            </footer>
-        </section>
 
+            <Footer username={username}/>
+        </section>
+         </>
     )
     return content
 }
