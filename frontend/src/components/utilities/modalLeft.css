@@ -1,9 +1,9 @@
 .dropdown-menu {
         --primary-bg: rgb(79, 82, 82);
-        --secondary-bg: rgb(79, 82, 82);
+        --secondary-bg: #333;
         --primary-text-color: #fff;
         --secondary-text-color: #cecece;
-        --border-radius: 8px;
+        --border-radius: 15px;
         --speed: 500ms;
     }
 .menu-trigger img {
@@ -19,23 +19,23 @@
 }
 
 .dropdown-menu {
-    /* position: absolute; */
+    visibility: hidden;
     margin-top: 50px;
     top: 100px;
     right: 20px;
     border-style: solid;
-    /* border: black;  */
-    background-color: rgb(79, 82, 82) ;
+    background-color: #333 ;
     border-radius: var(--border-radius);
     padding: 7px 20px;
-    width: 170px;
+    width: 164px;
 }
 
 .dropdown-menu::before {
+    
     content: '';
     position: absolute;
     top: -11px;
-    right: 114px;
+    right: 92px;
     height: 33px;
     width: 30px;
     background: var(--secondary-bg);
@@ -57,17 +57,6 @@
 }
 
 
-/* h3 {
-    width: 100%;
-    text-align: center;
-    font-size: 18px;
-    padding: 20px 0;
-    font-weight: 500;
-    font-size: 18px;
-    color: var(--primary-text-color);
-    line-height: 1.2rem;
-} */
-
 h3 span {
     font-size: 14px;
     color: var(--secondary-text-color);
@@ -78,7 +67,6 @@ h3 span {
     color: #fff;
     font-size: 18px;
     width: 180px;
-    /* padding: 10px 0; */
     border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 

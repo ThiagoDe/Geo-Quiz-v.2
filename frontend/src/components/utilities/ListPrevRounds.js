@@ -32,7 +32,7 @@ const ListPrevRounds = ({username}) => {
         
         let filteredIds = ids.filter(roundId => entities[roundId].username === username)
         
-        const userRounds = ids?.length && filteredIds.map(roundId => <PrevRound key={roundId} roundId={roundId} />)
+        const userRounds = ids?.length && filteredIds.slice(-11, -1).reverse().map((roundId, i )=> <PrevRound key={roundId} roundId={roundId} num={i}/>)
         // console.log(userRounds, 'userrounds')
         
         content = (
@@ -42,7 +42,7 @@ const ListPrevRounds = ({username}) => {
                 </div>
               
                 <div>
-                    {userRounds.slice(-11, -1).reverse()}
+                    {userRounds}
                 </div>
             
             </div>

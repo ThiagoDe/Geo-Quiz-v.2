@@ -1,9 +1,9 @@
 import * as React from "react";
 const SvgUs = (props) => (
   <svg
-    viewBox="50 20 1000 540" // 100 0 1000 589
+    viewBox="30 20 1000 540" // 100 0 1000 589
     xmlns="http://www.w3.org/2000/svg"
-    height={589}
+    height={789}
     style={{
       strokeLinejoin: "round",
       stroke: "#000",

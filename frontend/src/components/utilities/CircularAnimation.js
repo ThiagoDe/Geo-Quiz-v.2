@@ -34,8 +34,6 @@ const ChangingProgressProvider = forwardRef((props, _ref) => {
 
     useEffect(() => {
         if (isRunning){
-            // setEndGame(false)
-            // dispatch(resetGame())
             startTimer()
         } 
     }, [isRunning, dispatch])
@@ -51,16 +49,13 @@ const ChangingProgressProvider = forwardRef((props, _ref) => {
 
     useEffect(() => { 
         if (gameOn) {
-            // console.log(gameOn, 'from circurlar')
-            // console.log(roundComplete, 'round from circurlar')
+ 
             setIsRunning(true)
         }
-        // if (endGame) return 
         
         if (valuesIndex >= values.length) {
             dispatch(roundFinish()) // Global state end game
             stopTimer()
-            // dispatch(resetGame()) // reset Global f f
         }
     }, [ valuesIndex, values, dispatch, gameOn, roundComplete, stopTimer])
 
@@ -81,21 +76,21 @@ const CircularAnimation = ({time, animationOn}) => {
         
     return String(Math.ceil((percentage / 100) * time));
   }
-    
     return (
         <div>
             
             <ChangingProgressProvider values={secondsToPercentages} animationOn={animationOn}>
                 {percentage => (
                     <div id='timer__round'>
+            
                         <CircularProgressbar 
                             
                             value={percentage} 
                             text={percentage ? percentageToSeconds(percentage) : '0'} 
                             styles={buildStyles({
                                 textSize: '50px',
-                                textColor: "#4D5259",
-                                pathColor: "#4D5259",
+                                textColor: (percentage >= 24)? "#4D5259" : 'red',
+                                pathColor: (percentage >= 24)? "#4D5259" : 'red',
                                 trailColor: "ightgray"
                                 })}
                         />
