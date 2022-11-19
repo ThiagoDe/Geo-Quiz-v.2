@@ -36,7 +36,7 @@ const BarChart = ({username}) => {
         },
         title: {
           display: true,
-          text: "Previous Games Chart", 
+          text: "Last 20 games chart", 
           
         }
       }
@@ -87,7 +87,12 @@ const BarChart = ({username}) => {
         }
         const userRounds = ids?.length && filteredIds.map(roundId => entities[roundId])
         userRounds.slice(-21, -1).forEach((r, i) => {
-          labels.push('' + (i+1))
+          if (i == 19){
+            labels.push('Last')
+          } else {
+            labels.push('#' + (i+1))
+          }
+          
           scored.push(r.score)
           missed.push(r.missed)
         })

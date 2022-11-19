@@ -19,6 +19,7 @@ import ModalLogin from './utilities/ModalLogin'
 import ArrowAnimation from './utilities/ArrowAnination'
 import ModalLeft from './utilities/ModalLeft'
 import Footer from './utilities/Footer'
+import HowItWorks from './utilities/about/HowItWorks'
 
 const Public = () => {
     const { username} = useAuth()
@@ -203,7 +204,7 @@ const Public = () => {
                     <div> <Toggle handleChange={handleChange}/> </div>
                 <div className="dash-header__container">
                     
-                    <h1>Welcome to <span className="nowrap">Geo-Quiz! </span></h1>
+                    <h2><span className="nowrap">Geo-Quiz </span></h2>
                 </div >
                 { modalOpen ? <div></div> :
                     <div className='login-container'>
@@ -265,7 +266,7 @@ const Public = () => {
             </main>
             <div className='under__map'></div>
 
-            
+           
                     {/* Modal  */}
             {modalOpen && <ModalLogin setOpenModal={setModalOpen} />}
             <div id="modal"></div>

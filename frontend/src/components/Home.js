@@ -36,33 +36,7 @@ const Home = () => {
             setCurrentId(users[0])
         }
     }, [])
-     
-    //  console.log(id, 'userparams')
-        // const {
-        //     data: users,
-        //     isLoading,
-        //     isSuccess,
-        //     isError,
-        //     error
-            
-        // } = useGetUsersQuery('usersList', {
-        //     pollingInterval: 6000,
-        //     refetchOnFocus: true,
-        //     refetchOnMountOrArgChange: true
-        // })
-    
-    
-    // useEffect(() => {
-    //     if (isSuccess && username) {
 
-    //         const { ids, entities } = users
-    //         let userId = ids.filter(id => entities[id].username === username)[0]
-            
-    //         setCurrentId(userId) 
-
-    //     }
-    // }, [ username, users, isSuccess])
-    
 
 
     const [addNewRound, 
@@ -250,7 +224,7 @@ const Home = () => {
             <header className="dash-header">
                     <div> <Toggle handleChange={handleChange}/> </div>
                 <div className="dash-header__container">
-                    <h1>Welcome to <span className="nowrap">Geo-Quiz!</span></h1>
+                    <h2><span className="nowrap">Geo-Quiz</span></h2>
                 </div>
                     {username ? logoutButton : <div className='settings'>
                     <Link to="/login">LOGIN</Link>
