@@ -4,6 +4,7 @@ import { useGetRoundsQuery } from "../../features/rounds/roundsApiSlice";
 import { useEffect } from "react";
 import PulseLoader from 'react-spinners/PulseLoader'
 import PrevRound from "./PrevRound";
+import BestScore from "./BestSore"
 
 const ListPrevRounds = ({username}) => {
     
@@ -31,6 +32,9 @@ const ListPrevRounds = ({username}) => {
         const { ids, entities } = rounds
         
         let filteredIds = ids.filter(roundId => entities[roundId].username === username)
+        let allUserRounds = filteredIds.map((roundId) => entities[roundId] )
+        
+        const bestScore = <BestScore allUserRounds={allUserRounds}/>
         
         const userRounds = ids?.length && filteredIds.slice(-11, -1).reverse().map((roundId, i )=> <PrevRound key={roundId} roundId={roundId} num={i}/>)
         // console.log(userRounds, 'userrounds')
@@ -44,7 +48,9 @@ const ListPrevRounds = ({username}) => {
                 <div>
                     {userRounds}
                 </div>
-            
+                <div>
+                    {bestScore}
+                </div>
             </div>
         );
 

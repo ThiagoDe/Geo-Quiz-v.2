@@ -233,7 +233,8 @@ a:focus-visible {
 
 } */
 .dash-header {
-  padding-bottom: 0px !important;
+  // padding-bottom: 0px !important;
+  max-height: 1.6em;
   display: flex;
   flex-flow: row;
   justify-content: space-between;
@@ -267,7 +268,7 @@ a:focus-visible {
   margin-top: 9px;
   display: flex;
   flex-flow: row nowrap;
-  border-top: 18px;
+  // border-top: 18px;
   justify-content: space-between;
   align-items: center;
   
