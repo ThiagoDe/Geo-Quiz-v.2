@@ -20,7 +20,7 @@ import Home from './components/Home';
 
 
 function App() {
-  useTitle('GeoQuizz')
+  useTitle('GeoQuiz')
 
   return (
     <Routes>
