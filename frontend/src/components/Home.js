@@ -21,23 +21,43 @@ import ModalLeft from './utilities/ModalLeft'
 import Footer from './utilities/Footer'
 
 const Home = () => {
-     const { username, isManager, isAdmin } = useAuth()
-     const [currentId, setCurrentId ] = useState(null)
+    const { username, userId } = useAuth()
+    const [currentId, setCurrentId ] = useState(userId)
 
-     const { users } = useGetUsersQuery("usersList", {
-        selectFromResult: ({ data }) => ({
-            users: data?.ids.filter(idx => data?.entities[idx].username === username)
-        }),
-    })
+    // console.log(userId, 'auth here')
+     
+     
+    // const { users } = useGetUsersQuery("usersList", {
+    //     pollingInterval: 6000,
+    //     refetchOnFocus: true,
+    //     refetchOnMountOrArgChange: true,
+    //     selectFromResult: ({ data }) => ({
+    //     users: data?.ids.filter(idx => data?.entities[idx].username === username)
+    //     }),
+    //     })
+ 
+    
+    // useEffect(() => {
+    //     if (username && users){
+    //         setCurrentId(users[0])
+    //         // window.localStorage.setItem('userId', JSON.stringify(users[0]))
+    //         window.localStorage.setItem('userId', users[0])
+    //         console.log(currentId, 'current Id inside if')
+    //     }
+    // }, [username])
 
-    useEffect(() => {
+    
+    // useEffect(() => {
+    //     const d = window.localStorage.getItem('userId') 
+    //     console.log(d, 'data')
+    //     // if (d !== null && d !== 'undefined') setCurrentId(JSON.parse(d))
+    //     if (d !== null && d !== undefined) setCurrentId(d)
+    // }, [])
 
-        if (users){
-            setCurrentId(users[0])
-        }
-    }, [])
-
-
+    // useEffect(() => {
+        
+    //      if (currentId !== null && currentId !== undefined) window.localStorage.setItem('userId', currentId)
+    // }, [currentId])
 
     const [addNewRound, 
         // isLoading,
@@ -83,7 +103,6 @@ const Home = () => {
     
             
     useEffect (() => {
-        // console.log(document.getElementById('us_svg__svg').getElementsByTagName('path'), 'SVGUS')
         setUsMap(document.getElementById('us_svg__svg').getElementsByTagName('path'))
         if (gameModeBtn.checked) {
             setBoxInfo(document.getElementById('details-box'))
@@ -122,7 +141,6 @@ const Home = () => {
     const time = 25
     const [score, setScore] = useState(0)
     const [missed, setMissed] = useState(0)
-    const [userId, setUserId] = useState(0)
     const [statesScored, setStatesScored] =  useState([])
     const [statesMissed, setStatesMissed] =  useState([])
     const [previousQuestions, setPreviousQuestions] = useState([])
@@ -182,14 +200,14 @@ const Home = () => {
 
     
     useEffect(() => {
-        // console.log(gameOn, 'gameon')
+        // const d = window.localStorage.getItem('userId') 
+        console.log(currentId, 'save')
         if (score > 0 || missed > 0){
-            if (roundComplete && username) {
+            if (roundComplete && currentId) {
             const saveOnDb = async() => {
                 await addNewRound({user: currentId ,time, score, missed, statesScored, statesMissed })
                 }
                 saveOnDb()
-                // dispatch(resetGame())// reset too early?
             }
         }
 
@@ -275,11 +293,7 @@ const Home = () => {
             <div className='under__map'>
             <BarChart username={username}/>
             </div>
-            {/* <footer>
-                <div className='settings'>
-                    { username && <Link to="/dash">Dash</Link>}
-                </div>
-            </footer> */}
+     
             <Footer username={username}/>
         </section>
 

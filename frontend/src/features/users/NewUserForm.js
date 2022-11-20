@@ -79,6 +79,7 @@ const NewUserForm = () => {
 
     const onUsernameChanged = e => setUsername(e.target.value)
     const onPasswordChanged = e => setPassword(e.target.value)
+    const handleToggle = () => setPersist(prev => !prev)
 
     const onRolesChanged = e => {
         const values = Array.from(
@@ -122,7 +123,6 @@ const NewUserForm = () => {
 
             <form className="form" onSubmit={onSaveUserClicked}>
                 <div className="login_container">
-                    {/* <h2>New User</h2> */}
                      <header>
                         <FontAwesomeIcon icon={faUserCircle} style={{fontSize:"110px"}}/>
                         {/* {isLoading && <div className="pulse"><PulseLoader color='green' /></div>} */}
@@ -157,21 +157,18 @@ const NewUserForm = () => {
                     value={password}
                     onChange={onPasswordChanged}
                 />
+                <label htmlFor="persist" className="form__persist">
+                                <input
+                                    type="checkbox"
+                                    className="form__checkbox"
+                                    id="persist"
+                                    onChange={handleToggle}
+                                    checked={persist}
+                                />
+                                <div className='h8' >Trust this device</div>
+                            </label>
                 <button className="form__submit-button" style={{background: '#2196F3', color:'white' }}>Sign Up</button>
 
-                {/* <label className="form__label" htmlFor="roles">
-                    ASSIGNED ROLES:</label>
-                <select
-                    id="roles"
-                    name="roles"
-                    className={`form__select ${validRolesClass}`}
-                    multiple={true}
-                    size="2"
-                    value={roles}
-                    onChange={onRolesChanged}
-                >
-                    {options}
-                </select> */}
 
             </form>
         </>
