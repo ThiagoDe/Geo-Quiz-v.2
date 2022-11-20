@@ -48,7 +48,7 @@ Once the user feels comfortable putting it’s knowledge to test, Geo-Quiz offer
 
 # **Wireframes**
 
-![Screen Shot 2022-11-17 at 1 19 12 AM](https://user-images.githubusercontent.com/89544506/202672795-868572fb-6a6a-4753-8f3f-5d02a6d6573f.png)
+![Screen Shot 2022-11-18 at 11 56 29 AM](https://user-images.githubusercontent.com/89544506/202876926-0693527a-c654-4744-bf75-85aa3322448f.png)
 
 
 # **Technologies, Libraries, APIs**
