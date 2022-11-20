@@ -31,7 +31,7 @@ const BarChart = ({username}) => {
         legend: {
           position: "top",
           labels: {
-            family: "'courier', 'sans-serif'"
+            font: "'Courier Prime', monospace"
           }
         },
         title: {
@@ -100,7 +100,7 @@ const BarChart = ({username}) => {
 
         content = (
             <div className='dash-nivo' >
-             <Bar options={options} data={data2} width={1000} height='200px' style={{fontFamily: "courier"}}/>
+             <Bar options={options} data={data2} width={1000} height='200px' style={{font: 'Courier Prime'}}/>
             </div>
            
     )

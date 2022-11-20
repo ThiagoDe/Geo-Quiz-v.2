@@ -3,7 +3,8 @@
 .round {
     /* width: 200px; */
     cursor: pointer;
-    font-family: courier;
+    font-family: 'Courier Prime',
+        monospace;
     font-size: 18px;
     color: #4D5259;
     line-height: 1.5;

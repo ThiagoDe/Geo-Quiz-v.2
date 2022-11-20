@@ -3,7 +3,7 @@ import { memo } from 'react'
 const BestScore = ({allUserRounds}) => {
 
     let best = [0,0]
-    
+    // console.log(allUserRounds)
     if (allUserRounds.length > 0){
 
         allUserRounds.forEach((round) => {

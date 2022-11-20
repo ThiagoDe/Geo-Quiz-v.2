@@ -1,7 +1,6 @@
 import React from "react";
 import './listPrevRounds.css'
 import { useGetRoundsQuery } from "../../features/rounds/roundsApiSlice";
-import { useEffect } from "react";
 import PulseLoader from 'react-spinners/PulseLoader'
 import PrevRound from "./PrevRound";
 import BestScore from "./BestSore"
@@ -28,7 +27,7 @@ const ListPrevRounds = ({username}) => {
         content = <p className="errmsg">{error?.data?.message}</p>
     }
 
-     if (isSuccess) {
+    if (isSuccess) {
         const { ids, entities } = rounds
         
         let filteredIds = ids.filter(roundId => entities[roundId].username === username)
