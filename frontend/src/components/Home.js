@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom'
 import BarChart from './BarChart'
 import ModalLeft from './utilities/ModalLeft'
 import Footer from './utilities/Footer'
+import Pie from './utilities/Pie'
 
 const Home = () => {
     const { username, userId } = useAuth()
@@ -104,12 +105,51 @@ const Home = () => {
             
     useEffect (() => {
         setUsMap(document.getElementById('us_svg__svg').getElementsByTagName('path'))
+        // console.log(usMap)
         if (gameModeBtn.checked) {
             setBoxInfo(document.getElementById('details-box'))
         }
         setGameModeBtn(document.getElementById("checkbox"))
         
     }, [usMap, stateName, stateId, boxInfo, addMouseover, gameModeBtn] );
+
+    const [defsSvg, setDefsSvg] = useState()
+    useEffect(() => {
+        setDefsSvg(document.getElementsByTagName('defs'))
+        // console.log(defsSvg)
+    }, [defsSvg])
+
+    useEffect(() => {
+        if (defsSvg) {
+            for (let i = 0; i < defsSvg.length; i++) {
+                defsSvg[i].style = "@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap')"
+                defsSvg[i].style.fontFamily = 'Courier Prime'
+                // console.log(defsSvg[i])
+            }
+        }
+    }, [defsSvg])
+
+    const [textsSvg, setTextsSvg] = useState()
+    useEffect(() => {
+        setTextsSvg(document.getElementsByTagName('text'))
+        // console.log(textsSvg)
+    }, [textsSvg])
+
+    if (textsSvg) {
+        for (let i = 0; i < textsSvg.length; i++) {
+            textsSvg[i].style.fontFamily = 'Courier Prime'
+            // console.log(textsSvg[i])
+        }
+    }
+
+    // useEffect(() => {
+    //     let c = document.getElementsByTagName('canvas')
+    //     c[0].getContext('2d').font = '30px Courier New'
+    //     c[0].style.fontFamily = '30px Courier New'
+    //     console.log(c[0].getContext('2d')) 
+    // }, [])
+
+
 
        //Toggle  
     const handleChange = () => {
@@ -158,7 +198,6 @@ const Home = () => {
         if (usMap) {
             for (let i = 0; i < usMap.length; i++) {
                 document.getElementById(usMap[i].id).style.fill = "rgb(79, 82, 82)"
-                // document.getElementById(usMap[i].id).style.fill = "rgb(161, 0, 0)"
             }
         }
     }, [usMap] )
@@ -200,7 +239,6 @@ const Home = () => {
 
     
     useEffect(() => {
-        // const d = window.localStorage.getItem('userId') 
         console.log(currentId, 'save')
         if (score > 0 || missed > 0){
             if (roundComplete && currentId) {
@@ -292,7 +330,12 @@ const Home = () => {
             </main>
             <div className='under__map'>
             <BarChart username={username}/>
+
             </div>
+                <div className='pie' style={{ maxHeight: "600px"}}>
+                <p style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bolder' }}>STATES BY NUMBER OF RIGHT GUESSES</p>
+                <Pie username={username}/>
+                </div>
      
             <Footer username={username}/>
         </section>

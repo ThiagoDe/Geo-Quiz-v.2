@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
 * {
   margin: 0;
@@ -122,8 +122,14 @@
   width: 120px
 }
 
+element.style {
+  font-family: 'Courier Prime',
+      monospace;
+}
+
 body {
-  font-family: 'courier', sans-serif;
+  font-family: 'Courier Prime',
+    monospace;
   min-height: 100vh;
   background-color: var(--BGCOLOR);
   color: var(--COLOR);
@@ -308,7 +314,7 @@ a:focus-visible {
 
 /* from the old css */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 .modal {
   z-index: 4;
@@ -325,7 +331,8 @@ a:focus-visible {
 }
 
 .modal-content {
-  font-family: "Poppins";
+  font-family: 'Courier Prime',
+    monospace;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -374,7 +381,8 @@ a:focus-visible {
 }
 
 .modal-content2 {
-  font-family: "Poppins";
+  font-family: 'Courier Prime',
+    monospace;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -449,7 +457,8 @@ svg {
   font-size: 24px;
   position: fixed;
   color: white;
-  font-family: "Poppins";
+  font-family: 'Courier Prime',
+    monospace;
   background-color: black;
   width: fit-content;
   transform: translateX(-50%);
@@ -460,7 +469,8 @@ svg {
 
 #logo {
   color: white;
-  font-family: "Poppins";
+  font-family: 'Courier Prime',
+    monospace;
   background-color: black;
   display: flex;
   justify-content: center;
@@ -558,7 +568,8 @@ div.controls {
   font-size: 24px;
   color: rgb(7, 6, 6);
   /* color: rgb(161, 0, 0); */
-  font-family: "Poppins";
+  font-family: 'Courier Prime',
+    monospace;
 }
 
 #info-btn {
@@ -572,7 +583,8 @@ div.controls {
   border-radius: 8px;
   font-size: 16px;
   color: rgb(248, 245, 245);
-  font-family: "Poppins";
+  font-family: 'Courier Prime',
+    monospace;
   background-color: black;
   width: fit-content;
 }
@@ -584,7 +596,8 @@ div.controls {
   border-radius: 8px;
   font-size: 16px;
   color: rgb(248, 245, 245);
-  font-family: "Poppins";
+  font-family: 'Courier Prime',
+    monospace;
   background-color: black;
   width: 90px;
   /* width: fit-content; */
@@ -595,7 +608,8 @@ div.controls {
   border-radius: 8px;
   font-size: 16px;
   color: white;
-  font-family: "Poppins";
+  font-family: 'Courier Prime',
+    monospace;
   background-color: black;
   width: 10%;
 }
@@ -614,7 +628,8 @@ div.controls {
   /* height: 200px; */
   color: rgb(7, 6, 6);
   /* color: rgb(161, 0, 0); */
-  font-family: "Poppins";
+  font-family: 'Courier Prime',
+    monospace;
 }
 
 .scoreBoard {
@@ -665,7 +680,8 @@ div.controls {
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
   border-radius: var(--height);
   cursor: pointer;
-  font-family: "courier"
+  font-family: 'Courier Prime',
+    monospace;
 }
 
 .toggle input {
@@ -690,7 +706,8 @@ div.controls {
 }
 
 .toggle .slider2::before {
-  font-family: "courier";
+  font-family: 'Courier Prime',
+    monospace;
   content: '';
   position: absolute;
   top: 0;
@@ -722,7 +739,8 @@ div.controls {
   width: 100%;
   height: 100%;
   font-size: 20px;
-  font-family: "courier";
+  font-family: 'Courier Prime',
+    monospace;
   transition: all 0.4s ease-in-out;
   
 }
