@@ -19,6 +19,7 @@
 }
 
 .dropdown-menu {
+    /* z-index: 799; */
     visibility: hidden;
     margin-top: 50px;
     top: 100px;
@@ -28,10 +29,11 @@
     border-radius: var(--border-radius);
     padding: 7px 20px;
     width: 164px;
+    height: fit-content;
 }
 
 .dropdown-menu::before {
-    
+    z-index: -1;
     content: '';
     position: absolute;
     top: -11px;
@@ -65,7 +67,7 @@ h3 span {
 
 .dropdown-menu ul li {
     color: #fff;
-    font-size: 18px;
+    font-size: 17px;
     width: 180px;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
 }

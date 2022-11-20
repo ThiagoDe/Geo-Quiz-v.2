@@ -14,7 +14,7 @@ const login = asyncHandler(async (req, res) => {
     }
 
     const foundUser = await User.findOne({ username }).exec()
-
+    // console.log(foundUser, "foundUser auth controller")
     if (!foundUser ) {
         return res.status(401).json({ message: 'Unauthorized' })
     }
@@ -27,7 +27,8 @@ const login = asyncHandler(async (req, res) => {
         {
             "UserInfo": {
                 "username": foundUser.username,
-                "roles": foundUser.roles
+                "roles": foundUser.roles,
+                "userId": foundUser._id 
             }
         },
         process.env.ACCESS_TOKEN_SECRET,
@@ -69,14 +70,15 @@ const refresh = (req, res) => {
             if (err) return res.status(403).json({ message: 'Forbidden' })
 
             const foundUser = await User.findOne({ username: decoded.username }).exec()
-
+            console.log(foundUser, 'founUser from auth controller')
             if (!foundUser) return res.status(401).json({ message: 'Unauthorized' })
 
             const accessToken = jwt.sign(
                 {
                     "UserInfo": {
                         "username": foundUser.username,
-                        "roles": foundUser.roles
+                        "roles": foundUser.roles,
+                        "userId": foundUser._id 
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,

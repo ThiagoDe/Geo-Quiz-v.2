@@ -6,8 +6,11 @@
   /* box-sizing: border-box; */
 }
 .map {
+  // max-height: 30em;
+  max-width: 100vw;
+
   min-width: 600px;
-  margin-top: -137px;
+  margin-top: -76px;
   // max-height: 400px;
 }
 
@@ -39,8 +42,7 @@
 }
 
 .nowrap {
-
-  white-space: nowrap;
+  // white-space: nowrap;
   
 }
 
@@ -184,7 +186,7 @@ a:focus-visible {
   position: relative;
   align-self: stretch;
   max-width: 2000px;
-  padding-bottom: 0px;
+  padding-top: 0px !important;
   padding: 1em;
   padding-left: 4em;
   padding-right: 4em;
@@ -201,7 +203,7 @@ a:focus-visible {
   /* flex-grow: 1; */
 }
 .under__map {
-  min-height: calc(20vh - 34px);
+  min-height: calc(30vh - 34px);
 }
 .login_container {
   justify-self: center;
@@ -231,6 +233,7 @@ a:focus-visible {
 
 } */
 .dash-header {
+  padding-bottom: 0px !important;
   display: flex;
   flex-flow: row;
   justify-content: space-between;
@@ -238,7 +241,7 @@ a:focus-visible {
   top: 0;
   z-index: 1;
   background-color: var(--BGCOLOR);
-  padding: 0 0.5em;
+  // padding: 0 0.5em;
   /* padding-bottom: 100px; */
   border-bottom: 4px solid var(--BORDER-COLOR);
   border-right: 2px solid var(--BORDER-COLOR);
@@ -261,10 +264,13 @@ a:focus-visible {
 } */
 
 .dash-header__container {
+  margin-top: 9px;
   display: flex;
   flex-flow: row nowrap;
+  border-top: 18px;
   justify-content: space-between;
   align-items: center;
+  
 }
 
 .dash-header__nav {
@@ -647,6 +653,7 @@ div.controls {
 /* <!-- btn test --> */
 /* Adding text in the toggle switch */
 .toggle {
+  top: 5px;
   --width: 110px;
   --height: calc(var(--width) / 3);
 
@@ -1085,7 +1092,7 @@ tr {
 
   .dash-header {
     background-color: lightgray;
-    padding: 0.5em 1em;
+    padding: 0.2em 1em;
   }
 
   .dash-container {
@@ -1211,23 +1218,27 @@ table th {
   align-self: center;
 }
 .game_display_container {
-  margin-top: 60px;
-  min-height: 160px;
+  margin-top: 1em;
+  min-height: 5.5em;
   max-height: 100px !important;
   display: flex;
   justify-content: space-between;
 }
 
 .main_map_score {
-  display: flex;
-  align-items: start;
+  max-height: 63vh;
+  display: grid;
+  justify-content: space-between;
+  // align-items: start;
   grid-template-columns: 1fr 9fr 1fr;
 }
 
 .settings {
+  margin-top: 5px;
   cursor: pointer;
   display: block;
   width: 70px;
+  height: 30px;
   font-size: 18px;
   text-align: center;
   color: #4D5259;

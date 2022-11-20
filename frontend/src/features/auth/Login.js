@@ -27,11 +27,6 @@ const Login = () => {
     const [login, { isLoading }] = useLoginMutation()
     const [newUserForm, setNewUserForm] = useState(false)
 
-    // useEffect(() => {
-    //     if (loginModal) setNewUserForm(false)
-    //     // console.log(newUserForm)
-    // }, [loginModal])
-
     useEffect(() => {
         userRef.current.focus()
     }, [])
@@ -68,8 +63,6 @@ const Login = () => {
         try {
             const username = 'UserDemo'
             const password = 'password'
-            // console.log(demoPassword)
-            // console.log(demoUsername)
             const { accessToken } = await login({ username, password }).unwrap()
             dispatch(setCredentials({ accessToken }))
             setUsername('')
@@ -109,24 +102,15 @@ const Login = () => {
                 </div>
             </div>
             <div className='login_container' style={newUserForm ? {display: 'none'}: {display: 'block'}}>
-                {/* {newUserForm ?  :  */}
                     <>
                     <header>
                         <FontAwesomeIcon icon={faUserCircle} style={{fontSize:"110px"}}/>
-                        {/* {isLoading && <div className="pulse"><PulseLoader color='green' /></div>} */}
                     </header>
                     <main className="login">
                         
-                        {/* <form className="form" onSubmit={handleDemoSubmit}>
-                            <button className="form__submit-button" style={{background: 'grey' }}  >Guest Sign In </button>
-                        </form> */}
-                        {/* <br/>
-                        <br/> */}
-                    
                         <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
 
                         <form className="form" onSubmit={handleSubmit}>
-                            {/* <label htmlFor="username">Username:</label> */}
                             <input
                                 placeholder='Username'
                                 className="form__input"
@@ -139,7 +123,6 @@ const Login = () => {
                                 required
                             />
 
-                            {/* <label htmlFor="password">Password:</label> */}
                             <input
                                 placeholder="Password"
                                 className="form__input"
@@ -153,7 +136,7 @@ const Login = () => {
                                 <input
                                     type="checkbox"
                                     className="form__checkbox"
-                                    id="persist"
+                                    id="persist_login"
                                     onChange={handleToggle}
                                     checked={persist}
                                 />
