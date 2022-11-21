@@ -109,7 +109,9 @@
 
 .dash-nivo {
   display:flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  // justify-content: center;
   height: 240px;
   // width: 900px;
 }
@@ -125,6 +127,14 @@
 element.style {
   font-family: 'Courier Prime',
       monospace;
+}
+
+.pies {
+  font-family: 'Courier Prime',
+      monospace;
+  display: grid;
+  max-width: 2000px;
+  grid-template-columns: 1fr 1fr;
 }
 
 body {
