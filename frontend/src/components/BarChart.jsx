@@ -1,6 +1,5 @@
 import { useGetRoundsQuery } from '../features/rounds/roundsApiSlice'
 import PulseLoader from 'react-spinners/PulseLoader'
-// import { useState, useCallback } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -36,7 +35,8 @@ const BarChart = ({username}) => {
         },
         title: {
           display: true,
-          text: "Last 20 games chart", 
+          // text: "LAST 20 GAMES", 
+          // font: "Courier"
           
         }
       }
@@ -87,7 +87,7 @@ const BarChart = ({username}) => {
         }
         const userRounds = ids?.length && filteredIds.map(roundId => entities[roundId])
         userRounds.slice(-21, -1).forEach((r, i) => {
-          if (i == 19){
+          if (i === 19){
             labels.push('Last')
           } else {
             labels.push('#' + (i+1))
@@ -100,7 +100,10 @@ const BarChart = ({username}) => {
 
         content = (
             <div className='dash-nivo' >
-             <Bar options={options} data={data2} width={1000} height='200px' style={{font: 'Courier Prime'}}/>
+              <div className='canvas'>
+                <p style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bolder', position: 'relative', top: '36px' }}>LAST 20 GAMES</p>
+                <Bar options={options} data={data2} width={1065} height='200px' style={{font: 'Courier Prime'}}/>
+              </div>
             </div>
            
     )

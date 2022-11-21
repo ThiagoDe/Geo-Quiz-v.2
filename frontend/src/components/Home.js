@@ -19,7 +19,8 @@ import { useNavigate } from 'react-router-dom'
 import BarChart from './BarChart'
 import ModalLeft from './utilities/ModalLeft'
 import Footer from './utilities/Footer'
-import Pie from './utilities/Pie'
+import Pie from './utilities/pies/Pie'
+import MissedPie from './utilities/pies/MissedPie'
 
 const Home = () => {
     const { username, userId } = useAuth()
@@ -134,14 +135,26 @@ const Home = () => {
         setTextsSvg(document.getElementsByTagName('text'))
         // console.log(textsSvg)
     }, [textsSvg])
+    
 
     if (textsSvg) {
         for (let i = 0; i < textsSvg.length; i++) {
             textsSvg[i].style.fontFamily = 'Courier Prime'
-            // console.log(textsSvg[i])
         }
     }
 
+    const fontsDefault = async() => {
+        let loaded = await textsSvg;
+        if (loaded){
+            for (let i = 0; i < loaded.length; i++) {
+                loaded[i].style.fontFamily = 'Courier Prime'
+            }
+        }
+    }
+    
+    fontsDefault()
+    
+  
     // useEffect(() => {
     //     let c = document.getElementsByTagName('canvas')
     //     c[0].getContext('2d').font = '30px Courier New'
@@ -317,8 +330,6 @@ const Home = () => {
                     {/* <div></div> */}
                          <ModalLeft statesScored={statesScored} statesMissed={statesMissed} />
                         
-                    
-
                     <div className='map' onMouseMove={addMouseover} onClick={onClickMap}>
                         <SvgUs />
                     </div>
@@ -332,10 +343,18 @@ const Home = () => {
             <BarChart username={username}/>
 
             </div>
-                <div className='pie' style={{ maxHeight: "600px"}}>
-                <p style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bolder' }}>STATES BY NUMBER OF RIGHT GUESSES</p>
-                <Pie username={username}/>
+            <div className='pies'>
+                <div className='pie' style={{ height: "22em"}}>
+                    <p style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bolder' }}>STATES BY NUMBER O CORRECT GUESSES</p>
+                    <Pie username={username}/>
                 </div>
+
+                <div className='pie' style={{ height: "22em"}}>
+                    <p style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bolder' }}>STATES BY NUMBER O MISSED GUESSES</p>
+                    <MissedPie username={username}/>
+                </div>
+                
+            </div>
      
             <Footer username={username}/>
         </section>

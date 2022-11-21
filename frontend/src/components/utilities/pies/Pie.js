@@ -1,7 +1,6 @@
 import { ResponsivePie } from '@nivo/pie'
-import { useGetRoundsQuery } from "../../features/rounds/roundsApiSlice"
+import { useGetRoundsQuery } from "../../../features/rounds/roundsApiSlice"
 import PulseLoader from 'react-spinners/PulseLoader'
-
 
 
 const Pie = ({username}) => {
@@ -66,7 +65,7 @@ const Pie = ({username}) => {
         padAngle={0.7}
         cornerRadius={3}
         activeOuterRadiusOffset={8}
-        colors={{ scheme: 'category10' }}
+        colors={{ scheme: 'greens'  }}
         borderWidth={1}
         borderColor={{
             from: 'color',
