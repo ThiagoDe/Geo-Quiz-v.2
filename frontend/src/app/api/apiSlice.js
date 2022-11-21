@@ -44,7 +44,6 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
             return refreshResult
         }
     }
-
     return result
 }
 
