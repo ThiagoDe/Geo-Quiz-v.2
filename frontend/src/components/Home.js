@@ -328,7 +328,7 @@ const Home = () => {
 
                 <div className='main_map_score'>
                     {/* <div></div> */}
-                         <ModalLeft statesScored={statesScored} statesMissed={statesMissed} />
+                         { roundComplete ? <ModalLeft statesScored={statesScored} statesMissed={statesMissed} /> : <div></div>}
                         
                     <div className='map' onMouseMove={addMouseover} onClick={onClickMap}>
                         <SvgUs />

@@ -252,7 +252,9 @@ const Public = () => {
 
                 <div className='main_map_score'>
                     
-                        <ModalLeft statesScored={statesScored} statesMissed={statesMissed} />
+                        { roundComplete ? <ModalLeft statesScored={statesScored} statesMissed={statesMissed} /> : <div>
+                            
+                        </div>}
                 
                         
                     <div className='map' onMouseMove={addMouseover} onClick={onClickMap}>
