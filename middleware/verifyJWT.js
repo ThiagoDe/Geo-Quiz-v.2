@@ -16,6 +16,7 @@ const verifyJWT = (req, res, next) => {
             if (err) return res.status(403).json({ message: 'Forbidden' })
             req.user = decoded.UserInfo.username
             req.roles = decoded.UserInfo.roles
+            req.userId = decoded.UserInfo.userId // I added this line trying to fix refresh when deployed 
             next()
         }
     )
