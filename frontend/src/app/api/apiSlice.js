@@ -14,7 +14,6 @@ const baseQuery = fetchBaseQuery({
         return headers
     }
 })
-
 const baseQueryWithReauth = async (args, api, extraOptions) => {
     // console.log(args) // request url, method, body
     // console.log(api) // signal, dispatch, getState()
