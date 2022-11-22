@@ -11,7 +11,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
     // Get all users from MongoDB
     
     const users = await User.find().select('-password').lean()
-
+    console.log(users, 'from users')
     // If no users 
     if (!users?.length) {
         return res.status(400).json({ message: 'No users found' })
@@ -22,6 +22,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
 
 const getUser = asyncHandler(async (req, res) => {
     // const { id } = req.body
+    console.log(req.params, 'from users controller')
     const user = await User.findById(req.params.id).exec()
     res.json(user)
 

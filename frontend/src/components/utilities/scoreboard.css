@@ -4,7 +4,7 @@
 }
 .scoreboard {
     background: #333;
-    width: 200px;
+    max-width: 200px;
     margin: 70px auto;
     border-radius: 15px;
     box-shadow: 0 4px 0px #333;

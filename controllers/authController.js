@@ -70,9 +70,8 @@ const refresh = (req, res) => {
             if (err) return res.status(403).json({ message: 'Forbidden' })
 
             const foundUser = await User.findOne({ username: decoded.username }).exec()
-            console.log(foundUser, 'founUser from auth controller')
             if (!foundUser) return res.status(401).json({ message: 'Unauthorized' })
-
+            
             const accessToken = jwt.sign(
                 {
                     "UserInfo": {
@@ -83,7 +82,8 @@ const refresh = (req, res) => {
                 },
                 process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: '35m' }
-            )
+                )
+                console.log(foundUser, 'founUser from auth controller')
 
             res.json({ accessToken })
         })

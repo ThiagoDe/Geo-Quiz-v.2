@@ -14,8 +14,8 @@ const Scoreboard = ({score, missed}) => {
             <div className="row-name" style={{color:'rgb(0, 131, 28)'}}>
                 <p>CORRECT</p>
             </div>
-            <div className="row-score">
-                <div className="row-counter">
+            <div className="row-score" >
+                <div className="row-counter" id='counter'>
                     {<p>{score}</p>}
                 </div>
             </div>
@@ -25,7 +25,7 @@ const Scoreboard = ({score, missed}) => {
                 <p>MISSED</p>
             </div>
             <div className="row-score">
-                <div className="row-counter">
+                <div className="row-counter" id='counter'>
                     {<p>{missed}</p>}
                 </div>
             </div>

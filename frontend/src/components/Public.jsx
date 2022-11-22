@@ -218,7 +218,7 @@ const Public = () => {
                             setModalOpen(true)
                             
                             }}>
-                            LOGIN 
+                            <div id='login-text'>LOGIN </div>
                         </div>
                     }
                     </div>}
@@ -243,7 +243,7 @@ const Public = () => {
                             </div>
                                } 
 
-                            <div className='animation'  style={{ width: "120px", marginRight: '30px' }}>
+                            <div className='animation'  style={{ maxWidth: "120px", marginRight: '30px' }}>
                                 <CircularAnimation time={time} />
                             </div>
                         </>

@@ -76,6 +76,7 @@ const Pie = ({username}) => {
                 ]
             ]
         }}
+        
         arcLinkLabelsSkipAngle={10}
         arcLinkLabelsTextColor="#333333"
         arcLinkLabelsThickness={2}
