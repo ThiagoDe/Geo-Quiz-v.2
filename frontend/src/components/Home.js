@@ -24,6 +24,7 @@ import MissedPie from './utilities/pies/MissedPie'
 
 const Home = () => {
     const { username, userId } = useAuth()
+    // console.log(useAuth(), 'useauth here')
     const [currentId, setCurrentId ] = useState(userId)
 
     // console.log(userId, 'auth here')
@@ -319,7 +320,7 @@ const Home = () => {
                             </div>
                                } 
 
-                            <div  style={{ width: "120px", marginRight: '30px' }}>
+                            <div  style={{ maxWidth: "120px", marginRight: '30px' }}>
                                 <CircularAnimation time={time} />
                             </div>
                         </>
@@ -344,12 +345,12 @@ const Home = () => {
 
             </div>
             <div className='pies'>
-                <div className='pie' style={{ height: "22em"}}>
+                <div className='pie' style={{ maxHeight: "22em"}}>
                     <p style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bolder' }}>STATES BY NUMBER O CORRECT GUESSES</p>
                     <Pie username={username}/>
                 </div>
 
-                <div className='pie' style={{ height: "22em"}}>
+                <div className='pie' style={{ maxHeight: "22em"}}>
                     <p style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bolder' }}>STATES BY NUMBER O MISSED GUESSES</p>
                     <MissedPie username={username}/>
                 </div>

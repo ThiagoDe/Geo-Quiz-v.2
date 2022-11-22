@@ -10,6 +10,7 @@
 }
 
 .modalContainer {
+    z-index: 99 !important;
     width: 500px;
     height: 720px;
     border-radius: 12px;
