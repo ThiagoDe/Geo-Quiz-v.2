@@ -155,6 +155,9 @@ body {
 } 
 
 @media screen and (max-width: 1200px){
+  .dropdown-menu {
+    display: none;
+  }
   body {
     // max-width: 330px !important;
     margin-right: 0px !important;
@@ -266,13 +269,15 @@ body {
     position: absolute !important;
   }
   .scoreboard {
+    top: 0px !important;
     max-width: 100px !important;
     font-size: 10px !important;
     
   }
   .scoreboard_container {
     max-width: 100px !important;
-    height: 250px;
+    margin-top: -55px !important;
+    // height: 250px;
     font-size: 10px !important;
     
   }
@@ -1359,8 +1364,10 @@ table th {
   align-self: center;
 }
 .game_display_container {
+  margin-bottom: 20px;
+  z-index: 2;
   margin-top: 1em;
-  min-height: 5.5em;
+  min-height: 7.5em;
   max-height: 100px !important;
   display: flex;
   justify-content: space-between;
