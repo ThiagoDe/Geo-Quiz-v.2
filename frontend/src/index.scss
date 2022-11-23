@@ -244,15 +244,7 @@ body {
   #upgrade {
     // z-index: 2;
   }
-  .dash-header__container {
-    // position: absolute;
-    //   left: 0;
-    //   right: 0;
-    //   margin-left: auto;
-    //   margin-right: auto;
-    //   margin-top: 0px !important;
-    //   width: 130px;
-  }
+
   .dash-header__container span {
     font-size: 23px;
   }
@@ -1553,3 +1545,37 @@ table th {
 .settings2:hover {
   background: #d3d3d3;
 }
+
+.dash-header2 {
+  // padding-bottom: 0px !important;
+  height: 70px;
+  max-height: 2.6em;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background-color: lightgray !important;
+  padding: 0.2em 1em;
+  background-color: var(--BGCOLOR);
+  // padding: 0 0.5em;
+  /* padding-bottom: 100px; */
+  border-bottom: 4px solid var(--BORDER-COLOR);
+  border-right: 2px solid var(--BORDER-COLOR);
+  border-top: 2px solid var(--BORDER-COLOR);
+  border-left: 2px solid var(--BORDER-COLOR);
+}
+
+.dash-header__container2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: 35px;
+    margin-right: 35px;
+    margin-top: 0px !important;
+    // width: 130px;
+    }

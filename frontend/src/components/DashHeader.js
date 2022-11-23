@@ -133,15 +133,15 @@ const DashHeader = () => {
         <>
             <p className={errClass}>{error?.data?.message}</p>
 
-            <header className="dash-header">
-                <div className={`dash-header__container ${dashClass}`}>
+            <header className="dash-header2">
+                <div className={`dash-header__container2 ${dashClass}`}>
                     <Link to="/">
                         <h1 className="dash-header__title">Geo Quiz </h1>
                     </Link>
                     <nav className="dash-header__nav">
                     </nav>
-                        {buttonContent}
-                    <nav className="settings" >
+                        {/* {buttonContent} */}
+                    <nav className="setting" >
                         {/* add more buttons later */}
                         {logoutButton}
                     </nav>
