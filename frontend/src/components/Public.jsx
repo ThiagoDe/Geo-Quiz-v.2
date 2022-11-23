@@ -20,6 +20,7 @@ import ArrowAnimation from './utilities/ArrowAnination'
 import ModalLeft from './utilities/ModalLeft'
 import Footer from './utilities/Footer'
 import HowItWorks from './utilities/about/HowItWorks'
+import blurred from '../images/image_blurred.png'
 
 const Public = () => {
     const { username} = useAuth()
@@ -252,6 +253,7 @@ const Public = () => {
 
                 <div className='main_map_score'>
                     
+                    
                         { roundComplete ? <ModalLeft statesScored={statesScored} statesMissed={statesMissed} /> : <div>
                             
                         </div>}
@@ -266,10 +268,17 @@ const Public = () => {
                 </div>
                     { gameModeBtn.checked && <div id="details-box"></div>}
             </main>
-            <div className='under__map'></div>
-
-           
-                    {/* Modal  */}
+            <div className='under__map' ></div>
+                    <div className='blurred'>
+                        <img src={blurred} alt='' style={{ filter: 'grayscale(0%)', backgroud: 'black', opacity: '0.7', webkitFilter: 'blur(2px)'}}/>
+                        <div className='settings2'  onClick={() => {
+                            setModalOpen(true)
+                            
+                            }}>
+                            <div id='login-text'>🔒 LOGIN </div>
+                        </div>
+                    </div>
+                 
             {modalOpen && <ModalLogin setOpenModal={setModalOpen} />}
             <div id="modal"></div>
 
