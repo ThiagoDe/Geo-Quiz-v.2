@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import './App.scss'
 import Layout from './components/Layout'
 import Public from './components/Public'
@@ -57,6 +57,7 @@ function App() {
             </Route>
           </Route>
       </Route>
+      <Route path="/*" element={<Navigate to="/"/> }/>
     </Routes>
   );
 }

@@ -19,8 +19,7 @@ const ROUNDS_REGEX = /^\/dash\/rounds(\/)?$/
 const USERS_REGEX = /^\/dash\/users(\/)?$/
 
 const DashHeader = () => {
-    const { isManager, isAdmin, username} = useAuth
-
+    const { isManager, isAdmin} = useAuth()
     const navigate = useNavigate()
     const { pathname } = useLocation()
 
@@ -132,7 +131,6 @@ const DashHeader = () => {
     const content = (
         <>
             <p className={errClass}>{error?.data?.message}</p>
-
             <header className="dash-header2">
                 <div className={`dash-header__container2 ${dashClass}`}>
                     <Link to="/">

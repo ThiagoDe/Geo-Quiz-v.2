@@ -1,17 +1,15 @@
 import { Link } from 'react-router-dom'
 import SvgUs from './Us'
 import Toggle from './utilities/Toggle'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect} from 'react'
 import ButtonRound from './utilities/ButtonRound'
 import CircularAnimation from './utilities/CircularAnimation'
 import { useAddNewRoundMutation } from '../features/rounds/roundsApiSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import Scoreboard from './utilities/Scoreboard'
-import { gameFinish, resetGame, startGame } from "../features/roundGame/gameSlice";
+import { resetGame, startGame } from "../features/roundGame/gameSlice";
 import ListPrevRounds from './utilities/ListPrevRounds'
 import useAuth from '../hooks/useAuth'
-import { useParams } from 'react-router-dom'
-import { useGetUsersQuery} from '../features/users/usersApiSlice'
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons"
@@ -26,49 +24,9 @@ const Home = () => {
     const { username, userId } = useAuth()
     // console.log(useAuth(), 'useauth here')
     const [currentId, setCurrentId ] = useState(userId)
-
-    // console.log(userId, 'auth here')
-     
-     
-    // const { users } = useGetUsersQuery("usersList", {
-    //     pollingInterval: 6000,
-    //     refetchOnFocus: true,
-    //     refetchOnMountOrArgChange: true,
-    //     selectFromResult: ({ data }) => ({
-    //     users: data?.ids.filter(idx => data?.entities[idx].username === username)
-    //     }),
-    //     })
- 
-    
-    // useEffect(() => {
-    //     if (username && users){
-    //         setCurrentId(users[0])
-    //         // window.localStorage.setItem('userId', JSON.stringify(users[0]))
-    //         window.localStorage.setItem('userId', users[0])
-    //         console.log(currentId, 'current Id inside if')
-    //     }
-    // }, [username])
+    const navigate = useNavigate()
 
     
-    // useEffect(() => {
-    //     const d = window.localStorage.getItem('userId') 
-    //     console.log(d, 'data')
-    //     // if (d !== null && d !== 'undefined') setCurrentId(JSON.parse(d))
-    //     if (d !== null && d !== undefined) setCurrentId(d)
-    // }, [])
-
-    // useEffect(() => {
-        
-    //      if (currentId !== null && currentId !== undefined) window.localStorage.setItem('userId', currentId)
-    // }, [currentId])
-
-    const [addNewRound, 
-        // isLoading,
-        // isSuccess,
-        // isError,
-        // error
-   ] = useAddNewRoundMutation()
-
     const [gameModeBtn, setGameModeBtn] = useState(false)
     const [usMap, setUsMap] = useState(null)
     const [stateName, setStateName ] = useState('')
@@ -76,11 +34,20 @@ const Home = () => {
     const [boxInfo, setBoxInfo] = useState(null)
     const [pos, setPos] = useState({x: 0, y: 0})
     const dispatch = useDispatch()
-
+    
     const roundComplete = useSelector((state) => state.roundComplete.roundComplete)
     const gameOn = useSelector((state) => state.roundComplete.gameOn) 
+    
+    const [defsSvg, setDefsSvg] = useState()
+    const [textsSvg, setTextsSvg] = useState()
 
-    // const [firstRound, setFirstRound] = useState(true)
+    
+    const [addNewRound, 
+        // isLoading,
+        // isSuccess,
+        // isError,
+        // error
+   ] = useAddNewRoundMutation()
 
     const addMouseover = React.useCallback((e) => {
                 e.persist()
@@ -107,18 +74,14 @@ const Home = () => {
             
     useEffect (() => {
         setUsMap(document.getElementById('us_svg__svg').getElementsByTagName('path'))
-        // console.log(usMap)
         if (gameModeBtn.checked) {
             setBoxInfo(document.getElementById('details-box'))
         }
         setGameModeBtn(document.getElementById("checkbox"))
-        
     }, [usMap, stateName, stateId, boxInfo, addMouseover, gameModeBtn] );
 
-    const [defsSvg, setDefsSvg] = useState()
     useEffect(() => {
         setDefsSvg(document.getElementsByTagName('defs'))
-        // console.log(defsSvg)
     }, [defsSvg])
 
     useEffect(() => {
@@ -126,46 +89,33 @@ const Home = () => {
             for (let i = 0; i < defsSvg.length; i++) {
                 defsSvg[i].style = "@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap')"
                 defsSvg[i].style.fontFamily = 'Courier Prime'
-                // console.log(defsSvg[i])
             }
         }
     }, [defsSvg])
 
-    const [textsSvg, setTextsSvg] = useState()
     useEffect(() => {
         setTextsSvg(document.getElementsByTagName('text'))
-        // console.log(textsSvg)
     }, [textsSvg])
     
-
     if (textsSvg) {
         for (let i = 0; i < textsSvg.length; i++) {
             textsSvg[i].style.fontFamily = 'Courier Prime'
         }
     }
 
-    const fontsDefault = async() => {
-        let loaded = await textsSvg;
-        if (loaded){
-            for (let i = 0; i < loaded.length; i++) {
-                loaded[i].style.fontFamily = 'Courier Prime'
+    useEffect(() => {
+        const fontsDefault = async() => {
+            let loaded = await textsSvg;
+            if (loaded){
+                for (let i = 0; i < loaded.length; i++) {
+                    loaded[i].style.fontFamily = 'Courier Prime'
+                }
             }
         }
-    }
+        fontsDefault()
+    }, [textsSvg])
     
-    fontsDefault()
-    
-  
-    // useEffect(() => {
-    //     let c = document.getElementsByTagName('canvas')
-    //     c[0].getContext('2d').font = '30px Courier New'
-    //     c[0].style.fontFamily = '30px Courier New'
-    //     console.log(c[0].getContext('2d')) 
-    // }, [])
-
-
-
-       //Toggle  
+    //Toggle  
     const handleChange = () => {
         setGameModeBtn(!gameModeBtn)
         mapDefaultColors()
@@ -200,13 +150,12 @@ const Home = () => {
     const [previousQuestions, setPreviousQuestions] = useState([])
     const [currentQuestion, setCurrentQuestion] = useState('')
 
-
     const mapWithOnlyGreens = React.useCallback((e) => {
-                for (let i = 0; i < statesMissed.length; i++) {
-                    let stateName = statesMissed[i]
-                    document.querySelector(`[data-name='${stateName}']`).style.fill = "rgb(79, 82, 82)"
-                }
-            }, [statesMissed])
+        for (let i = 0; i < statesMissed.length; i++) {
+            let stateName = statesMissed[i]
+            document.querySelector(`[data-name='${stateName}']`).style.fill = "rgb(79, 82, 82)"
+        }
+    }, [statesMissed])
 
     const mapDefaultColors = React.useCallback((e) =>{
         if (usMap) {
@@ -222,10 +171,8 @@ const Home = () => {
             mapWithOnlyGreens()
             let i = Math.floor(Math.random() * (usMap.length - 1))
             let state = usMap[i].dataset.name
-            // console.log(previousQuestions)
             if (!previousQuestions.includes(state)){
                 setPreviousQuestions(previousQuestions => [...previousQuestions,state])
-                // console.log(previousQuestions)
                 setCurrentQuestion(state)
             } else {
                 nextQuestionQueue()
@@ -246,14 +193,11 @@ const Home = () => {
                 setMissed(missed + 1)
                 e.target.style.fill = 'rgb(161, 0, 0)'
             }
-            
         }
-
     }, [usMap, previousQuestions, score, missed, nextQuestionQueue, gameOn, statesMissed])
 
     
     useEffect(() => {
-        console.log(currentId, 'save')
         if (score > 0 || missed > 0){
             if (roundComplete && currentId) {
             const saveOnDb = async() => {
@@ -262,17 +206,10 @@ const Home = () => {
                 saveOnDb()
             }
         }
-
     }, [score, missed, statesScored, statesMissed, roundComplete, addNewRound, currentId, gameOn, username])
     
-    const [sendLogout, {
-        isLoading,
-        isSuccess,
-        isError,
-        error
-    }] = useSendLogoutMutation()
+    const [sendLogout] = useSendLogoutMutation()
 
-    const navigate = useNavigate()
     const onLogout = () => {
         sendLogout()
         navigate('/')
@@ -288,7 +225,6 @@ const Home = () => {
         </button>
     )
 
-
     const content = (
         <section className="public">
             <header className="dash-header">
@@ -297,8 +233,8 @@ const Home = () => {
                     <h2><span className="nowrap">Geo-Quiz</span></h2>
                 </div>
                     {username ? logoutButton : <div className='settings'>
-                    <Link to="/login">LOGIN</Link>
-                </div>}
+                        <Link to="/login">LOGIN</Link>
+                    </div>}
             </header>
 
             <main className="public__main">  
@@ -311,16 +247,14 @@ const Home = () => {
                         <> 
                             { (!gameOn || roundComplete) ?
                                 <ButtonRound handleClick={handleClick} text='START'/> :
-                            <div className='round__center'>
-                               <ButtonRound handleClick={nextQuestionQueue} text='NEXT'/> 
-                               <br/>
-                               <br/>
-                               
-                               <h3>Where is {currentQuestion}?</h3>
-                            </div>
-                               } 
-
-                            <div  style={{ maxWidth: "120px", marginRight: '30px' }}>
+                                <div className='round__center'>
+                                <ButtonRound handleClick={nextQuestionQueue} text='NEXT'/> 
+                                <br/>
+                                <br/>
+                                <h3>Where is {currentQuestion}?</h3>
+                                </div> 
+                            } 
+                            <div style={{ maxWidth: "120px", marginRight: '30px' }}>
                                 <CircularAnimation time={time} />
                             </div>
                         </>
@@ -328,9 +262,7 @@ const Home = () => {
                 </div>
 
                 <div className='main_map_score'>
-                    {/* <div></div> */}
                          { roundComplete ? <ModalLeft statesScored={statesScored} statesMissed={statesMissed} /> : <div></div>}
-                        
                     <div className='map' onMouseMove={addMouseover} onClick={onClickMap}>
                         <SvgUs />
                     </div>
@@ -341,22 +273,18 @@ const Home = () => {
                     { gameModeBtn.checked && <div id="details-box"></div>}
             </main>
             <div className='under__map'>
-            <BarChart username={username}/>
-
+                <BarChart username={username}/>
             </div>
             <div className='pies'>
                 <div className='pie' style={{ maxHeight: "22em"}}>
                     <p style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bolder' }}>STATES BY NUMBER O CORRECT GUESSES</p>
                     <Pie username={username}/>
                 </div>
-
                 <div className='pie' style={{ maxHeight: "22em"}}>
                     <p style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bolder' }}>STATES BY NUMBER O MISSED GUESSES</p>
                     <MissedPie username={username}/>
                 </div>
-                
             </div>
-     
             <Footer username={username}/>
         </section>
 
