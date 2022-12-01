@@ -7,6 +7,9 @@ A simple and efficient way for people to learn the name and locations of the sta
 Robust front-end architecture using React-Redux and SCSS along with integrated SVG map coordinates
 
 Implemented study and game modes to ensure exciting learning progress and performance reports
+
+The front-end is designed to do all the data analysis and calculation on the user's browser asynchronously, allowing the application to scale horizontally without the need for servers to synchronize user's infomation and only working direct with the database. As a result we have atomicity, consistency, isolation, and durability(ACID) garanteed.
+
 ## Technologies:
 
  * MongoDB
