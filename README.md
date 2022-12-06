@@ -1,5 +1,5 @@
 # GeoQuiz App
-https://geoquiz-v2.onrender.com 
+Click Here to see the live site https://geoquiz-v2.onrender.com 
 
 ## FullStack MERN project
 A simple and efficient way for people to learn the name and locations of the states of the United States of America and track their performance over time.
