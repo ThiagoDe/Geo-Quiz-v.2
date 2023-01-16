@@ -52,6 +52,8 @@ Once the user feels comfortable putting it’s knowledge to test, Geo-Quiz offer
     - The final score of the user is displayed once the timer gets to zero.
 - At any point in time, the user can click the back arrow to exit the current mode and get back to the main menu.
 
+![LearnTube (1)](https://user-images.githubusercontent.com/89544506/212580932-51d22ef0-1a38-4c46-b10c-6f8ad55e1592.jpg)
+
 # **Wireframes**
 
 ![Screen Shot 2022-11-18 at 11 56 29 AM](https://user-images.githubusercontent.com/89544506/202876926-0693527a-c654-4744-bf75-85aa3322448f.png)
